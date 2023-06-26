@@ -14,8 +14,6 @@ import java.util.HashMap;
 @Component
 public class JoonggonaraImpl implements Joonggonara{
 
-    private int categoryid;
-
     @Override
     public HashMap<Long, Product> getPage(String category, int pagenum) {
         int categoryid;
@@ -33,7 +31,8 @@ public class JoonggonaraImpl implements Joonggonara{
 
             for (int i = 0; i < 80; i++){
                 String[] id_string = ids.get(i).attr("href").split("/");
-                Long id = Long.parseLong(id_string[2]);
+                System.out.println(ids.get(i));
+                //Long id = Long.parseLong(id_string[2]);
 
                 String name = imgs.get(i).attr("alt");
                 String img = imgs.get(i).attr("src");
@@ -41,13 +40,13 @@ public class JoonggonaraImpl implements Joonggonara{
                 String price_string = prices.get(i).text().replaceAll("[^0-9]", "");
                 int price = Integer.parseInt(price_string);
 
-                Product product = new Product(id, name, img, price, Market.JOONGGONARA);
-                page.put(id, product);
+                //Product product = new Product(id, name, img, price, Market.JOONGGONARA);
+                //page.put(id, product);
             }
         } catch(IOException e){
             System.out.println("중고나라 크롤링 오류");
         }
-        return null;
+        return page;
     }
 
     @Override
@@ -61,6 +60,8 @@ public class JoonggonaraImpl implements Joonggonara{
     }
 
     public int setCategory(@NotNull String category) {
+
+        int categoryid;
 
         switch(category){
             case "WOMANCLOTHES":
