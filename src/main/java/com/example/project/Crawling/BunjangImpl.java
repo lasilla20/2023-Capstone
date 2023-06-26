@@ -3,21 +3,13 @@ package com.example.project.Crawling;
 import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import com.sun.istack.NotNull;
-import org.checkerframework.checker.units.qual.C;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class BunjangImpl implements Bunjang {
@@ -37,44 +29,24 @@ public class BunjangImpl implements Bunjang {
             categoryid = setCategory(category);
             url = "https://m.bunjang.co.kr/categories/" + categoryid + "?page=" + pagenum + "&req_ref=popular_category";
             webDriver.get(url);
-            System.out.println("html = " + webDriver.getPageSource());
-
-            WebElement webElement = webDriver.findElement(By.className("sc-gVLVqr"));
-            System.out.println("pid = " + webElement.findElement(By.tagName("a")).getAttribute("data-pid"));
-
-
-            /*Long time = new Date().getTime();
-            while(new Date().getTime() < time + 30000){
-                Thread.sleep(500);
-                ((JavascriptExecutor) webDriver)
-                        .executeScript("window.scrollTo(0, document.body.scrollHeight)", webElement);
-            }*/
+            Thread.sleep(500);
 
             List<WebElement> webElements = webDriver.findElements(By.className("sc-gVLVqr"));
 
-            /*for (WebElement element : webElements){
-                webDriver.manage().timeouts().implicitlyWait(100000, TimeUnit.MILLISECONDS);
+            for(WebElement webElement : webElements){
+                String pid = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
+                Long id = Long.parseLong(pid);
 
-                System.out.println("pid = " + element.findElement(By.tagName("a")).getAttribute("data-pid"));
+                String name = webElement.findElement(By.className("sc-kasBVs")).getText();
+                String img = webElement.findElement(By.tagName("img")).getAttribute("src");
 
-                String pid = element.findElement(By.tagName("a")).getAttribute("data-pid");
-                webDriver.navigate().to(pid);
-                Thread.sleep(500);
-            }*/
-
-            /*for (int i = 0; i < 80; i++){
-                String[] id_string = ids.get(i).attr("href").split("/");
-                Long id = Long.parseLong(id_string[2]);
-
-                String name = imgs.get(i).attr("alt");
-                String img = imgs.get(i).attr("src");
-
-                String price_string = prices.get(i).text().replaceAll("[^0-9]", "");
+                String price_string = webElement.findElement(By.className("sc-hgHYgh")).getText()
+                        .replaceAll("[^0-9]", "");
                 int price = Integer.parseInt(price_string);
 
-                Product product = new Product(id, name, img, price, Market.Bunjang);
+                Product product = new Product(id, name, img, price, Market.BUNJANG);
                 page.put(id, product);
-            }*/
+            }
         } catch(Exception e){
             System.out.println("번개장터 크롤링 오류");
         } finally {
@@ -93,7 +65,7 @@ public class BunjangImpl implements Bunjang {
         return null;
     }
 
-    public int setCategory(@NotNull String category) {
+    private int setCategory(@NotNull String category) {
 
         int categoryid;
 

@@ -22,7 +22,7 @@ public class JoonggonaraImpl implements Joonggonara{
 
         try {
             categoryid = setCategory(category);
-            url = "https://web.joongna.com/search?category=" + categoryid + "&page=" + page + "&sort=RECENT_SORT";
+            url = "https://web.joongna.com/search?category=" + categoryid + "&page=" + pagenum + "&sort=RECENT_SORT";
             Document doc = Jsoup.connect(url).get();
 
             Elements ids = doc.select(".grid.grid-cols-2 li:nth-child(n) a");
@@ -31,8 +31,7 @@ public class JoonggonaraImpl implements Joonggonara{
 
             for (int i = 0; i < 80; i++){
                 String[] id_string = ids.get(i).attr("href").split("/");
-                System.out.println(ids.get(i));
-                //Long id = Long.parseLong(id_string[2]);
+                Long id = Long.parseLong(id_string[2]);
 
                 String name = imgs.get(i).attr("alt");
                 String img = imgs.get(i).attr("src");
@@ -40,8 +39,8 @@ public class JoonggonaraImpl implements Joonggonara{
                 String price_string = prices.get(i).text().replaceAll("[^0-9]", "");
                 int price = Integer.parseInt(price_string);
 
-                //Product product = new Product(id, name, img, price, Market.JOONGGONARA);
-                //page.put(id, product);
+                Product product = new Product(id, name, img, price, Market.JOONGGONARA);
+                page.put(id, product);
             }
         } catch(IOException e){
             System.out.println("중고나라 크롤링 오류");
@@ -59,7 +58,7 @@ public class JoonggonaraImpl implements Joonggonara{
         return null;
     }
 
-    public int setCategory(@NotNull String category) {
+    private int setCategory(@NotNull String category) {
 
         int categoryid;
 
