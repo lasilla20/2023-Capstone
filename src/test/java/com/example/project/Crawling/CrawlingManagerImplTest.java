@@ -20,4 +20,8 @@ class CrawlingManagerImplTest {
     void getPage() {
         crawlingManager.getPage(Market.JOONGGONARA, "WOMANCLOTHES", 1);
     }
+
+    @Test
+    void getPage2() { crawlingManager.getPage(Market.BUNJANG, "PETS", 1); }
+
 }
