@@ -58,6 +58,8 @@ public class JoonggonaraImpl implements Joonggonara{
         return null;
     }
 
+    /** URL 세팅 함수 만들기 (상품 상세정보용, 카테고리용, 검색정보용 오버로딩) **/
+
     private int setCategory(@NotNull String category) {
 
         int categoryid;
