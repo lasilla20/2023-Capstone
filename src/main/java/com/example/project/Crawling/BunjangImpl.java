@@ -65,6 +65,10 @@ public class BunjangImpl implements Bunjang {
         return null;
     }
 
+    /** URL 세팅 함수 만들기 (상품 상세정보용, 카테고리용, 검색정보용 오버로딩) **/
+    /** 크롬 브라우저 세팅용 함수 만들기 (상품 상세정보, 카테고리, 검색정보에 공통적으로 쓰일 것) **/
+    /** 크롤링 코드에 일관성 있으면 함수로 따로 빼기 **/
+
     private int setCategory(@NotNull String category) {
 
         int categoryid;
