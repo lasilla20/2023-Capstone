@@ -1,0 +1,30 @@
+package com.example.project.Product;
+
+import com.example.project.Crawling.Bunjang;
+import com.example.project.Crawling.Joonggonara;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+public class ProductServiceImpl implements ProductService{
+
+    private final Joonggonara joonggonara;
+    private final Bunjang bunjang;
+
+    @Override
+    public Product getProduct(Long id, Market market) {
+
+        if (market == Market.JOONGGONARA) {
+            Product product = joonggonara.getProduct(id, market);
+            return product;
+        } else if (market == Market.BUNJANG) {
+            Product product = bunjang.getProduct(id, market);
+            return product;
+        } else if (market == Market.CARROT) {
+            //TODO 당근마켓 추가
+        }
+
+        return null;
+    }
+}

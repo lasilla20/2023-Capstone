@@ -30,9 +30,9 @@ public interface Joonggonara {
     public HashMap<Long, Product> getPage(String category, int pagenum);
 
     /** 중고나라 검색 결과 가져오기 **/
-    public HashMap<Long, Product> getSearchResult(String keyword);
+    public HashMap<Long, Product> getSearchResult(String keyword, int pagenum);
 
     /** 중고나라 상품 상세 가져오기 **/
-    public Product getProduct(Long id);
+    public Product getProduct(Long id, Market market);
 
 }
