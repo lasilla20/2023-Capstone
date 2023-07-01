@@ -112,8 +112,7 @@ public class BunjangImpl implements Bunjang {
             int price = Integer.parseInt(prices.replaceAll("[^0-9]", ""));
             String seller = webDriver.findElement(By.className("ProductSellerstyle__Name-sc-1qnzvgu-7")).getText();
 
-            //TODO 업데이트 시간
-            //TODO Views 수정 (지금 찜 수가 대신 나오는 중)
+            //TODO 업데이트 시간, Views -> 크롤링 안 됨
             String views = webDriver.findElement(By.className("ProductSummarystyle__Status-sc-oxz0oy-13"))
                     .getText();
 

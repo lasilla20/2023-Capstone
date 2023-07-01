@@ -108,6 +108,7 @@ public class JoonggonaraImpl implements Joonggonara{
     @Override
     public Product getProduct(Long id, Market market) {
         String url = setURL(id);
+        WebDriver webDriver = chromeDriver.setChrome();
 
         try {
             Document doc = Jsoup.connect(url).get();
@@ -122,10 +123,14 @@ public class JoonggonaraImpl implements Joonggonara{
             String price_string = prices.text().replaceAll("[^0-9]", "");
             int price = Integer.parseInt(price_string);
 
-            //TODO 판매자 정보 -> 동적 크롤링 나중에 추가
-            //TODO 날짜 변환 하는 중
+            String sellerURL = webDriver.findElement(By.cssSelector(".col-span-2 div div.flex a.font-semibold")).getAttribute("href");
+            webDriver.get(sellerURL);
+            String seller = webDriver.findElement(By.cssSelector("div.relative h1.hidden")).getText();
+            System.out.println("seller = " + seller);
 
             String[] etcs = doc.select(".text-body span").text().split(" · ");
+
+            String updatedate = etcs[0];
 
             int view = Integer.parseInt(etcs[1].replaceAll("[^0-9]", ""));
             int heart = Integer.parseInt(etcs[2].replaceAll("[^0-9]", ""));
@@ -135,10 +140,12 @@ public class JoonggonaraImpl implements Joonggonara{
 
             //TODO 카테고리
 
-            Product product = new Product(id, name, img, price, market, null, null, view, heart, detail, null);
+            Product product = new Product(id, name, img, price, market, null, updatedate, view, heart, detail, null);
             return product;
         } catch (IOException e){
             System.out.println("중고나라 크롤링 오류_상품 상세");
+        } finally {
+            webDriver.quit();
         }
 
         return null;

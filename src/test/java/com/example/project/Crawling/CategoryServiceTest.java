@@ -1,5 +1,6 @@
 package com.example.project.Crawling;
 
+import com.example.project.AppConfig;
 import com.example.project.Category.CategoryService;
 import com.example.project.Category.CategoryServiceImpl;
 import com.example.project.Product.Market;
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,7 +24,10 @@ import java.util.List;
 
 class CategoryServiceTest {
 
-    com.example.project.Crawling.ChromeDriver chromeDriver = new ChromeDriverImpl();
+    ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+
+    ChromeDriver chromeDriver = ac.getBean("chromeDriver", ChromeDriver.class);
+
     Joonggonara joonggonara = new JoonggonaraImpl(chromeDriver);
     Bunjang bunjang = new BunjangImpl(chromeDriver);
     CategoryService categoryService = new CategoryServiceImpl(joonggonara, bunjang);
