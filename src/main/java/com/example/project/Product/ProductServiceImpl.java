@@ -1,6 +1,7 @@
 package com.example.project.Product;
 
 import com.example.project.Crawling.Bunjang;
+import com.example.project.Crawling.Carrot;
 import com.example.project.Crawling.Joonggonara;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ public class ProductServiceImpl implements ProductService{
 
     private final Joonggonara joonggonara;
     private final Bunjang bunjang;
+    private final Carrot carrot;
 
     @Override
     public Product getProduct(Long id, Market market) {
@@ -22,7 +24,8 @@ public class ProductServiceImpl implements ProductService{
             Product product = bunjang.getProduct(id, market);
             return product;
         } else if (market == Market.CARROT) {
-            //TODO 당근마켓 추가
+            Product product = carrot.getProduct(id, market);
+            return product;
         }
 
         return null;

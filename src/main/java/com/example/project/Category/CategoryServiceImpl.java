@@ -5,6 +5,7 @@ import com.example.project.Crawling.Joonggonara;
 import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 

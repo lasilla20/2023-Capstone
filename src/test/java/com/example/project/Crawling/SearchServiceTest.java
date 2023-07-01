@@ -21,7 +21,8 @@ public class SearchServiceTest {
     com.example.project.Crawling.ChromeDriver chromeDriver = new ChromeDriverImpl();
     Joonggonara joonggonara = new JoonggonaraImpl(chromeDriver);
     Bunjang bunjang = new BunjangImpl(chromeDriver);
-    SearchService searchService = new SearchServiceImpl(joonggonara, bunjang);
+    Carrot carrot = new CarrotImpl(chromeDriver);
+    SearchService searchService = new SearchServiceImpl(joonggonara, bunjang, carrot);
 
     /** 중고나라 검색 테스트 **/
     @Test
@@ -101,7 +102,42 @@ public class SearchServiceTest {
                 System.out.println("product.getName() = " + product.getName());
             }
         } catch(Exception e){
-            System.out.println("번개장터 크롤링 오류");
+            System.out.println("번개장터 크롤링 오류_검색");
+        } finally {
+            webDriver.quit();
+        }
+    }
+
+    @Test
+    void getSearchResultTest3(){
+        String url = "https://www.daangn.com/search/%EC%A7%B1%EA%B5%AC/";
+        HashMap<Long, Product> page = new HashMap<>();
+        WebDriver webDriver = setChrome();
+
+        try {
+            webDriver.get(url);
+            Thread.sleep(500);
+
+            List<WebElement> webElements = webDriver.findElements(By.cssSelector("article.flea-market-article"));
+
+            for(WebElement webElement : webElements){
+                String[] pid = webElement.findElement(By.tagName("a")).getAttribute("href").split("s/");
+                Long id = Long.parseLong(pid[1]);
+                System.out.println("ppid = " + id);
+
+                String name = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("alt");
+                System.out.println("name = " + name);
+
+                String img = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("src");
+                System.out.println("img = " + img);
+
+                String price_string = webElement.findElement(By.cssSelector("a div.article-info p.article-price")).getText()
+                        .replaceAll("[^0-9]", "");;
+                int price = Integer.parseInt(price_string);
+                System.out.println("price = " + price);
+            }
+        } catch(Exception e){
+            System.out.println("당근마켓 크롤링 오류_검색");
         } finally {
             webDriver.quit();
         }
