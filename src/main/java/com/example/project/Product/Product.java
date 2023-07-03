@@ -15,9 +15,11 @@ public class Product {
     private int hearts;
     private String details;
     private String category;
+    private String producturl;
 
     public Product(Long id, String name, String image, int price, Market market, @Nullable String seller,
-                   @Nullable String updatedate, @Nullable int views, @Nullable int hearts, @Nullable String details, @Nullable String category) {
+                   @Nullable String updatedate, @Nullable int views, @Nullable int hearts, @Nullable String details, @Nullable String category,
+                   @Nullable String producturl) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -29,6 +31,15 @@ public class Product {
         this.hearts = hearts;
         this.details = details;
         this.category = category;
+        this.producturl = producturl;
+    }
+
+    public String getProducturl() {
+        return producturl;
+    }
+
+    public void setProducturl(String producturl) {
+        this.producturl = producturl;
     }
 
     public String getSeller() {

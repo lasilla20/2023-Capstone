@@ -48,7 +48,7 @@ public class CarrotImpl implements Carrot{
                         .replaceAll("[^0-9]", "");;
                 int price = Integer.parseInt(price_string);
 
-                Product product = new Product(id, name, img, price, Market.CARROT, null, null, 0, 0, null, null);
+                Product product = new Product(id, name, img, price, Market.CARROT, null, null, 0, 0, null, null, null);
                 page.put(id, product);
             }
             return page;
@@ -89,7 +89,7 @@ public class CarrotImpl implements Carrot{
 
             //TODO 카테고리
 
-            Product product = new Product(id, name, img, price, market, seller, updatedate, view, heart, detail, null);
+            Product product = new Product(id, name, img, price, market, seller, updatedate, view, heart, detail, null, url);
             return product;
         } catch (IOException e){
             System.out.println("당근마켓 크롤링 오류_상품 상세");
