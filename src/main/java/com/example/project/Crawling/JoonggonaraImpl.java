@@ -51,7 +51,7 @@ public class JoonggonaraImpl implements Joonggonara{
                 String price_string = prices.get(i).text().replaceAll("[^0-9]", "");
                 int price = Integer.parseInt(price_string);
 
-                Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, 0, null, category);
+                Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, 0, null, category, null);
                 page.put(id, product);
             }
             return page;
@@ -90,7 +90,7 @@ public class JoonggonaraImpl implements Joonggonara{
 
                     //TODO 작성 일시 필요하면 불러오기 (의논)
 
-                    Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, 0, null, null);
+                    Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, 0, null, null, null);
                     page.put(id, product);
                 }
             }
@@ -140,7 +140,7 @@ public class JoonggonaraImpl implements Joonggonara{
 
             //TODO 카테고리
 
-            Product product = new Product(id, name, img, price, market, null, updatedate, view, heart, detail, null);
+            Product product = new Product(id, name, img, price, market, null, updatedate, view, heart, detail, null, url);
             return product;
         } catch (IOException e){
             System.out.println("중고나라 크롤링 오류_상품 상세");

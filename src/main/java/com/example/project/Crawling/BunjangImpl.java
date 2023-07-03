@@ -44,7 +44,7 @@ public class BunjangImpl implements Bunjang {
                             .replaceAll("[^0-9]", "");
                     int price = Integer.parseInt(price_string);
 
-                    Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, 0, null, category);
+                    Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, 0, null, category, null);
                     page.put(id, product);
                 }
             }
@@ -83,7 +83,7 @@ public class BunjangImpl implements Bunjang {
                         .replaceAll("[^0-9]", "");;
                 int price = Integer.parseInt(price_string);
 
-                Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, 0, null, null);
+                Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, 0, null, null, null);
                 page.put(id, product);
             }
             return page;
@@ -123,7 +123,7 @@ public class BunjangImpl implements Bunjang {
 
             //TODO 카테고리 추가
 
-            Product product = new Product(id, name, img, price, market, seller, null, 0, heart, detail, null);
+            Product product = new Product(id, name, img, price, market, seller, null, 0, heart, detail, null, url);
             return product;
         } catch(Exception e){
             System.out.println("번개장터 크롤링 오류_상품 상세");
