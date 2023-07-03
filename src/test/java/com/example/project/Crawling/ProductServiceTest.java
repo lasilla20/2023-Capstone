@@ -140,7 +140,7 @@ public class ProductServiceTest {
             String name = doc.select("#article-title").text();
             System.out.println("name = " + name);
 
-            String img = doc.select(".image-wrap img").attr("src");
+            String img = doc.select(".image-wrap img").attr("data-lazy");
             System.out.println("img = " + img);
 
             Elements prices = doc.select("#article-price");
@@ -168,7 +168,7 @@ public class ProductServiceTest {
 
             //TODO 카테고리
 
-        } catch (IOException e){
+        } catch (Exception e){
             System.out.println("당근마켓 크롤링 오류_상품 상세");
         }
     }
