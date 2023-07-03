@@ -1,21 +1,13 @@
 package com.example.project.Controller;
 
-import com.example.project.Category.CategoryService;
-import com.example.project.Repository.UserRepository;
 import com.example.project.config.auth.PrincipalDetails;
-import com.example.project.config.auth.PrincipalOauth2UserService;
 import com.example.project.domain.user.User;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 @Controller
 @RequestMapping(value = "/main")
 public class UserController {
