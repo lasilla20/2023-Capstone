@@ -19,18 +19,16 @@ public class HelloWorldController {
         return "Hello, world!";
     }
 
-    /* UserController 에 존재
     @GetMapping("/loginForm")
     public String login(){
         return "login";
     }
 
-    MainController 에 존재
     @GetMapping("/main")
     public String main(){
         return "main";
     }
-    */
+
     @GetMapping("/private")
     public String privatePage(){
         return "private";
