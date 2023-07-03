@@ -69,8 +69,7 @@ public class CarrotImpl implements Carrot{
             Document doc = Jsoup.connect(url).get();
 
             String name = doc.select("#article-title").text();
-            //TODO 이미지 링크 수정
-            String img = doc.select(".image-wrap img").attr("src");
+            String img = doc.select(".image-wrap img").attr("data-lazy");
 
             Elements prices = doc.select("#article-price");
             String price_string = prices.text().replaceAll("[^0-9]", "");
