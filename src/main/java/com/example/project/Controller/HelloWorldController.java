@@ -22,12 +22,12 @@ public class HelloWorldController {
     public String test() {
         return "Hello, world!";
     }
-    /*
+    
     @GetMapping("/loginForm")
     public String login(){
         return "login";
     }
-
+    /*
     @GetMapping("/main")
     public String main(){
         return "main";
