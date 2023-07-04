@@ -22,32 +22,20 @@ public class HelloWorldController {
     public String test() {
         return "Hello, world!";
     }
-
+    /*
     @GetMapping("/loginForm")
     public String login(){
         return "login";
     }
 
-    @GetMapping("/main")
-    public String main(){
-        return "main";
-    }
-
-    @GetMapping("/private")
-    public String privatePage(){
-        return "private";
-    }
-
-    /* UserController 에 존재
-    @GetMapping("/loginForm")
-    public String login(){
-        return "login";
-    }
-
-    MainController 에 존재
     @GetMapping("/main")
     public String main(){
         return "main";
     }
     */
+    @GetMapping("/private")
+    public String privatePage(){
+        return "private";
+    }
+
 }
