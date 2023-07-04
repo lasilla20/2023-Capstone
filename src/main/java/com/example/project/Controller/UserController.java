@@ -30,7 +30,7 @@ public class UserController {
         return login();
     }
 
-    /** 통합 로그아웃 **/
+    /* 통합 로그아웃
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session, PrincipalDetails principalDetails) throws Exception {
         logger.info("로그아웃 진행중···");
@@ -47,4 +47,5 @@ public class UserController {
         }
         return "main";
     }
+    */
 }
