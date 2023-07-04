@@ -12,10 +12,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping(value = "/main")
 public class UserController {
 
-    /**스프링 시큐리티: user 정보를 받아오고 싶으면 PrincialDetails에서 user를 꺼내다 쓴다. (OAuth 로그인으로 인하여)**/
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
-    @GetMapping("/login")
+   @GetMapping("/login")
     public String login(){
         return "login";
     }
