@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Component
 public class CarrotImpl implements Carrot{
 
     private final ChromeDriver chromeDriver;
