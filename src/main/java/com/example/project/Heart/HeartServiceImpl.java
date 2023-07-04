@@ -6,11 +6,16 @@ import com.example.project.Product.ProductService;
 import com.example.project.config.auth.PrincipalDetails;
 import com.example.project.domain.user.User;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 @Getter
 @Setter
+@Component
+@RequiredArgsConstructor
 public class HeartServiceImpl implements HeartService {
     private Heart heart;
     private ProductService productService;
@@ -57,8 +62,11 @@ public class HeartServiceImpl implements HeartService {
     }
 
     @Override
-    public Heart getHeartList() {
-        return heart;
+    public String toString() {
+        return "HeartServiceImpl{" +
+                "heart=" + heart +
+                ", productService=" + productService +
+                ", principalDetails=" + principalDetails +
+                '}';
     }
-
 }
