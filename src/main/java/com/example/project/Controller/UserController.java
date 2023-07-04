@@ -8,41 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-@Controller
-@RequestMapping(value = "/main")
+
 public class UserController {
 
-   @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
-
-    @GetMapping("/loginForm")
-    public String loginForm(){
-        return login();
-    }
-
-    @GetMapping("/login/google")
-    public String loginGoogle() {
-        return login();
-    }
-
-    /* 통합 로그아웃
-    @RequestMapping(value = "/logout")
-    public String logout(HttpSession session, PrincipalDetails principalDetails) throws Exception {
-        logger.info("로그아웃 진행중···");
-        User user = principalDetails.getUser();
-        switch (user.getProvider()){
-            case "google":
-                session.invalidate();
-                break;
-            case "kakao":
-                String accessToken = (String) session.getAttribute("access_Token");
-                session.removeAttribute("access_Token");
-                session.removeAttribute("userId");
-                break;
-        }
-        return "main";
-    }
-    */
 }

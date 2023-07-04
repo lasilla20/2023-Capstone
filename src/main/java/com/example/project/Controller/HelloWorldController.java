@@ -23,7 +23,6 @@ public class HelloWorldController {
         return "Hello, world!";
     }
 
-    /*
     @GetMapping("/loginForm")
     public String login(){
         return "login";
@@ -33,7 +32,7 @@ public class HelloWorldController {
     public String main(){
         return "main";
     }
-    */
+
     @GetMapping("/private")
     public String privatePage(){
         return "private";
