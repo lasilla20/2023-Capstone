@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    public Optional<User> findByName(String name);  //최초 로그인 여부 체크
+    // SELECT * FROM user WHERE username = ?1
+    User findByName(String name);  //최초 로그인 여부 체크
 }
