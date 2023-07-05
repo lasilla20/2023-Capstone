@@ -22,7 +22,7 @@ public class SecurityConfig{
                 .csrf().disable()
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers("/private/**").authenticated()
+                .antMatchers("/user/**").authenticated()
 
                 .anyRequest().permitAll()
                 .and().oauth2Login()
