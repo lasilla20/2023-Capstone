@@ -51,6 +51,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String role = "ROLE_USER";
         User userEntity = userRepository.findByName(username);
         if (userEntity == null){    //유저가 없다면
+            System.out.println("유저 없음");
             userEntity = User.builder()  //회원가입 처리 - db 저장
                     .name(username)
                     .email(email)
@@ -58,6 +59,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .role(role)
                     .provider(provider)
                     .providerId(providerId).build();
+            System.out.println("userEntity = " + userEntity.getEmail());
             userRepository.save(userEntity);
         }
 
