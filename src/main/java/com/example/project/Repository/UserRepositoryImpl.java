@@ -71,6 +71,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public <S extends User> S save(S entity) {
+        System.out.println("저장 완료");
+
         return null;
     }
 
