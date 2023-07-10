@@ -3,23 +3,19 @@ package com.example.project.Crawling;
 import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import com.sun.istack.NotNull;
-import com.sun.xml.bind.v2.TODO;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Component
@@ -30,9 +26,9 @@ public class JoonggonaraImpl implements Joonggonara{
 
     /** 중고나라 카테고리 페이지 가져오기 **/
     @Override
-    public HashMap<Long, Product> getPage(String category, int pagenum) {
+    public LinkedHashMap<Long, Product> getPage(String category, int pagenum) {
         String url = setURL(category, pagenum);
-        HashMap<Long, Product> page = new HashMap<>();
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
 
         try {
             Document doc = Jsoup.connect(url).get();
@@ -41,7 +37,7 @@ public class JoonggonaraImpl implements Joonggonara{
             Elements imgs = doc.select(".grid.grid-cols-2 li:nth-child(n) a div img");
             Elements prices = doc.select(".grid.grid-cols-2 li:nth-child(n) a div div.font-semibold");
 
-            for (int i = 0; i < 80; i++){
+            for (int i = 0; i < imgs.size(); i++){
                 String[] id_string = ids.get(i).attr("href").split("/");
                 Long id = Long.parseLong(id_string[2]);
 
@@ -51,7 +47,7 @@ public class JoonggonaraImpl implements Joonggonara{
                 String price_string = prices.get(i).text().replaceAll("[^0-9]", "");
                 int price = Integer.parseInt(price_string);
 
-                Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, 0, null, category, null);
+                Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, category, null);
                 page.put(id, product);
             }
             return page;
@@ -63,9 +59,9 @@ public class JoonggonaraImpl implements Joonggonara{
 
     /** 중고나라 검색 결과 가져오기 **/
     @Override
-    public HashMap<Long, Product> getSearchResult(String keyword, int pagenum) {
+    public LinkedHashMap<Long, Product> getSearchResult(String keyword, int pagenum) {
         String url = setURL(pagenum, keyword);
-        HashMap<Long, Product> page = new HashMap<>();
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
         WebDriver webDriver = chromeDriver.setChrome();
 
         try {
@@ -88,9 +84,7 @@ public class JoonggonaraImpl implements Joonggonara{
                             .replaceAll("[^0-9]", "");
                     int price = Integer.parseInt(price_string);
 
-                    //TODO 작성 일시 필요하면 불러오기 (의논)
-
-                    Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, 0, null, null, null);
+                    Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, null, null);
                     page.put(id, product);
                 }
             }
@@ -113,15 +107,12 @@ public class JoonggonaraImpl implements Joonggonara{
         try {
             Document doc = Jsoup.connect(url).get();
 
-            Elements names = doc.select(".pb-5 h1");
-            String name = names.text();
+            String name = doc.select(".pb-5 h1").text();
+            String img = doc.select(".col-span-1 img").attr("src");
 
-            Elements imgs = doc.select(".col-span-1 img");
-            String img = imgs.attr("src");
-
-            Elements prices = doc.select(".pb-5.border-b.border-gray-300 div div");
-            String price_string = prices.text().replaceAll("[^0-9]", "");
-            int price = Integer.parseInt(price_string);
+            String prices = doc.select(".pb-5.border-b.border-gray-300 div div").text()
+                    .replaceAll("[^0-9]", "");
+            int price = Integer.parseInt(prices);
 
             String sellerURL = webDriver.findElement(By.cssSelector(".col-span-2 div div.flex a.font-semibold")).getAttribute("href");
             webDriver.get(sellerURL);
@@ -129,18 +120,24 @@ public class JoonggonaraImpl implements Joonggonara{
             System.out.println("seller = " + seller);
 
             String[] etcs = doc.select(".text-body span").text().split(" · ");
-
             String updatedate = etcs[0];
 
-            int view = Integer.parseInt(etcs[1].replaceAll("[^0-9]", ""));
             int heart = Integer.parseInt(etcs[2].replaceAll("[^0-9]", ""));
+            String detail = doc.select(".col-span-3 article p").text();
 
-            Elements details = doc.select(".col-span-3 article p");
-            String detail = details.text();
+            HashMap<Integer, String> categoryset = getCategory();
+            String[] categories = doc.select(".chawkbazarBreadcrumb ol li:nth-child(3) a").attr("href").split("y=");
+            String category = null;
+            if (categoryset.containsKey(Integer.parseInt(categories[1]))) {
+                category = categoryset.get(Integer.parseInt(categories[1]));
+            } else{
+                categories = doc.select(".chawkbazarBreadcrumb ol li:nth-child(5) a").attr("href").split("y=");
+                if (categoryset.containsKey(Integer.parseInt(categories[1]))) {
+                    category = categoryset.get(Integer.parseInt(categories[1]));
+                }
+            }
 
-            //TODO 카테고리
-
-            Product product = new Product(id, name, img, price, market, null, updatedate, view, heart, detail, null, url);
+            Product product = new Product(id, name, img, price, market, seller, updatedate, heart, detail, category, url);
             return product;
         } catch (IOException e){
             System.out.println("중고나라 크롤링 오류_상품 상세");
@@ -148,6 +145,39 @@ public class JoonggonaraImpl implements Joonggonara{
             webDriver.quit();
         }
 
+        return null;
+    }
+
+    /** 중고나라 메인(추천상품) 가져오기 **/
+    @Override
+    public LinkedHashMap<Long, Product> getMainPage() {
+        String url = setURL();
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+
+        try {
+            Document doc = Jsoup.connect(url).get();
+
+            Elements ids = doc.select(".swiper-slide.pt-2 a");
+            Elements imgs = doc.select(".swiper-slide.pt-2 a div img");
+            Elements prices = doc.select(".swiper-slide.pt-2 a div div.font-semibold");
+
+            for (int i = 0; i < 10; i++){
+                String[] id_string = ids.get(i).attr("href").split("/");
+                Long id = Long.parseLong(id_string[2]);
+
+                String name = imgs.get(i).attr("alt");
+                String img = imgs.get(i).attr("src");
+
+                String price_string = prices.get(i).text().replaceAll("[^0-9]", "");
+                int price = Integer.parseInt(price_string);
+
+                Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, null, null);
+                page.put(id, product);
+            }
+            return page;
+        } catch(IOException e){
+            System.out.println("중고나라 크롤링 오류_메인화면");
+        }
         return null;
     }
 
@@ -200,6 +230,27 @@ public class JoonggonaraImpl implements Joonggonara{
         return categoryid;
     }
 
+    /** 중고나라 카테고리 세팅 2 **/
+    private HashMap<Integer, String> getCategory(){
+        HashMap<Integer, String> category = new HashMap<>();
+        category.put(Joonggonara.WOMANCLOTHES, "WOMANCLOTHES");
+        category.put(Joonggonara.MANCLOTHES, "MANCLOTHES");
+        category.put(Joonggonara.BEAUTY, "BEAUTY");
+        category.put(Joonggonara.FURNITURE, "FURNITURE");
+        category.put(Joonggonara.FOOD, "FOOD");
+        category.put(Joonggonara.KIDS, "KIDS");
+        category.put(Joonggonara.PETS, "PETS");
+
+        //TODO 생활(주방+가전) 디지털(컴퓨터+디지털) 스포츠(스포츠+레저+여행)
+        category.put(Joonggonara.LIVES1, "LIVES");
+        category.put(Joonggonara.DIGITAL1, "DIGITAL");
+        category.put(Joonggonara.SPORTS1, "SPORTS");
+
+        category.put(Joonggonara.STATIONERY, "STATIONERY");
+
+        return category;
+    }
+
     /** 크롤링 주소 세팅 **/
     private String setURL(@NotNull String category, @NotNull int pagenum){
         int categoryid = setCategory(category);
@@ -224,5 +275,8 @@ public class JoonggonaraImpl implements Joonggonara{
         String url = "https://web.joongna.com/search/" + keyword_encoded + "?page=" + pagenum;
 
         return url;
+    }
+    private String setURL(){
+        return "https://web.joongna.com/";
     }
 }

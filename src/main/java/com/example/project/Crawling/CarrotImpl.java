@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,8 +25,8 @@ public class CarrotImpl implements Carrot{
 
     /** 당근마켓 검색 결과 가져오기 **/
     @Override
-    public HashMap<Long, Product> getSearchResult(String keyword, int pagenum) {
-        HashMap<Long, Product> page = new HashMap<>();
+    public LinkedHashMap<Long, Product> getSearchResult(String keyword, int pagenum) {
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
 
         String url = setURL(keyword);
         WebDriver webDriver = chromeDriver.setChrome();
@@ -50,7 +50,7 @@ public class CarrotImpl implements Carrot{
                         .replaceAll("[^0-9]", "");;
                 int price = Integer.parseInt(price_string);
 
-                Product product = new Product(id, name, img, price, Market.CARROT, null, null, 0, 0, null, null, null);
+                Product product = new Product(id, name, img, price, Market.CARROT, null, null, 0, null, null, null);
                 page.put(id, product);
             }
             return page;
@@ -79,22 +79,60 @@ public class CarrotImpl implements Carrot{
 
             String seller = doc.select("#nickname").text();
 
-            String[] updatedates = doc.select("#article-category time").text().split("끌올 ");
+            String[] updatedates = doc.select("#article-category").text().split(" ∙ ");
             String updatedate = updatedates[1];
 
-            String[] etcs = doc.select("#article-counts").text().split(" ∙ ");
+            String category = updatedates[0];
 
-            int view = Integer.parseInt(etcs[2].replaceAll("[^0-9]", ""));
+            String[] etcs = doc.select("#article-counts").text().split(" ∙ ");
             int heart = Integer.parseInt(etcs[0].replaceAll("[^0-9]", ""));
 
             String detail = doc.select("#article-detail").text();
 
-            //TODO 카테고리
-
-            Product product = new Product(id, name, img, price, market, seller, updatedate, view, heart, detail, null, url);
+            Product product = new Product(id, name, img, price, market, seller, updatedate, heart, detail, category, url);
             return product;
         } catch (IOException e){
             System.out.println("당근마켓 크롤링 오류_상품 상세");
+        }
+        return null;
+    }
+
+    /** 당근마켓 메인(추천상품) 가져오기 **/
+    @Override
+    public LinkedHashMap<Long, Product> getMainPage() {
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+
+        String url = "https://www.daangn.com/hot_articles";
+        WebDriver webDriver = chromeDriver.setChrome();
+
+        try {
+            webDriver.get(url);
+            Thread.sleep(500);
+
+            List<WebElement> webElements = webDriver.findElements(By.cssSelector("article.card-top"));
+
+            for (WebElement webElement : webElements) {
+                String pid = webElement.findElement(By.cssSelector("a")).getAttribute("data-event-label");
+                Long id = Long.parseLong(pid);
+
+                String name = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("alt");
+                String img = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("src");
+
+                String price_string = webElement.findElement(By.cssSelector("a div.card-desc div.card-price")).getText()
+                        .replaceAll("[^0-9]", "");
+                int price = 0;
+                if(price_string.length() != 0){
+                    price = Integer.parseInt(price_string);
+                }
+
+                Product product = new Product(id, name, img, price, Market.CARROT, null, null, 0, null, null, null);
+                page.put(id, product);
+            }
+            return page;
+        } catch (Exception e) {
+            System.out.println("당근마켓 크롤링 오류_메인화면");
+        } finally {
+            webDriver.quit();
         }
         return null;
     }
@@ -104,7 +142,6 @@ public class CarrotImpl implements Carrot{
 
         return url;
     }
-
     private String setURL(@NotNull String keyword){
         String keyword_encoded = "\0";
 
@@ -117,5 +154,8 @@ public class CarrotImpl implements Carrot{
         String url = "https://www.daangn.com/search/" + keyword_encoded + "/";
 
         return url;
+    }
+    private String setURL(){
+        return "https://www.daangn.com/hot_articles";
     }
 }
