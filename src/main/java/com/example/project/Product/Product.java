@@ -11,14 +11,13 @@ public class Product {
     private Market market;
     private String seller;
     private String updatedate;
-    private int views;
     private int hearts;
     private String details;
     private String category;
     private String producturl;
 
     public Product(Long id, String name, String image, int price, Market market, @Nullable String seller,
-                   @Nullable String updatedate, @Nullable int views, @Nullable int hearts, @Nullable String details, @Nullable String category,
+                   @Nullable String updatedate, @Nullable int hearts, @Nullable String details, @Nullable String category,
                    @Nullable String producturl) {
         this.id = id;
         this.name = name;
@@ -27,7 +26,6 @@ public class Product {
         this.market = market;
         this.seller = seller;
         this.updatedate = updatedate;
-        this.views = views;
         this.hearts = hearts;
         this.details = details;
         this.category = category;
@@ -56,14 +54,6 @@ public class Product {
 
     public void setUpdatedate(String updatedate) {
         this.updatedate = updatedate;
-    }
-
-    public int getViews() {
-        return views;
-    }
-
-    public void setViews(int views) {
-        this.views = views;
     }
 
     public int getHearts() {

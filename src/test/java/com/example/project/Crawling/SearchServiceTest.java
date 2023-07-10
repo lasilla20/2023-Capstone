@@ -5,6 +5,7 @@ import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import com.example.project.Search.SearchService;
 import com.example.project.Search.SearchServiceImpl;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.PageLoadStrategy;
@@ -14,6 +15,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class SearchServiceTest {
@@ -28,8 +30,8 @@ public class SearchServiceTest {
     @Test
     void getSearchResultTest() {
         String url = "https://web.joongna.com/search/%EC%A7%B1%EA%B5%AC?page=1";
-        HashMap<Long, Product> page = new HashMap<>();
-        WebDriver webDriver = setChrome();
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        WebDriver webDriver = chromeDriver.setChrome();
 
         try {
             webDriver.get(url);
@@ -42,20 +44,26 @@ public class SearchServiceTest {
                 if(!ad.equals("광고")){
                     String[] pid = webElement.getAttribute("href").split("t/");
                     Long id = Long.parseLong(pid[1]);
-                    System.out.println("ppid = " + id);
 
                     String name = webElement.getAttribute("title");
-                    System.out.println("name = " + name);
-
                     String img = webElement.findElement(By.cssSelector("div.relative img")).getAttribute("src");
-                    System.out.println("img = " + img);
 
                     String price_string = webElement.findElement(By.cssSelector("div div.font-semibold")).getText()
                             .replaceAll("[^0-9]", "");
                     int price = Integer.parseInt(price_string);
-                    System.out.println("price = " + price);
+
+                    Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, null, null);
+                    page.put(id, product);
                 }
             }
+            for (Long key:page.keySet()){
+                Product p = page.get(key);
+                System.out.println("p.getId() = " + p.getId());
+                System.out.println("p.getName() = " + p.getName());
+                System.out.println("p.getImage() = " + p.getImage());
+                System.out.println("p.getPrice() = " + p.getPrice());
+            }
+            System.out.println("page.size() = " + page.size());
         } catch (Exception e) {
             System.out.println("중고나라 크롤링 오류_검색");
         } finally {
@@ -67,8 +75,8 @@ public class SearchServiceTest {
     @Test
     void getSearchResultTest2(){
         String url = "https://m.bunjang.co.kr/search/products?order=date&page=1&q=%EC%A7%B1%EA%B5%AC";
-        HashMap<Long, Product> page = new HashMap<>();
-        WebDriver webDriver = setChrome();
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        WebDriver webDriver = chromeDriver.setChrome();
 
         try {
             webDriver.get(url);
@@ -92,15 +100,17 @@ public class SearchServiceTest {
                 System.out.println("price_string = " + price_string);
                 int price = Integer.parseInt(price_string);
 
-                Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, 0, null, null, url);
+                Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, null, null, url);
                 page.put(id, product);
             }
-
-            for(Long key:page.keySet()){
-                Product product = page.get(key);
-                System.out.println("product.getId() = " + product.getId());
-                System.out.println("product.getName() = " + product.getName());
+            for (Long key:page.keySet()){
+                Product p = page.get(key);
+                System.out.println("p.getId() = " + p.getId());
+                System.out.println("p.getName() = " + p.getName());
+                System.out.println("p.getImage() = " + p.getImage());
+                System.out.println("p.getPrice() = " + p.getPrice());
             }
+            System.out.println("page.size() = " + page.size());
         } catch(Exception e){
             System.out.println("번개장터 크롤링 오류_검색");
         } finally {
@@ -111,8 +121,8 @@ public class SearchServiceTest {
     @Test
     void getSearchResultTest3(){
         String url = "https://www.daangn.com/search/%EC%A7%B1%EA%B5%AC/";
-        HashMap<Long, Product> page = new HashMap<>();
-        WebDriver webDriver = setChrome();
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        WebDriver webDriver = chromeDriver.setChrome();
 
         try {
             webDriver.get(url);
@@ -123,19 +133,25 @@ public class SearchServiceTest {
             for(WebElement webElement : webElements){
                 String[] pid = webElement.findElement(By.tagName("a")).getAttribute("href").split("s/");
                 Long id = Long.parseLong(pid[1]);
-                System.out.println("ppid = " + id);
 
                 String name = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("alt");
-                System.out.println("name = " + name);
-
                 String img = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("src");
-                System.out.println("img = " + img);
 
                 String price_string = webElement.findElement(By.cssSelector("a div.article-info p.article-price")).getText()
                         .replaceAll("[^0-9]", "");;
                 int price = Integer.parseInt(price_string);
-                System.out.println("price = " + price);
+
+                Product product = new Product(id, name, img, price, Market.CARROT, null, null, 0, null, null, null);
+                page.put(id, product);
             }
+            for (Long key:page.keySet()){
+                Product p = page.get(key);
+                System.out.println("p.getId() = " + p.getId());
+                System.out.println("p.getName() = " + p.getName());
+                System.out.println("p.getImage() = " + p.getImage());
+                System.out.println("p.getPrice() = " + p.getPrice());
+            }
+            System.out.println("page.size() = " + page.size());
         } catch(Exception e){
             System.out.println("당근마켓 크롤링 오류_검색");
         } finally {
@@ -143,13 +159,17 @@ public class SearchServiceTest {
         }
     }
 
-    private WebDriver setChrome(){
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        chromeOptions.addArguments("--remote-allow-origins=*");
-//        chromeOptions.addArguments("headless");
-        WebDriver webDriver = new ChromeDriver(chromeOptions);
+    @Test
+    void getSearchResultTest4(){
+        LinkedHashMap<Long, Product> page = searchService.getSearchResult(Market.JOONGGONARA, 1, "짱구");
+        Assertions.assertThat(page.size()).isEqualTo(80); // 중고나라 검색 결과 한 페이지에 80개
+        page.clear();
 
-        return webDriver;
+        page = searchService.getSearchResult(Market.BUNJANG, 1, "짱구");
+        Assertions.assertThat(page.size()).isEqualTo(100); // 번개장터 검색 결과 한 페이지에 100개
+        page.clear();
+
+        page = searchService.getSearchResult(Market.CARROT, 1, "짱구");
+        Assertions.assertThat(page.size()).isEqualTo(6); // 번개장터 검색 결과 한 페이지에 6개
     }
 }

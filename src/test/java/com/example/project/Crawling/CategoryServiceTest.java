@@ -26,7 +26,7 @@ class CategoryServiceTest {
 
     ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
 
-    ChromeDriver chromeDriver = ac.getBean("chromeDriver", ChromeDriver.class);
+    ChromeDriver chromeDriver = new ChromeDriverImpl();
 
     Joonggonara joonggonara = new JoonggonaraImpl(chromeDriver);
     Bunjang bunjang = new BunjangImpl(chromeDriver);
@@ -55,10 +55,16 @@ class CategoryServiceTest {
                 String price_string = prices.get(i).text().replaceAll("[^0-9]", "");
                 int price = Integer.parseInt(price_string);
 
-                Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, 0, null, null, url);
+                Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, null, url);
                 page.put(id, product);
             }
-
+            for (Long key:page.keySet()){
+                Product p = page.get(key);
+                System.out.println("p.getId() = " + p.getId());
+                System.out.println("p.getName() = " + p.getName());
+                System.out.println("p.getImage() = " + p.getImage());
+                System.out.println("p.getPrice() = " + p.getPrice());
+            }
             System.out.println("page.size() = " + page.size());
         } catch(IOException e){
             System.out.println("중고나라 크롤링 오류_카테고리");
@@ -70,9 +76,7 @@ class CategoryServiceTest {
     void getPageTest2() {
         HashMap<Long, Product> hashMap = categoryService
                 .getPage(Market.JOONGGONARA, "WOMANCLOTHES", 1);
-
-        // 카테고리에 총 80개 데이터 있어야 함
-        Assertions.assertThat(hashMap.size()).isEqualTo(80);
+        Assertions.assertThat(hashMap.size()).isEqualTo(80); // 카테고리에 총 80개 데이터 있어야 함
     }
 
     /** 번개장터에서 카테고리 불러오기 테스트 **/
@@ -80,7 +84,8 @@ class CategoryServiceTest {
     void getPageTest3() {
         HashMap<Long, Product> page = new HashMap<>();
 
-        String url = "https://m.bunjang.co.kr/categories/310";
+//        String url = "https://m.bunjang.co.kr/categories/310";
+        String url = "https://m.bunjang.co.kr";
         WebDriver webDriver = chromeDriver.setChrome();
 
         try {
@@ -107,7 +112,7 @@ class CategoryServiceTest {
                     int price = Integer.parseInt(price_string);
                     System.out.println("price = " + price);
 
-                    Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, 0, null, null, url);
+                    Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, null, null, url);
                     page.put(id, product);
                 }
             }
@@ -132,17 +137,7 @@ class CategoryServiceTest {
     void getPageTest4(){
         HashMap<Long, Product> hashMap = categoryService
                 .getPage(Market.BUNJANG, "WOMANCLOTHES", 1);
-
-        System.out.println("hashMap.size() = " + hashMap.size());
-
-        for (Long key:hashMap.keySet()){
-            Product p = hashMap.get(key);
-            System.out.println("p.getId() = " + p.getId());
-            System.out.println("p.getName() = " + p.getName());
-        }
-
-        // 여성의류 카테고리에 총 98 개의 데이터 있어야 함
-        Assertions.assertThat(hashMap.size()).isEqualTo(78);
+        Assertions.assertThat(hashMap.size()).isEqualTo(78); // 여성의류 카테고리에 총 98 개의 데이터 있어야 함
     }
 
 }

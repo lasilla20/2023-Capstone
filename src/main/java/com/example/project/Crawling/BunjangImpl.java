@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+
+import static java.sql.Types.NULL;
 
 @Component
 @RequiredArgsConstructor
@@ -19,8 +22,8 @@ public class BunjangImpl implements Bunjang {
 
     /** 번개장터 카테고리 페이지 가져오기 **/
     @Override
-    public HashMap<Long, Product> getPage(String category, int pagenum) {
-        HashMap<Long, Product> page = new HashMap<>();
+    public LinkedHashMap<Long, Product> getPage(String category, int pagenum) {
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
 
         String url = setURL(category, pagenum);
         WebDriver webDriver = chromeDriver.setChrome();
@@ -44,7 +47,7 @@ public class BunjangImpl implements Bunjang {
                             .replaceAll("[^0-9]", "");
                     int price = Integer.parseInt(price_string);
 
-                    Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, 0, null, category, null);
+                    Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, null, category, null);
                     page.put(id, product);
                 }
             }
@@ -59,8 +62,8 @@ public class BunjangImpl implements Bunjang {
 
     /** 번개장터 검색 결과 가져오기 **/
     @Override
-    public HashMap<Long, Product> getSearchResult(String keyword, int pagenum) {
-        HashMap<Long, Product> page = new HashMap<>();
+    public LinkedHashMap<Long, Product> getSearchResult(String keyword, int pagenum) {
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
 
         String url = setURL(pagenum, keyword);
         WebDriver webDriver = chromeDriver.setChrome();
@@ -83,7 +86,7 @@ public class BunjangImpl implements Bunjang {
                         .replaceAll("[^0-9]", "");;
                 int price = Integer.parseInt(price_string);
 
-                Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, 0, null, null, null);
+                Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, null, null, null);
                 page.put(id, product);
             }
             return page;
@@ -112,7 +115,7 @@ public class BunjangImpl implements Bunjang {
             int price = Integer.parseInt(prices.replaceAll("[^0-9]", ""));
             String seller = webDriver.findElement(By.className("ProductSellerstyle__Name-sc-1qnzvgu-7")).getText();
 
-            //TODO 업데이트 시간, Views -> 크롤링 안 됨
+            //TODO 업데이트 시간 -> 크롤링 안 됨
             String views = webDriver.findElement(By.className("ProductSummarystyle__Status-sc-oxz0oy-13"))
                     .getText();
 
@@ -121,9 +124,15 @@ public class BunjangImpl implements Bunjang {
             String detail = webDriver.findElement(By.className("ProductInfostyle__DescriptionContent-sc-ql55c8-3"))
                     .findElement(By.tagName("p")).getText();
 
-            //TODO 카테고리 추가
+            HashMap<Integer, String> categoryset = getCategory();
+            String[] categories = webDriver.findElement(By.cssSelector(".Productsstyle__ProductBottom-sc-13cvfvh-15.ksyzGu div.Productsstyle__ProductInfoContent-sc-13cvfvh-14.lcdoPu div div div.ProductInfostyle__Description-sc-ql55c8-2.hWujk div.ProductInfostyle__DetailInfo-sc-ql55c8-8.UrLSZ div:nth-child(2) div.ProductInfostyle__InfoValue-sc-ql55c8-13.gLVyVQ a"))
+                    .getAttribute("href").split("categories/");
+            String category = null;
+            if(categoryset.containsKey(Integer.parseInt(categories[1].substring(0, 3)))){
+                category = categoryset.get(Integer.parseInt(categories[1].substring(0, 3)));
+            }
 
-            Product product = new Product(id, name, img, price, market, seller, null, 0, heart, detail, null, url);
+            Product product = new Product(id, name, img, price, market, seller, null, heart, detail, category, url);
             return product;
         } catch(Exception e){
             System.out.println("번개장터 크롤링 오류_상품 상세");
@@ -131,6 +140,43 @@ public class BunjangImpl implements Bunjang {
             webDriver.quit();
         }
 
+        return null;
+    }
+
+    /** 번개장터 메인(추천상품) 가져오기 **/
+    @Override
+    public LinkedHashMap<Long, Product> getMainPage() {
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+
+        String url = setURL();
+        WebDriver webDriver = chromeDriver.setChrome();
+
+        try {
+            webDriver.get(url);
+            Thread.sleep(500);
+
+            List<WebElement> webElements = webDriver.findElements(By.className("styled__ProductWrapper-sc-32dn86-1"));
+
+            for(WebElement webElement : webElements){
+                String pid = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
+                Long id = Long.parseLong(pid);
+
+                String name = webElement.findElement(By.className("sc-kasBVs")).getText();
+                String img = webElement.findElement(By.tagName("img")).getAttribute("src");
+
+                String price_string = webElement.findElement(By.className("sc-hgHYgh")).getText()
+                        .replaceAll("[^0-9]", "");
+                int price = Integer.parseInt(price_string);
+
+                Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, null, null, null);
+                page.put(id, product);
+            }
+            return page;
+        } catch(Exception e){
+            System.out.println("번개장터 크롤링 오류_메인화면");
+        } finally {
+            webDriver.quit();
+        }
         return null;
     }
 
@@ -183,6 +229,27 @@ public class BunjangImpl implements Bunjang {
         return categoryid;
     }
 
+    /** 번개장터 카테고리 세팅 2 **/
+    private HashMap<Integer, String> getCategory(){
+        HashMap<Integer, String> category = new HashMap<>();
+        category.put(Bunjang.WOMANCLOTHES, "WOMANCLOTHES");
+        category.put(Bunjang.MANCLOTHES, "MANCLOTHES");
+        category.put(Bunjang.BEAUTY, "BEAUTY");
+        category.put(Bunjang.FURNITURE, "FURNITURE");
+        category.put(Bunjang.FOOD, "FOOD");
+        category.put(Bunjang.KIDS, "KIDS");
+        category.put(Bunjang.PETS, "PETS");
+
+        //TODO 생활(주방+가전)
+        category.put(Bunjang.LIVES1, "LIVES");
+
+        category.put(Bunjang.DIGITAL, "DIGITAL");
+        category.put(Bunjang.SPORTS, "SPORTS");
+        category.put(Bunjang.STATIONERY, "STATIONERY");
+
+        return category;
+    }
+
     /** 크롤링 주소 세팅 **/
     private String setURL(@NotNull String category, @NotNull int pagenum){
         int categoryid = setCategory(category);
@@ -207,5 +274,8 @@ public class BunjangImpl implements Bunjang {
         String url = "https://m.bunjang.co.kr/search/products?order=date&page=" + pagenum + "&q=" + keyword_encoded;
 
         return url;
+    }
+    private String setURL(){
+        return "https://m.bunjang.co.kr";
     }
 }

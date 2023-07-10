@@ -7,9 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.LinkedHashMap;
 
 @Service
-public interface CategoryService {
+public interface MainPageService {
 
-    /** 카테고리별 상품 열람 페이지 가져오기 **/
-    LinkedHashMap<Long, Product> getPage(Market market, String category, int pagenum);
-
+    /** 메인화면에 인기상품 40개 띄우기 **/
+    LinkedHashMap<Long, Product> getPage();
 }

@@ -8,6 +8,7 @@ import com.example.project.Product.Product;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
 public class SearchServiceImpl implements SearchService{
@@ -17,9 +18,9 @@ public class SearchServiceImpl implements SearchService{
     private final Carrot carrot;
 
     @Override
-    public HashMap<Long, Product> getSearchResult(Market market, int pagenum, String keyword) {
+    public LinkedHashMap<Long, Product> getSearchResult(Market market, int pagenum, String keyword) {
 
-        HashMap<Long, Product> page = new HashMap<>();
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
 
         if (market == Market.JOONGGONARA) {
             page = joonggonara.getSearchResult(keyword, pagenum);
@@ -34,4 +35,6 @@ public class SearchServiceImpl implements SearchService{
 
         return null;
     }
+
+    //TODO 한 페이지에 40개씩 자르기
 }

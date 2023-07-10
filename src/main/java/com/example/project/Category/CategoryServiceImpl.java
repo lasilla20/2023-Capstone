@@ -5,7 +5,7 @@ import com.example.project.Crawling.Joonggonara;
 import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import lombok.RequiredArgsConstructor;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
@@ -14,9 +14,9 @@ public class CategoryServiceImpl implements CategoryService {
     private final Bunjang bunjang;
 
     @Override
-    public HashMap<Long, Product> getPage(Market market, String category, int pagenum) {
+    public LinkedHashMap<Long, Product> getPage(Market market, String category, int pagenum) {
 
-        HashMap<Long, Product> page = new HashMap<>();
+        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
 
         if (market == Market.JOONGGONARA) {
             page = joonggonara.getPage(category, pagenum);
@@ -27,4 +27,6 @@ public class CategoryServiceImpl implements CategoryService {
 
         return page;
     }
+
+    //TODO 한 페이지에 40개씩 자르기
 }
