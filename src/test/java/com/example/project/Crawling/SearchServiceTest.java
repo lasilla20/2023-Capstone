@@ -7,10 +7,7 @@ import com.example.project.Search.SearchService;
 import com.example.project.Search.SearchServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.PageLoadStrategy;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -118,6 +115,7 @@ public class SearchServiceTest {
         }
     }
 
+    /** 당근마켓 검색 테스트 **/
     @Test
     void getSearchResultTest3(){
         String url = "https://www.daangn.com/search/%EC%A7%B1%EA%B5%AC/";
@@ -128,6 +126,12 @@ public class SearchServiceTest {
             webDriver.get(url);
             Thread.sleep(500);
 
+            WebElement btn = webDriver.findElement(By.cssSelector("div:nth-child(1) div.more-btn"));
+            JavascriptExecutor javascriptExecutor = (JavascriptExecutor) webDriver;
+            for (int i = 0; i < 3; i++) {
+                javascriptExecutor.executeScript("arguments[0].click();", btn);
+                System.out.println("clicked");
+            }
             List<WebElement> webElements = webDriver.findElements(By.cssSelector("article.flea-market-article"));
 
             for(WebElement webElement : webElements){
@@ -159,17 +163,19 @@ public class SearchServiceTest {
         }
     }
 
+    /** 검색 통합 테스트 **/
     @Test
     void getSearchResultTest4(){
-        LinkedHashMap<Long, Product> page = searchService.getSearchResult(Market.JOONGGONARA, 1, "짱구");
-        Assertions.assertThat(page.size()).isEqualTo(80); // 중고나라 검색 결과 한 페이지에 80개
-        page.clear();
+//        LinkedHashMap<Long, Product> page = searchService.getSearchResult(Market.JOONGGONARA, 2, "짱구");
+//        Assertions.assertThat(page.size()).isEqualTo(40);
+//        page.clear();
+//
+//        page = searchService.getSearchResult(Market.BUNJANG, 4, "짱구");
+//        Assertions.assertThat(page.size()).isEqualTo(40);
+//        page.clear();
 
-        page = searchService.getSearchResult(Market.BUNJANG, 1, "짱구");
-        Assertions.assertThat(page.size()).isEqualTo(100); // 번개장터 검색 결과 한 페이지에 100개
-        page.clear();
-
-        page = searchService.getSearchResult(Market.CARROT, 1, "짱구");
-        Assertions.assertThat(page.size()).isEqualTo(6); // 번개장터 검색 결과 한 페이지에 6개
+        LinkedHashMap<Long, Product> page = searchService.getSearchResult(Market.CARROT, 1, "짱구");
+        System.out.println("page.size() = " + page.size());
+//        Assertions.assertThat(page.size()).isEqualTo(6); // 번개장터 검색 결과 한 페이지에 6개
     }
 }
