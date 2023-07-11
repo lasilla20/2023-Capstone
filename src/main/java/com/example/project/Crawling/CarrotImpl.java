@@ -35,7 +35,7 @@ public class CarrotImpl implements Carrot{
             webDriver.get(url);
             Thread.sleep(500);
 
-            //TODO 페이지 새로고침 어떻게 할지
+            //TODO 더보기 버튼 안 눌리는 거 수정...
 
             List<WebElement> webElements = webDriver.findElements(By.cssSelector("article.flea-market-article"));
 
@@ -56,9 +56,10 @@ public class CarrotImpl implements Carrot{
             return page;
         } catch(Exception e){
             System.out.println("당근마켓 크롤링 오류_검색");
-        } finally {
-            webDriver.quit();
         }
+//        finally {
+//            webDriver.quit();
+//        }
         return null;
     }
 

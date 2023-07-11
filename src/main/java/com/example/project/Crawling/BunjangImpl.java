@@ -116,9 +116,6 @@ public class BunjangImpl implements Bunjang {
             String seller = webDriver.findElement(By.className("ProductSellerstyle__Name-sc-1qnzvgu-7")).getText();
 
             //TODO 업데이트 시간 -> 크롤링 안 됨
-            String views = webDriver.findElement(By.className("ProductSummarystyle__Status-sc-oxz0oy-13"))
-                    .getText();
-
             String hearts = webDriver.findElement(By.className("ProductSummarystyle__StatusValue-sc-oxz0oy-14")).getText();
             int heart = Integer.parseInt(hearts);
             String detail = webDriver.findElement(By.className("ProductInfostyle__DescriptionContent-sc-ql55c8-3"))

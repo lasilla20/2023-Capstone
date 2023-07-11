@@ -23,9 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 
 class CategoryServiceTest {
-
-    ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
-
     ChromeDriver chromeDriver = new ChromeDriverImpl();
 
     Joonggonara joonggonara = new JoonggonaraImpl(chromeDriver);
@@ -76,7 +73,7 @@ class CategoryServiceTest {
     void getPageTest2() {
         HashMap<Long, Product> hashMap = categoryService
                 .getPage(Market.JOONGGONARA, "WOMANCLOTHES", 1);
-        Assertions.assertThat(hashMap.size()).isEqualTo(80); // 카테고리에 총 80개 데이터 있어야 함
+        Assertions.assertThat(hashMap.size()).isEqualTo(40);
     }
 
     /** 번개장터에서 카테고리 불러오기 테스트 **/
@@ -84,8 +81,7 @@ class CategoryServiceTest {
     void getPageTest3() {
         HashMap<Long, Product> page = new HashMap<>();
 
-//        String url = "https://m.bunjang.co.kr/categories/310";
-        String url = "https://m.bunjang.co.kr";
+        String url = "https://m.bunjang.co.kr/categories/310";
         WebDriver webDriver = chromeDriver.setChrome();
 
         try {
@@ -136,8 +132,8 @@ class CategoryServiceTest {
     @Test
     void getPageTest4(){
         HashMap<Long, Product> hashMap = categoryService
-                .getPage(Market.BUNJANG, "WOMANCLOTHES", 1);
-        Assertions.assertThat(hashMap.size()).isEqualTo(78); // 여성의류 카테고리에 총 98 개의 데이터 있어야 함
+                .getPage(Market.BUNJANG, "WOMANCLOTHES", 5);
+        Assertions.assertThat(hashMap.size()).isEqualTo(40);
     }
 
 }

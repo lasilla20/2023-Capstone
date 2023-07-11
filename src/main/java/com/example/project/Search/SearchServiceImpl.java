@@ -6,8 +6,6 @@ import com.example.project.Crawling.Joonggonara;
 import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import lombok.RequiredArgsConstructor;
-
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
@@ -16,25 +14,60 @@ public class SearchServiceImpl implements SearchService{
     private final Joonggonara joonggonara;
     private final Bunjang bunjang;
     private final Carrot carrot;
+    private LinkedHashMap<Long, Product> JGpage = new LinkedHashMap<>();
+    private LinkedHashMap<Long, Product> BJpage = new LinkedHashMap<>();
+    private LinkedHashMap<Long, Product> CRpage = new LinkedHashMap<>();
+    private int JGpagenum = 1;
+    private int BJpagenum = 1;
+    private int CRpagenum = 1;
 
     @Override
     public LinkedHashMap<Long, Product> getSearchResult(Market market, int pagenum, String keyword) {
 
         LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        int i = 0;
 
-        if (market == Market.JOONGGONARA) {
-            page = joonggonara.getSearchResult(keyword, pagenum);
-            return page;
-        } else if (market == Market.BUNJANG) {
-            page = bunjang.getSearchResult(keyword, pagenum);
-            return page;
-        } else if (market == Market.CARROT) {
-            page = carrot.getSearchResult(keyword, pagenum);
-            return page;
+        while(true) {
+            if (market == Market.JOONGGONARA) {
+                if (JGpage.size() < pagenum * 40) JGpage.putAll(joonggonara.getSearchResult(keyword, JGpagenum++));
+                else {
+                    for (Long key : JGpage.keySet()) {
+                        if ((i > ((pagenum - 1) * 40 - 1)) && (i < pagenum * 40)) page.put(key, JGpage.get(key));
+                        else if (i == pagenum * 40) break;
+                        i++;
+                    }
+                    return page;
+                }
+            } else if (market == Market.BUNJANG) {
+                if (BJpage.size() < pagenum * 40) BJpage.putAll(bunjang.getSearchResult(keyword, BJpagenum++));
+                else {
+                    for (Long key : BJpage.keySet()) {
+                        if ((i > ((pagenum - 1) * 40 - 1)) && (i < pagenum * 40)) page.put(key, BJpage.get(key));
+                        else if (i == pagenum * 40) break;
+                        i++;
+                    }
+                    return page;
+                }
+            } else if (market == Market.CARROT) {
+                if (CRpage.size() < pagenum * 40) {
+                    CRpage.putAll(carrot.getSearchResult(keyword, CRpagenum++));
+                    //TODO 당근 수정되면 여기도 수정
+                }
+                else {
+                    for (Long key : CRpage.keySet()) {
+                        if ((i > ((pagenum - 1) * 40 - 1)) && (i < pagenum * 40)) page.put(key, CRpage.get(key));
+                        else if (i == pagenum * 40) break;
+                        i++;
+                    }
+                    return page;
+                }
+            } else {
+                System.out.println("마켓 값 잘못됨");
+                return null;
+            }
         }
-
-        return null;
     }
 
-    //TODO 한 페이지에 40개씩 자르기
-}
+    private void clear(){
+        //TODO 만일 속도나 메모리 이슈 생기면 i 전역변수로 빼고 초기화 함수 세팅하기 (테스트 결과 한 번에 100페이지까지 불러오는 데 최소 1분 걸림...)
+    }}
