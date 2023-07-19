@@ -1,0 +1,129 @@
+.div14,
+.group,
+.planet {
+  position: absolute;
+}
+
+.group {
+  top: 191px;
+  left: 80px;
+  width: 545px;
+  height: 360px;
+  font-size: var(--font-size-xl);
+  font-family: Noto Sans KR;
+}
+.planet {
+  top: -5px;
+  left: 0;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+}
+.planetIcon,
+.planetParent {
+  position: absolute;
+  /*height: 49.14px;*/
+}
+.planetIcon {
+  top: 0;
+  left: 132px;
+  width: 49.14px;
+  overflow: hidden;
+}
+.planetParent {
+  top: 5px;
+  left: 0;
+  width: 181.14px;
+}
+.basketAlt3Icon,
+.userCicrleDuotoneIcon {
+  position: absolute;
+  top: 8px;
+  left: 1006px;
+  width: 42px;
+  height: 42px;
+}
+.userCicrleDuotoneIcon {
+  left: 1078px;
+}
+
+.line,
+.groupItem {
+  position: absolute;
+  box-sizing: border-box;
+}
+.line {
+  top: 15.5px;
+  left: 1061.5px;
+  border-right: 1px solid var(--color-gainsboro);
+  width: 1px;
+  height: 27px;
+  background: #dbdbdb;
+}
+.groupItem {
+  width: 549px;
+  height: 58px;
+  flex-shrink: 0;
+  top: 0;
+  left: 285px;
+
+  background-color: var(--color-white);
+
+  border-radius: 90px;
+  border: 3px solid #5d1fc2;
+  background: #fff;
+}
+.div16,
+.searchAltIcon {
+  position: absolute;
+  top: 18px;
+  left: 317.42px;
+  width: 21.94px;
+  height: 21.94px;
+  border: none;
+  background-color: white;
+}
+.div16 {
+  top: 21px;
+  left: 357px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Noto Sans KR";
+  color: #999;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  width: 200px;
+  height: 16px;
+}
+.groupParent {
+  position: absolute;
+  top: 68px;
+  left: 80px;
+  width: 1120px;
+  height: 58px;
+  text-align: center;
+  font-size: var(--font-size-5xl);
+  color: var(--color-blueviolet-100);
+  font-family: var(--font-notoseriftamilslanted);
+}
+
+.pannel {
+  position: relative;
+  top: 100px;
+  left: 80px;
+  width: 20000px;
+  height: 80px;
+
+  padding: 20px;
+}
+
+.prod {
+  width: 100px;
+  height: 10px;
+  font-size: 16px;
+  color: black;
+  border: 2px solid black;
+}

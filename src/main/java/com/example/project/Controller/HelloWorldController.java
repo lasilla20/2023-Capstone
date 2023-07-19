@@ -22,7 +22,7 @@ public class HelloWorldController {
         return "Hello, world!";
     }
 
-    @GetMapping("/loginForm")
+    @GetMapping("/Login")
     public String login(){
         return "login";
     }

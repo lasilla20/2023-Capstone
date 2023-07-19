@@ -128,6 +128,7 @@ public class SearchServiceTest {
 
             WebElement btn = webDriver.findElement(By.cssSelector("div:nth-child(1) div.more-btn"));
             JavascriptExecutor javascriptExecutor = (JavascriptExecutor) webDriver;
+            javascriptExecutor.executeScript("console.log(arg);", btn);
             for (int i = 0; i < 3; i++) {
                 javascriptExecutor.executeScript("arguments[0].click();", btn);
                 System.out.println("clicked");

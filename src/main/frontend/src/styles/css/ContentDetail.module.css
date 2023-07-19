@@ -1,0 +1,475 @@
+.divcategory {
+  display: inline-block;
+  position: relative;
+  top: 130px;
+  left: 100px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.divcontent {
+  display: inline-block;
+  position: relative;
+  top: 140px;
+  width: 100%;
+  /*left: 80px;*/
+}
+
+.divsidebar {
+  position: fixed;
+  display: inline-block;
+  top: 24%;
+  right: 10px;
+  /*left: 1086px;*/
+  width: 10%;
+}
+
+.title,
+.price,
+.icon {
+  position: absolute;
+}
+.icon {
+  top: 829px;
+  left: calc(50% - 226px);
+  width: 453px;
+  height: 299px;
+}
+.title,
+.price {
+  font-size: 24px;
+  color: var(--color-gray-200);
+  width: 312px;
+}
+.title {
+  top: 34px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
+.price {
+  top: 149px;
+  left: 1px;
+  height: 31px;
+}
+.price,
+.category,
+.name,
+.date,
+.views {
+  display: flex;
+  align-items: center;
+}
+.category {
+  position: absolute;
+  top: 0;
+  left: 1px;
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  width: 408px;
+  height: 22px;
+}
+.name,
+.date,
+.views {
+  height: 20px;
+}
+.name {
+  position: absolute;
+  top: 76px;
+  left: 1px;
+
+  font-weight: 500;
+  width: 130px;
+
+  color: #767676;
+  font-size: 16px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.date,
+.views {
+  top: 104px;
+}
+.date {
+  position: absolute;
+  left: 1px;
+  width: 80px;
+
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #767676;
+  font-size: 14px;
+  font-family: Noto Sans KR;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.views {
+  left: 93px;
+  width: 75px;
+
+  color: #767676;
+  font-size: 14px;
+  font-family: Noto Sans KR;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.views,
+.heart,
+.parent {
+  position: absolute;
+}
+.heart {
+  top: 104px;
+  left: 181px;
+  display: flex;
+  align-items: center;
+  width: 52px;
+  height: 20px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+
+  color: #767676;
+  font-size: 14px;
+  font-family: Noto Sans KR;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.parent {
+  top: 191px;
+  left: 655px;
+  width: 409px;
+  height: 180px;
+  font-size: var(--font-size-sm);
+}
+
+.child,
+.icon1,
+.icon2,
+.icon3,
+.icon4 {
+  position: absolute;
+  top: 67px;
+  left: 20px;
+  width: 74px;
+  height: 49px;
+}
+.child,
+.icon2,
+.icon3,
+.icon4 {
+  top: 340px;
+}
+.child,
+.icon3,
+.icon4 {
+  top: 251px;
+}
+.child,
+.icon4 {
+  top: 517px;
+  height: 50px;
+}
+.child {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  border-radius: 5px;
+  border: 3px solid #606cd6;
+  background: #fff;
+  box-sizing: border-box;
+}
+.btn_golink {
+  top: 472px;
+  left: 799px;
+  width: 201px;
+  height: 54px;
+  cursor: pointer;
+}
+.btn_golink,
+.div7,
+.div8 {
+  position: absolute;
+}
+.div7 {
+  top: 14px;
+  left: 34px;
+  font-weight: 500;
+
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 134px;
+  height: 27px;
+
+  color: #606cd6;
+  font-size: 16px;
+  font-family: Noto Sans KR;
+  cursor: pointer;
+}
+.div8 {
+  top: 735px;
+  left: 414px;
+  color: var(--color-gray-200);
+  display: inline-block;
+  width: 453px;
+  height: 46px;
+}
+.p {
+  margin: 0;
+}
+.div9 {
+  position: absolute;
+  top: 1191px;
+  left: 422px;
+  color: var(--color-gray-200);
+  display: inline-block;
+  width: 445px;
+  height: 121px;
+}
+
+.line {
+  position: absolute;
+  top: 668px;
+  left: 194px;
+  width: 862px;
+  height: 2px;
+  background: #dbdbdb;
+}
+.icon5 {
+  top: 0;
+  left: 0;
+  width: 545px;
+  height: 360px;
+}
+.div13,
+.icon5,
+.inner {
+  position: absolute;
+}
+.inner {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 50%;
+  background-color: var(--color-gray-300);
+}
+.div13 {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  top: 16%;
+  left: 24%;
+  display: flex;
+  align-items: center;
+}
+.div12,
+.div15 {
+  position: absolute;
+  top: 322px;
+  left: 505px;
+  width: 25px;
+  height: 25px;
+}
+.div15 {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  top: 16%;
+  left: 20%;
+  display: flex;
+  align-items: center;
+}
+.div14 {
+  top: 322px;
+  left: 465px;
+  width: 25px;
+  height: 25px;
+}
+.div14,
+.group,
+.planet {
+  position: absolute;
+}
+.group {
+  top: 191px;
+  left: 80px;
+  width: 545px;
+  height: 360px;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-inter);
+}
+
+.btn_unheartChild {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  border-radius: 5px;
+  border: 3px solid #5d1fc2;
+  background: #fff;
+
+  box-sizing: border-box;
+}
+.div17 {
+  position: absolute;
+  height: 50%;
+  width: 45.13%;
+  top: 25.93%;
+  left: 26.55%;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #5d1fc2;
+  text-align: center;
+  font-size: 16px;
+
+  font-family: Noto Sans KR;
+}
+
+.div177 {
+  position: absolute;
+  height: 50%;
+  width: 45.13%;
+  top: 25.93%;
+  left: 26.55%;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+
+  font-family: Noto Sans KR;
+}
+.btn_unheart {
+  position: absolute;
+  top: 472px;
+  left: 656px;
+  width: 113px;
+  height: 54px;
+  cursor: pointer;
+
+  border-radius: 5px;
+  border: 3px solid #5d1fc2;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.btn_heart {
+  position: absolute;
+  top: 472px;
+  left: 656px;
+  width: 113px;
+  height: 54px;
+  color: var(--color-white);
+  cursor: pointer;
+  border-radius: 5px;
+  border: 3px solid #5d1fc2;
+  background: #5d1fc2;
+  box-sizing: border-box;
+}
+
+.btn_heartChild {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 5px;
+  border: 3px solid #5d1fc2;
+  background: #5d1fc2;
+  box-sizing: border-box;
+}
+
+.div20,
+.icon6 {
+  position: absolute;
+  top: 0;
+}
+.div20 {
+  left: 35px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  width: 56px;
+  height: 20px;
+
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+
+  color: #767676;
+  font-size: 14px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.icon6 {
+  height: 100%;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  object-fit: cover;
+}
+.container,
+.div21 {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 23px;
+  height: 18px;
+}
+.container {
+  top: 568px;
+  left: 80px;
+  width: 91px;
+  height: 21px;
+  font-size: var(--font-size-sm);
+}
+.div {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 1510px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-base);
+  color: var(--color-gray-100);
+  font-family: var(--font-noto-sans-kr);
+}

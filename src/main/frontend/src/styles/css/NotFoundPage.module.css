@@ -1,0 +1,36 @@
+.span {
+  color: #5d1fc2;
+  font-family: "Noto Sans KR";
+}
+.span1 {
+  color: #191919;
+  font-family: "Noto Sans KR";
+}
+.div1,
+.div2 {
+  position: absolute;
+  font-family: "Noto Sans KR";
+}
+.div1 {
+  top: calc(50% - 52px);
+  left: calc(50% - 311px);
+  font-weight: 900;
+}
+.div2 {
+  top: 369px;
+  left: calc(50% - 188px);
+  font-weight: 500;
+  color: #767676;
+  text-align: center;
+  font-size: 24px;
+}
+.div {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 720px;
+  text-align: center;
+  font-size: 36px;
+  color: var(--color-gray-200);
+  font-family: "Noto Sans KR";
+}
