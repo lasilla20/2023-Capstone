@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 @Controller
-@RequestMapping("/main")
+@RequestMapping("/")
 public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
     private CategoryService categoryService;
