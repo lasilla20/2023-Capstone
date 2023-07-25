@@ -1,6 +1,7 @@
 package com.example.project.Controller;
 
 import com.example.project.Category.CategoryService;
+import com.example.project.Category.CategoryServiceImpl;
 import com.example.project.Heart.Heart;
 import com.example.project.Heart.HeartService;
 import com.example.project.Heart.HeartServiceImpl;
@@ -10,6 +11,7 @@ import com.example.project.Product.ProductService;
 import com.example.project.Search.SearchService;
 import com.example.project.config.auth.PrincipalDetails;
 import com.example.project.domain.user.User;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,11 +21,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Random;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/")
 public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
-    private CategoryService categoryService;
+    private final CategoryServiceImpl categoryService;
     private ProductService productService;
     private SearchService searchService;
     private HeartService heartService;
