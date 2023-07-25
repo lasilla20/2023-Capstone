@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 public interface HeartService {
 
-    public void addHeart(Long itemId, Market market);
-    public void deleteHeart(Long itemId, Market market);
-    public String getHeartLink(Long itemId, Market market);
-    public Heart getHeartList(Long userId);
+    public void addHeart(String itemId, Market market);
+    public void deleteHeart(String itemId, Market market);
+    public String getHeartLink(String itemId, Market market);
+    public Heart getHeartList(String userId);
 }

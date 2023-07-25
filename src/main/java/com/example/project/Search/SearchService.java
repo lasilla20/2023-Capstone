@@ -10,6 +10,6 @@ import java.util.LinkedHashMap;
 public interface SearchService {
 
     /** 검색 결과 페이지 가져오기 **/
-    LinkedHashMap<Long, Product> getSearchResult(Market market, int pagenum, String keyword);
+    LinkedHashMap<String, Product> getSearchResult(Market market, int pagenum, String keyword);
 
 }

@@ -23,12 +23,14 @@ public class CarrotImpl implements Carrot{
 
     private final ChromeDriver chromeDriver;
 
-    /** 당근마켓 검색 결과 가져오기 **/
+    /**
+     * 당근마켓 검색 결과 가져오기
+     **/
     @Override
-    public LinkedHashMap<Long, Product> getSearchResult(String keyword, int pagenum) {
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+    public LinkedHashMap<String, Product> getSearchResult(String keyword, int pagenum) {
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
-        String url = setURL(keyword);
+        String url = setSURL(keyword);
         WebDriver webDriver = chromeDriver.setChrome();
 
         try {
@@ -41,7 +43,7 @@ public class CarrotImpl implements Carrot{
 
             for(WebElement webElement : webElements){
                 String[] pid = webElement.findElement(By.tagName("a")).getAttribute("href").split("s/");
-                Long id = Long.parseLong(pid[1]);
+                String id = pid[1];
 
                 String name = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("alt");
                 String img = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("src");
@@ -65,7 +67,7 @@ public class CarrotImpl implements Carrot{
 
     /** 당근마켓 상품 상세 가져오기 **/
     @Override
-    public Product getProduct(Long id, Market market) {
+    public Product getProduct(String id, Market market) {
         String url = setURL(id);
 
         try {
@@ -98,10 +100,12 @@ public class CarrotImpl implements Carrot{
         return null;
     }
 
-    /** 당근마켓 메인(추천상품) 가져오기 **/
+    /**
+     * 당근마켓 메인(추천상품) 가져오기
+     **/
     @Override
-    public LinkedHashMap<Long, Product> getMainPage() {
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+    public LinkedHashMap<String, Product> getMainPage() {
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
         String url = "https://www.daangn.com/hot_articles";
         WebDriver webDriver = chromeDriver.setChrome();
@@ -113,8 +117,8 @@ public class CarrotImpl implements Carrot{
             List<WebElement> webElements = webDriver.findElements(By.cssSelector("article.card-top"));
 
             for (WebElement webElement : webElements) {
-                String pid = webElement.findElement(By.cssSelector("a")).getAttribute("data-event-label");
-                Long id = Long.parseLong(pid);
+                String id = webElement.findElement(By.cssSelector("a")).getAttribute("data-event-label");
+
 
                 String name = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("alt");
                 String img = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("src");
@@ -132,18 +136,19 @@ public class CarrotImpl implements Carrot{
             return page;
         } catch (Exception e) {
             System.out.println("당근마켓 크롤링 오류_메인화면");
-        } finally {
-            webDriver.quit();
         }
+//        } finally {
+//            webDriver.quit();
+//        }
         return null;
     }
 
-    private String setURL(Long id){
+    private String setURL(String id){
         String url = "https://www.daangn.com/articles/" + id;
 
         return url;
     }
-    private String setURL(@NotNull String keyword){
+    private String setSURL(@NotNull String keyword){
         String keyword_encoded = "\0";
 
         try{

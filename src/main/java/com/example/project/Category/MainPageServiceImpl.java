@@ -5,21 +5,25 @@ import com.example.project.Crawling.Carrot;
 import com.example.project.Crawling.Joonggonara;
 import com.example.project.Product.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
+@Component
 public class MainPageServiceImpl implements MainPageService{
 
     private final Joonggonara joonggonara;
     private final Bunjang bunjang;
     private final Carrot carrot;
 
-    /** 메인화면에 인기상품 40개 띄우기 **/
+    /**
+     * 메인화면에 인기상품 40개 띄우기
+     **/
     @Override
-    public LinkedHashMap<Long, Product> getPage() {
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
-        LinkedHashMap<Long, Product> crawlingpage = new LinkedHashMap<>();
+    public LinkedHashMap<String, Product> getPage() {
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
+        LinkedHashMap<String, Product> crawlingpage = new LinkedHashMap<>();
         int i = 0;
 
         // 중고나라
@@ -29,8 +33,8 @@ public class MainPageServiceImpl implements MainPageService{
 
         // 번개장터
         crawlingpage = bunjang.getMainPage();
-        for(Long l:crawlingpage.keySet()){
-            page.put(l, crawlingpage.get(l));
+        for(String s:crawlingpage.keySet()){
+            page.put(s, crawlingpage.get(s));
             if(++i == 13) break;
         }
         crawlingpage.clear();
@@ -38,8 +42,8 @@ public class MainPageServiceImpl implements MainPageService{
 
         // 당근마켓
         crawlingpage = carrot.getMainPage();
-        for(Long l:crawlingpage.keySet()){
-            page.put(l, crawlingpage.get(l));
+        for(String s:crawlingpage.keySet()){
+            page.put(s, crawlingpage.get(s));
             if(++i == 17) break;
         }
 

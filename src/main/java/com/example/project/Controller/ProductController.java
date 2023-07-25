@@ -19,8 +19,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
-@RequestMapping(value = "/product")
+@RequestMapping(value = "/api/product")
 @RequiredArgsConstructor
 public class ProductController {
     ChromeDriver chromeDriver = new ChromeDriverImpl();
@@ -33,7 +35,7 @@ public class ProductController {
     private HeartService heartService;
 
     /** 더미데이터 **/
-    Product product = new Product(119272335L, "item","image_url",
+    Product product = new Product("119272335", "item","image_url",
             10000, Market.JOONGGONARA,"seller","2023-07-14",0,"details","category","https://web.joongna.com/product/119272335");
 
     /** String -> Market **/
@@ -51,10 +53,13 @@ public class ProductController {
 
     /** 상품 상세 페이지 **/
     @GetMapping("/{itemId}/{market}")
-    public Product getProductId(@PathVariable("itemId")String itemId, @PathVariable("market")String market, Model model) {
+    public Product getProductId(@PathVariable("itemId")String itemId, @PathVariable("market")String market, Model model, HttpServletRequest request) {
 //        long item = Long.parseLong(itemId);
 //        Market m = parseMarket(market);
 //        Product product = productService.getProduct(item, m);
+        String requestURL = request.getRequestURL().toString();
+        System.out.println("requestURL = " + requestURL);
+
         return product;
     }
 
@@ -76,7 +81,8 @@ public class ProductController {
         User user = principalDetails.getUser();
         //Heart heart = user.getHeart();
         //heartService = new HeartServiceImpl(heart, productService, principalDetails);
-        heartService.addHeart(item, m);
+        //TODO 아래 item pid 타입 String으로 수정해 주세요
+//        heartService.addHeart(item, m);
         return "선택한 상품이 추가되었습니다.";
     }
 
@@ -88,7 +94,8 @@ public class ProductController {
         User user = principalDetails.getUser();
         //Heart heart = user.getHeart();
         //heartService = new HeartServiceImpl(heart, productService, principalDetails);
-        heartService.deleteHeart(item, m);
+        //TODO 아래 item pid 타입 String으로 수정해 주세요
+//        heartService.deleteHeart(item, m);
         return "선택한 상품이 제거되었습니다.";
     }
 }
