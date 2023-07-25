@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RequiredArgsConstructor
 @Controller
 public class HelloWorldController {
@@ -22,8 +24,11 @@ public class HelloWorldController {
         return "Hello, world!";
     }
 
-    @GetMapping("/Login")
-    public String login(){
+    @GetMapping("/api/Login")
+    public String login(HttpServletRequest request){
+        String requestURL = request.getRequestURL().toString();
+        System.out.println("requestURL = " + requestURL);
+
         return "login";
     }
 

@@ -12,18 +12,18 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import static java.sql.Types.NULL;
-
 @Component
 @RequiredArgsConstructor
 public class BunjangImpl implements Bunjang {
 
     private final ChromeDriver chromeDriver;
 
-    /** 번개장터 카테고리 페이지 가져오기 **/
+    /**
+     * 번개장터 카테고리 페이지 가져오기
+     **/
     @Override
-    public LinkedHashMap<Long, Product> getPage(String category, int pagenum) {
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+    public LinkedHashMap<String, Product> getPage(String category, int pagenum) {
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
         String url = setURL(category, pagenum);
         WebDriver webDriver = chromeDriver.setChrome();
@@ -37,8 +37,7 @@ public class BunjangImpl implements Bunjang {
             for(WebElement webElement : webElements){
                 String ad = webElement.findElement(By.cssSelector("a div.sc-iGPElx div.sc-gtfDJT div.sc-fOICqy")).getText();
                 if(!ad.equals("AD")) {
-                    String pid = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
-                    Long id = Long.parseLong(pid);
+                    String id = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
 
                     String name = webElement.findElement(By.className("sc-kasBVs")).getText();
                     String img = webElement.findElement(By.tagName("img")).getAttribute("src");
@@ -52,18 +51,21 @@ public class BunjangImpl implements Bunjang {
                 }
             }
             return page;
-        } catch(Exception e){
+        } catch(Exception e) {
             System.out.println("번개장터 크롤링 오류_카테고리");
-        } finally {
-            webDriver.quit();
         }
+//        } finally {
+//            webDriver.quit();
+//        }
         return null;
     }
 
-    /** 번개장터 검색 결과 가져오기 **/
+    /**
+     * 번개장터 검색 결과 가져오기
+     **/
     @Override
-    public LinkedHashMap<Long, Product> getSearchResult(String keyword, int pagenum) {
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+    public LinkedHashMap<String, Product> getSearchResult(String keyword, int pagenum) {
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
         String url = setURL(pagenum, keyword);
         WebDriver webDriver = chromeDriver.setChrome();
@@ -75,8 +77,7 @@ public class BunjangImpl implements Bunjang {
             List<WebElement> webElements = webDriver.findElements(By.className("sc-kcDeIU"));
 
             for(WebElement webElement : webElements){
-                String pid = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
-                Long id = Long.parseLong(pid);
+                String id = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
 
                 String name = webElement.findElement(By.cssSelector("a div.sc-eInJlc div.sc-gtfDJT")).getText();
 
@@ -90,17 +91,18 @@ public class BunjangImpl implements Bunjang {
                 page.put(id, product);
             }
             return page;
-        } catch(Exception e){
+        } catch(Exception e) {
             System.out.println("번개장터 크롤링 오류_검색");
-        } finally {
-            webDriver.quit();
         }
+//        } finally {
+//            webDriver.quit();
+//        }
         return null;
     }
 
     /** 번개장터 상품 상세 가져오기 **/
     @Override
-    public Product getProduct(Long id, Market market) {
+    public Product getProduct(String id, Market market) {
         String url = setURL(id);
         WebDriver webDriver = chromeDriver.setChrome();
 
@@ -131,19 +133,22 @@ public class BunjangImpl implements Bunjang {
 
             Product product = new Product(id, name, img, price, market, seller, null, heart, detail, category, url);
             return product;
-        } catch(Exception e){
+        } catch(Exception e) {
             System.out.println("번개장터 크롤링 오류_상품 상세");
-        } finally {
-            webDriver.quit();
         }
+//        } finally {
+//            webDriver.quit();
+//        }
 
         return null;
     }
 
-    /** 번개장터 메인(추천상품) 가져오기 **/
+    /**
+     * 번개장터 메인(추천상품) 가져오기
+     **/
     @Override
-    public LinkedHashMap<Long, Product> getMainPage() {
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+    public LinkedHashMap<String, Product> getMainPage() {
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
         String url = setURL();
         WebDriver webDriver = chromeDriver.setChrome();
@@ -155,8 +160,7 @@ public class BunjangImpl implements Bunjang {
             List<WebElement> webElements = webDriver.findElements(By.className("styled__ProductWrapper-sc-32dn86-1"));
 
             for(WebElement webElement : webElements){
-                String pid = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
-                Long id = Long.parseLong(pid);
+                String id = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
 
                 String name = webElement.findElement(By.className("sc-kasBVs")).getText();
                 String img = webElement.findElement(By.tagName("img")).getAttribute("src");
@@ -169,11 +173,12 @@ public class BunjangImpl implements Bunjang {
                 page.put(id, product);
             }
             return page;
-        } catch(Exception e){
+        } catch(Exception e) {
             System.out.println("번개장터 크롤링 오류_메인화면");
-        } finally {
-            webDriver.quit();
         }
+//        } finally {
+//            webDriver.quit();
+//        }
         return null;
     }
 
@@ -254,7 +259,7 @@ public class BunjangImpl implements Bunjang {
 
         return url;
     }
-    private String setURL(@NotNull Long id){
+    private String setURL(@NotNull String id){
         String url = "https://m.bunjang.co.kr/products/" + id;
 
         return url;

@@ -28,7 +28,7 @@ public class HeartServiceImpl implements HeartService {
     }
 
     @Override
-    public void addHeart(Long itemId, Market market) {
+    public void addHeart(String itemId, Market market) {
         Product product = productService.getProduct(itemId, market);
         if(product.getHearts()==0){
             List<Product> heartList = heart.getHeartList();
@@ -38,7 +38,7 @@ public class HeartServiceImpl implements HeartService {
     }
 
     @Override
-    public void deleteHeart(Long itemId, Market market) {
+    public void deleteHeart(String itemId, Market market) {
         Product product = productService.getProduct(itemId, market);
         if(product.getHearts()==1){
             List<Product> heartList = heart.getHeartList();
@@ -48,13 +48,13 @@ public class HeartServiceImpl implements HeartService {
     }
 
     @Override
-    public String getHeartLink(Long itemId, Market market) {
+    public String getHeartLink(String itemId, Market market) {
         Product product = productService.getProduct(itemId, market);
         return product.getProducturl();
     }
 
     @Override
-    public Heart getHeartList(Long userId) {
+    public Heart getHeartList(String userId) {
         User user = principalDetails.getUser();
         //return user.getHeartList();
         //TODO : user에 저장된 찜목록 불러오기

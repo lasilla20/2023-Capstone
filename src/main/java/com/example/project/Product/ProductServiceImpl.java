@@ -15,7 +15,7 @@ public class ProductServiceImpl implements ProductService{
     private final Carrot carrot;
 
     @Override
-    public Product getProduct(Long id, Market market) {
+    public Product getProduct(String id, Market market) {
 
         if (market == Market.JOONGGONARA) {
             Product product = joonggonara.getProduct(id, market);

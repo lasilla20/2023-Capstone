@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 public interface ProductService {
 
     /** 상품 상세 정보 가져오기 **/
-    Product getProduct(Long id, Market market);
+    Product getProduct(String id, Market market);
 
 }

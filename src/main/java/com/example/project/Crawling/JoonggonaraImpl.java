@@ -24,11 +24,13 @@ public class JoonggonaraImpl implements Joonggonara{
 
     private final ChromeDriver chromeDriver;
 
-    /** 중고나라 카테고리 페이지 가져오기 **/
+    /**
+     * 중고나라 카테고리 페이지 가져오기
+     **/
     @Override
-    public LinkedHashMap<Long, Product> getPage(String category, int pagenum) {
+    public LinkedHashMap<String, Product> getPage(String category, int pagenum) {
         String url = setURL(category, pagenum);
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
         try {
             Document doc = Jsoup.connect(url).get();
@@ -39,7 +41,7 @@ public class JoonggonaraImpl implements Joonggonara{
 
             for (int i = 0; i < imgs.size(); i++){
                 String[] id_string = ids.get(i).attr("href").split("/");
-                Long id = Long.parseLong(id_string[2]);
+                String id = id_string[2];
 
                 String name = imgs.get(i).attr("alt");
                 String img = imgs.get(i).attr("src");
@@ -57,11 +59,13 @@ public class JoonggonaraImpl implements Joonggonara{
         return null;
     }
 
-    /** 중고나라 검색 결과 가져오기 **/
+    /**
+     * 중고나라 검색 결과 가져오기
+     **/
     @Override
-    public LinkedHashMap<Long, Product> getSearchResult(String keyword, int pagenum) {
+    public LinkedHashMap<String, Product> getSearchResult(String keyword, int pagenum) {
         String url = setURL(pagenum, keyword);
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
         WebDriver webDriver = chromeDriver.setChrome();
 
         try {
@@ -74,7 +78,7 @@ public class JoonggonaraImpl implements Joonggonara{
                 String ad = webElement.findElement(By.cssSelector(".w-full.overflow-hidden div.my-1 span:nth-child(3)")).getText();
                 if(!ad.equals("광고")){
                     String[] pid = webElement.getAttribute("href").split("t/");
-                    Long id = Long.parseLong(pid[1]);
+                    String id = pid[1];
 
                     String name = webElement.getAttribute("title");
 
@@ -100,7 +104,7 @@ public class JoonggonaraImpl implements Joonggonara{
 
     /** 중고나라 상품 상세 가져오기 **/
     @Override
-    public Product getProduct(Long id, Market market) {
+    public Product getProduct(String id, Market market) {
         String url = setURL(id);
         WebDriver webDriver = chromeDriver.setChrome();
 
@@ -148,11 +152,13 @@ public class JoonggonaraImpl implements Joonggonara{
         return null;
     }
 
-    /** 중고나라 메인(추천상품) 가져오기 **/
+    /**
+     * 중고나라 메인(추천상품) 가져오기
+     **/
     @Override
-    public LinkedHashMap<Long, Product> getMainPage() {
+    public LinkedHashMap<String, Product> getMainPage() {
         String url = setURL();
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
         try {
             Document doc = Jsoup.connect(url).get();
@@ -163,7 +169,7 @@ public class JoonggonaraImpl implements Joonggonara{
 
             for (int i = 0; i < 10; i++){
                 String[] id_string = ids.get(i).attr("href").split("/");
-                Long id = Long.parseLong(id_string[2]);
+                String id = id_string[2];
 
                 String name = imgs.get(i).attr("alt");
                 String img = imgs.get(i).attr("src");
@@ -258,8 +264,8 @@ public class JoonggonaraImpl implements Joonggonara{
 
         return url;
     }
-    private String setURL(@NotNull Long id){
-        String url = "https://web.joongna.com/product/" + Long.toString(id);
+    private String setURL(@NotNull String id){
+        String url = "https://web.joongna.com/product/" +id;
 
         return url;
     }

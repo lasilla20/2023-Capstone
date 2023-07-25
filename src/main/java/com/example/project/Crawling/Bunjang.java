@@ -24,15 +24,21 @@ public interface Bunjang {
     int STATIONERY = 900; // 도서, 음반, 문구
     int MAIN = 0; // 메인화면
 
-    /** 번개장터 카테고리 페이지 가져오기 **/
-    public LinkedHashMap<Long, Product> getPage(String category, int pagenum);
+    /**
+     * 번개장터 카테고리 페이지 가져오기
+     **/
+    public LinkedHashMap<String, Product> getPage(String category, int pagenum);
 
-    /** 번개장터 검색 결과 가져오기 **/
-    public LinkedHashMap<Long, Product> getSearchResult(String keyword, int pagenum);
+    /**
+     * 번개장터 검색 결과 가져오기
+     **/
+    public LinkedHashMap<String, Product> getSearchResult(String keyword, int pagenum);
 
     /** 번개장터 상품 상세 가져오기 **/
-    public Product getProduct(Long id, Market market);
+    public Product getProduct(String id, Market market);
 
-    /** 번개장터 메인(추천상품) 가져오기 **/
-    public LinkedHashMap<Long, Product> getMainPage();
+    /**
+     * 번개장터 메인(추천상품) 가져오기
+     **/
+    public LinkedHashMap<String, Product> getMainPage();
 }

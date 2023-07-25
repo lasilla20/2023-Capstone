@@ -10,6 +10,6 @@ import java.util.LinkedHashMap;
 public interface CategoryService {
 
     /** 카테고리별 상품 열람 페이지 가져오기 **/
-    LinkedHashMap<Long, Product> getPage(Market market, String category, int pagenum);
+    LinkedHashMap<String, Product> getPage(Market market, String category, int pagenum);
 
 }

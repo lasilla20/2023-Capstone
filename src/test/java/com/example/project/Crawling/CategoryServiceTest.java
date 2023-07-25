@@ -136,4 +136,10 @@ class CategoryServiceTest {
         Assertions.assertThat(hashMap.size()).isEqualTo(40);
     }
 
+    @Test
+    void getPageTest5(){
+        HashMap<Long, Product> bunjang = categoryService.getPage(Market.BUNJANG, "WOMANCLOTHES", 2);
+        HashMap<Long, Product> joonggo = categoryService.getPage(Market.JOONGGONARA, "WOMANCLOTHES", 4);
+    }
+
 }

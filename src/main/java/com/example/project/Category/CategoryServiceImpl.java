@@ -5,29 +5,34 @@ import com.example.project.Crawling.Joonggonara;
 import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
+@Service
+@Component
 public class CategoryServiceImpl implements CategoryService {
 
     private final Joonggonara joonggonara;
     private final Bunjang bunjang;
-    private LinkedHashMap<Long, Product> JGpage = new LinkedHashMap<>();
-    private LinkedHashMap<Long, Product> BJpage = new LinkedHashMap<>();
+    private LinkedHashMap<String, Product> JGpage = new LinkedHashMap<>();
+    private LinkedHashMap<String, Product> BJpage = new LinkedHashMap<>();
     private int JGpagenum = 1;
     private int BJpagenum = 1;
 
     @Override
-    public LinkedHashMap<Long, Product> getPage(Market market, String category, int pagenum) {
+    public LinkedHashMap<String, Product> getPage(Market market, String category, int pagenum) {
 
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
         int i = 0;
 
         while(true) {
             if (market == Market.JOONGGONARA) {
                 if (JGpage.size() < pagenum * 40) JGpage.putAll(joonggonara.getPage(category, JGpagenum++));
                 else {
-                    for (Long key : JGpage.keySet()) {
+                    for (String key : JGpage.keySet()) {
                         if ((i > ((pagenum - 1) * 40 - 1)) && (i < pagenum * 40)) page.put(key, JGpage.get(key));
                         else if (i == pagenum * 40) break;
                         i++;
@@ -37,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
             } else if (market == Market.BUNJANG) {
                 if (BJpage.size() < pagenum * 40) BJpage.putAll(bunjang.getPage(category, BJpagenum++));
                 else {
-                    for (Long key : BJpage.keySet()) {
+                    for (String key : BJpage.keySet()) {
                         if ((i > ((pagenum - 1) * 40 - 1)) && (i < pagenum * 40)) page.put(key, BJpage.get(key));
                         else if (i == pagenum * 40) break;
                         i++;

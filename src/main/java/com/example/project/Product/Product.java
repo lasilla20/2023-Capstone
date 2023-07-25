@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 public class Product {
 
-    private Long id;
+    private String id;
     private String name;
     private String image;
     private int price;
@@ -16,7 +16,7 @@ public class Product {
     private String category;
     private String producturl;
 
-    public Product(Long id, String name, String image, int price, Market market, @Nullable String seller,
+    public Product(String id, String name, String image, int price, Market market, @Nullable String seller,
                    @Nullable String updatedate, @Nullable int hearts, @Nullable String details, @Nullable String category,
                    @Nullable String producturl) {
         this.id = id;
@@ -80,11 +80,11 @@ public class Product {
         this.category = category;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

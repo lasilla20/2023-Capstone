@@ -1,6 +1,8 @@
 package com.example.project.Controller;
 
 import com.example.project.Category.CategoryService;
+import com.example.project.Category.CategoryServiceImpl;
+import com.example.project.Category.MainPageService;
 import com.example.project.Heart.Heart;
 import com.example.project.Heart.HeartService;
 import com.example.project.Heart.HeartServiceImpl;
@@ -10,60 +12,56 @@ import com.example.project.Product.ProductService;
 import com.example.project.Search.SearchService;
 import com.example.project.config.auth.PrincipalDetails;
 import com.example.project.domain.user.User;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Random;
 
-@Controller
+@RequiredArgsConstructor
+@RestController
 @RequestMapping("/")
 public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
-    private CategoryService categoryService;
-    private ProductService productService;
-    private SearchService searchService;
-    private HeartService heartService;
+    private final CategoryService categoryService;
+    private final MainPageService mainPageService;
+    private final ProductService productService;
+    private final SearchService searchService;
+    private final HeartService heartService;
 
     //TODO : 틀만 잡았지 고쳐야할 부분 많음
-    /** 메인화면 실행시 랜덤 페이지 **/
-    public int randomPage(){
-        Random random = new Random();
-        random.setSeed(System.currentTimeMillis());
-        return random.nextInt(9)+1;
-    }
 
     /** 메인 **/
     @RequestMapping("")
-    public String main(Model model){
+    public LinkedHashMap<String, Product> main(Model model, HttpServletRequest request){
         logger.info("메인 페이지를 로딩합니다···");
-        String basic1 = "310";
-        String basic2 = "111";
-        String basic3 = "1";
-        HashMap<Long, Product> bunjang = categoryService.getPage(Market.BUNJANG, basic1, randomPage());
-        HashMap<Long, Product> joonggo = categoryService.getPage(Market.JOONGGONARA, basic2, randomPage());
-        HashMap<Long, Product> carrot = categoryService.getPage(Market.CARROT, basic3, randomPage());
-        model.addAttribute("mainInfo", bunjang);
-        model.addAttribute("mainInfo", joonggo);
-        model.addAttribute("mainInfo", carrot);
-        return "main";
+
+        String requestURL = request.getRequestURL().toString();
+        System.out.println("requestURL = " + requestURL);
+
+        LinkedHashMap<String, Product> page = mainPageService.getPage();
+
+        return page;
     }
 
-    /** 로고 클릭 시 메인화면으로 이동 **/
-    @RequestMapping(value = "/logo", method = RequestMethod.GET)
-    public String mainLogo(Model model){
-        return main(model);
-    }
+//    /** 로고 클릭 시 메인화면으로 이동 **/
+//    @RequestMapping(value = "/logo", method = RequestMethod.GET)
+//    public String mainLogo(Model model){
+//        return main(model);
+//    }
 
     /** 카테고리 **/
     @GetMapping("/category/{categoryName}/{pagenum}")
     public String getCategoryName(@PathVariable String categoryName, @PathVariable("pagenum")int pagenum, Model model){
-        HashMap<Long, Product> bunjang = categoryService.getPage(Market.BUNJANG, categoryName, pagenum);
-        HashMap<Long, Product> joonggo = categoryService.getPage(Market.JOONGGONARA, categoryName, pagenum);
-        HashMap<Long, Product> carrot = categoryService.getPage(Market.CARROT, categoryName, pagenum);
+        HashMap<String, Product> bunjang = categoryService.getPage(Market.BUNJANG, categoryName, pagenum);
+        HashMap<String, Product> joonggo = categoryService.getPage(Market.JOONGGONARA, categoryName, pagenum);
+        HashMap<String, Product> carrot = categoryService.getPage(Market.CARROT, categoryName, pagenum);
         model.addAttribute("categoryInfo", bunjang);
         model.addAttribute("categoryInfo", joonggo);
         model.addAttribute("categoryInfo", carrot);
@@ -73,9 +71,9 @@ public class MainController {
     /** 상품 검색 **/
     @PostMapping("/search/{productName}/{pagenum}")
     public String getProductSearch(@PathVariable String productName,@PathVariable("pagenum")int pagenum, Model model){
-        HashMap<Long, Product> bunjang = searchService.getSearchResult(Market.JOONGGONARA, pagenum, productName);
-        HashMap<Long, Product> joonggo = searchService.getSearchResult(Market.BUNJANG, pagenum, productName);
-        HashMap<Long, Product> carrot = searchService.getSearchResult(Market.CARROT, pagenum, productName);
+        LinkedHashMap<String, Product> bunjang = searchService.getSearchResult(Market.JOONGGONARA, pagenum, productName);
+        LinkedHashMap<String, Product> joonggo = searchService.getSearchResult(Market.BUNJANG, pagenum, productName);
+        LinkedHashMap<String, Product> carrot = searchService.getSearchResult(Market.CARROT, pagenum, productName);
         model.addAttribute("categoryInfo", bunjang);
         model.addAttribute("categoryInfo", joonggo);
         model.addAttribute("categoryInfo", carrot);

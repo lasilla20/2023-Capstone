@@ -26,16 +26,22 @@ public interface Joonggonara {
     int STATIONERY = 14; // 도서, 음반, 문구
     int MAIN = 0; // 메인화면
 
-    /** 중고나라 카테고리 페이지 가져오기 **/
-    public LinkedHashMap<Long, Product> getPage(String category, int pagenum);
+    /**
+     * 중고나라 카테고리 페이지 가져오기
+     **/
+    public LinkedHashMap<String, Product> getPage(String category, int pagenum);
 
-    /** 중고나라 검색 결과 가져오기 **/
-    public LinkedHashMap<Long, Product> getSearchResult(String keyword, int pagenum);
+    /**
+     * 중고나라 검색 결과 가져오기
+     **/
+    public LinkedHashMap<String, Product> getSearchResult(String keyword, int pagenum);
 
     /** 중고나라 상품 상세 가져오기 **/
-    public Product getProduct(Long id, Market market);
+    public Product getProduct(String id, Market market);
 
-    /** 중고나라 메인(추천상품) 가져오기 **/
-    public LinkedHashMap<Long, Product> getMainPage();
+    /**
+     * 중고나라 메인(추천상품) 가져오기
+     **/
+    public LinkedHashMap<String, Product> getMainPage();
 
 }
