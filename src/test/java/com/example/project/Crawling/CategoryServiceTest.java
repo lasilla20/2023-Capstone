@@ -33,7 +33,7 @@ class CategoryServiceTest {
     @Test
     void getPageTest(){
         String url = "https://web.joongna.com/search?category=111&page=1";
-        HashMap<Long, Product> page = new HashMap<>();
+        HashMap<String, Product> page = new HashMap<>();
 
         try {
             Document doc = Jsoup.connect(url).get();
@@ -44,7 +44,7 @@ class CategoryServiceTest {
 
             for (int i = 0; i < imgs.size(); i++){
                 String[] id_string = ids.get(i).attr("href").split("/");
-                Long id = Long.parseLong(id_string[2]);
+                String id = id_string[2];
 
                 String name = imgs.get(i).attr("alt");
                 String img = imgs.get(i).attr("src");
@@ -55,7 +55,7 @@ class CategoryServiceTest {
                 Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, null, url);
                 page.put(id, product);
             }
-            for (Long key:page.keySet()){
+            for (String key:page.keySet()){
                 Product p = page.get(key);
                 System.out.println("p.getId() = " + p.getId());
                 System.out.println("p.getName() = " + p.getName());
@@ -71,7 +71,7 @@ class CategoryServiceTest {
     /** 중고나라에서 카테고리 불러오기 테스트 2 **/
     @Test
     void getPageTest2() {
-        HashMap<Long, Product> hashMap = categoryService
+        HashMap<String, Product> hashMap = categoryService
                 .getPage(Market.JOONGGONARA, "WOMANCLOTHES", 1);
         Assertions.assertThat(hashMap.size()).isEqualTo(40);
     }
@@ -79,7 +79,7 @@ class CategoryServiceTest {
     /** 번개장터에서 카테고리 불러오기 테스트 **/
     @Test
     void getPageTest3() {
-        HashMap<Long, Product> page = new HashMap<>();
+        HashMap<String, Product> page = new HashMap<>();
 
         String url = "https://m.bunjang.co.kr/categories/310";
         WebDriver webDriver = chromeDriver.setChrome();
@@ -93,8 +93,7 @@ class CategoryServiceTest {
             for(WebElement webElement : webElements){
                 String ad = webElement.findElement(By.cssSelector("a div.sc-iGPElx div.sc-gtfDJT div.sc-fOICqy")).getText();
                 if(!ad.equals("AD")) {
-                    String pid = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
-                    Long id = Long.parseLong(pid);
+                    String id = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
                     System.out.println("ppid = " + id);
 
                     String name = webElement.findElement(By.className("sc-kasBVs")).getText();
@@ -112,7 +111,7 @@ class CategoryServiceTest {
                     page.put(id, product);
                 }
             }
-            for (Long key:page.keySet()){
+            for (String key:page.keySet()){
                 Product p = page.get(key);
                 System.out.println("p.getId() = " + p.getId());
                 System.out.println("p.getName() = " + p.getName());
@@ -131,15 +130,9 @@ class CategoryServiceTest {
     /** 번개장터에서 카테고리 불러오기 테스트 2 **/
     @Test
     void getPageTest4(){
-        HashMap<Long, Product> hashMap = categoryService
+        HashMap<String, Product> hashMap = categoryService
                 .getPage(Market.BUNJANG, "WOMANCLOTHES", 5);
         Assertions.assertThat(hashMap.size()).isEqualTo(40);
-    }
-
-    @Test
-    void getPageTest5(){
-        HashMap<Long, Product> bunjang = categoryService.getPage(Market.BUNJANG, "WOMANCLOTHES", 2);
-        HashMap<Long, Product> joonggo = categoryService.getPage(Market.JOONGGONARA, "WOMANCLOTHES", 4);
     }
 
 }
