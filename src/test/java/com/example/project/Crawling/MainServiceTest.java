@@ -30,7 +30,7 @@ public class MainServiceTest {
     @Test
     void getMainPageTest(){
         String url = "https://web.joongna.com/";
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
         try {
             Document doc = Jsoup.connect(url).get();
@@ -41,7 +41,7 @@ public class MainServiceTest {
 
             for (int i = 0; i < 10; i++){
                 String[] id_string = ids.get(i).attr("href").split("/");
-                Long id = Long.parseLong(id_string[2]);
+                String id = id_string[2];
 
                 String name = imgs.get(i).attr("alt");
                 String img = imgs.get(i).attr("src");
@@ -52,7 +52,7 @@ public class MainServiceTest {
                 Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, null, url);
                 page.put(id, product);
             }
-            for (Long key:page.keySet()){
+            for (String key:page.keySet()){
                 Product p = page.get(key);
                 System.out.println("p.getId() = " + p.getId());
                 System.out.println("p.getName() = " + p.getName());
@@ -68,14 +68,14 @@ public class MainServiceTest {
     /** 중고나라 메인화면 불러오기 테스트 2 **/
     @Test
     void getMainPageTest2() {
-        LinkedHashMap<Long, Product> page = joonggonara.getMainPage();
+        LinkedHashMap<String, Product> page = joonggonara.getMainPage();
         Assertions.assertThat(page.size()).isEqualTo(10); // 중고나라 추천 상품 개수: 10개
     }
 
     /** 번개장터 메인화면 불러오기 테스트 **/
     @Test
     void getMainPageTest3(){
-        HashMap<Long, Product> page = new HashMap<>();
+        HashMap<String, Product> page = new HashMap<>();
         String url = "https://m.bunjang.co.kr";
         WebDriver webDriver = chromeDriver.setChrome();
 
@@ -86,8 +86,7 @@ public class MainServiceTest {
             List<WebElement> webElements = webDriver.findElements(By.className("styled__ProductWrapper-sc-32dn86-1"));
 
             for(WebElement webElement : webElements){
-                String pid = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
-                Long id = Long.parseLong(pid);
+                String id = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
 
                 String name = webElement.findElement(By.className("sc-kasBVs")).getText();
                 String img = webElement.findElement(By.tagName("img")).getAttribute("src");
@@ -99,7 +98,7 @@ public class MainServiceTest {
                 Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, null, null, null);
                 page.put(id, product);
             }
-            for (Long key:page.keySet()){
+            for (String key:page.keySet()){
                 Product p = page.get(key);
                 System.out.println("p.getId() = " + p.getId());
                 System.out.println("p.getName() = " + p.getName());
@@ -118,14 +117,14 @@ public class MainServiceTest {
     /** 번개장터 메인화면 불러오기 테스트 2 **/
     @Test
     void getMainPageTest4(){
-        LinkedHashMap<Long, Product> page = bunjang.getMainPage();
+        LinkedHashMap<String, Product> page = bunjang.getMainPage();
         Assertions.assertThat(page.size()).isEqualTo(52); // 번개장터 추천 상품 개수: 52개
     }
 
     /** 당근마켓 메인화면 불러오기 테스트 **/
     @Test
     void getMainPageTest5() {
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
         String url = "https://www.daangn.com/hot_articles";
         WebDriver webDriver = chromeDriver.setChrome();
@@ -137,8 +136,7 @@ public class MainServiceTest {
             List<WebElement> webElements = webDriver.findElements(By.cssSelector("article.card-top"));
 
             for (WebElement webElement : webElements) {
-                String pid = webElement.findElement(By.cssSelector("a")).getAttribute("data-event-label");
-                Long id = Long.parseLong(pid);
+                String id = webElement.findElement(By.cssSelector("a")).getAttribute("data-event-label");
 
                 String name = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("alt");
                 String img = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("src");
@@ -153,7 +151,7 @@ public class MainServiceTest {
                 Product product = new Product(id, name, img, price, Market.CARROT, null, null, 0, null, null, null);
                 page.put(id, product);
             }
-            for (Long key:page.keySet()){
+            for (String key:page.keySet()){
                 Product p = page.get(key);
                 System.out.println("p.getId() = " + p.getId());
                 System.out.println("p.getName() = " + p.getName());
@@ -171,14 +169,14 @@ public class MainServiceTest {
     /** 당근마켓 메인화면 불러오기 테스트 2 **/
     @Test
     void getMainPageTest6(){
-        LinkedHashMap<Long, Product> page = carrot.getMainPage();
+        LinkedHashMap<String, Product> page = carrot.getMainPage();
         Assertions.assertThat(page.size()).isEqualTo(99); // 당근마켓 추천 상품 개수: 52개
     }
 
     /** 메인화면 서비스 테스트 **/
     @Test
     void getMainPageTest7(){
-        LinkedHashMap<Long, Product> page = mainPageService.getPage();
+        LinkedHashMap<String, Product> page = mainPageService.getPage();
         Assertions.assertThat(page.size()).isEqualTo(40);
     }
 }

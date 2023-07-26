@@ -95,9 +95,10 @@ public class JoonggonaraImpl implements Joonggonara{
             return page;
         } catch (Exception e) {
             System.out.println("중고나라 크롤링 오류_검색");
-        } finally {
-            webDriver.quit();
         }
+//        } finally {
+//            webDriver.quit();
+//        }
 
         return null;
     }
@@ -110,6 +111,8 @@ public class JoonggonaraImpl implements Joonggonara{
 
         try {
             Document doc = Jsoup.connect(url).get();
+            webDriver.get(url);
+            Thread.sleep(500);
 
             String name = doc.select(".pb-5 h1").text();
             String img = doc.select(".col-span-1 img").attr("src");
@@ -121,7 +124,6 @@ public class JoonggonaraImpl implements Joonggonara{
             String sellerURL = webDriver.findElement(By.cssSelector(".col-span-2 div div.flex a.font-semibold")).getAttribute("href");
             webDriver.get(sellerURL);
             String seller = webDriver.findElement(By.cssSelector("div.relative h1.hidden")).getText();
-            System.out.println("seller = " + seller);
 
             String[] etcs = doc.select(".text-body span").text().split(" · ");
             String updatedate = etcs[0];
@@ -143,11 +145,12 @@ public class JoonggonaraImpl implements Joonggonara{
 
             Product product = new Product(id, name, img, price, market, seller, updatedate, heart, detail, category, url);
             return product;
-        } catch (IOException e){
+        } catch (Exception e) {
             System.out.println("중고나라 크롤링 오류_상품 상세");
-        } finally {
-            webDriver.quit();
         }
+//        } finally {
+//            webDriver.quit();
+//        }
 
         return null;
     }

@@ -74,7 +74,7 @@ public class ProductServiceTest {
                 }
             }
 
-            Product product = new Product(119272335L, name, img, price, Market.JOONGGONARA, seller, updatedate, heart, detail, category, url);
+            Product product = new Product("119272335", name, img, price, Market.JOONGGONARA, seller, updatedate, heart, detail, category, url);
 
             System.out.println("product.getId() = " + product.getId());
             System.out.println("product.getName() = " + product.getName());
@@ -94,9 +94,26 @@ public class ProductServiceTest {
         }
     }
 
-    /** 번개장터 상품 상세 테스트 **/
+    /** 중고나라 상품 상세 테스트 2 **/
     @Test
     void getProductTest2(){
+        Product product = productService.getProduct("119272335", Market.JOONGGONARA);
+        System.out.println("product.getId() = " + product.getId());
+        System.out.println("product.getName() = " + product.getName());
+        System.out.println("product.getImage() = " + product.getImage());
+        System.out.println("product.getPrice() = " + product.getPrice());
+        System.out.println("product.getMarket() = " + product.getMarket());
+        System.out.println("product.getSeller() = " + product.getSeller());
+        System.out.println("product.getUpdatedate() = " + product.getUpdatedate());
+        System.out.println("product.getHearts() = " + product.getHearts());
+        System.out.println("product.getDetails() = " + product.getDetails());
+        System.out.println("product.getCategory() = " + product.getCategory());
+        System.out.println("product.getProducturl() = " + product.getProducturl());
+    }
+
+    /** 번개장터 상품 상세 테스트 **/
+    @Test
+    void getProductTest3(){
         String url = "https://m.bunjang.co.kr/products/227279899";
         WebDriver webDriver = chromeDriver.setChrome();
 
@@ -128,7 +145,7 @@ public class ProductServiceTest {
                     .getAttribute("href").split("categories/");
             String category = categoryset.get(Integer.parseInt(categories[1].substring(0, 3)));
 
-            Product product = new Product(227279899L, name, img, price, Market.BUNJANG, seller, null, heart, detail, category, url);
+            Product product = new Product("227279899", name, img, price, Market.BUNJANG, seller, null, heart, detail, category, url);
 
             System.out.println("product.getId() = " + product.getId());
             System.out.println("product.getName() = " + product.getName());
@@ -148,9 +165,26 @@ public class ProductServiceTest {
         }
     }
 
+    /** 번개장터 상품 상세 테스트 **/
+    @Test
+    void getProductTest4(){
+        Product product = productService.getProduct("227279899", Market.BUNJANG);
+        System.out.println("product.getId() = " + product.getId());
+        System.out.println("product.getName() = " + product.getName());
+        System.out.println("product.getImage() = " + product.getImage());
+        System.out.println("product.getPrice() = " + product.getPrice());
+        System.out.println("product.getMarket() = " + product.getMarket());
+        System.out.println("product.getSeller() = " + product.getSeller());
+        System.out.println("product.getUpdatedate() = " + product.getUpdatedate());
+        System.out.println("product.getHearts() = " + product.getHearts());
+        System.out.println("product.getDetails() = " + product.getDetails());
+        System.out.println("product.getCategory() = " + product.getCategory());
+        System.out.println("product.getProducturl() = " + product.getProducturl());
+    }
+
     /** 당근마켓 상품 상세 테스트 **/
     @Test
-    void getProductTest3(){
+    void getProductTest5(){
         String url = "https://www.daangn.com/articles/589353858";
 
         try {
@@ -174,7 +208,7 @@ public class ProductServiceTest {
 
             String detail = doc.select("#article-detail").text();
 
-            Product product = new Product(589353858L, name, img, price, Market.CARROT, seller, updatedate, heart, detail, category, url);
+            Product product = new Product("589353858", name, img, price, Market.CARROT, seller, updatedate, heart, detail, category, url);
 
             System.out.println("product.getId() = " + product.getId());
             System.out.println("product.getName() = " + product.getName());
@@ -190,6 +224,23 @@ public class ProductServiceTest {
         } catch (Exception e){
             System.out.println("당근마켓 크롤링 오류_상품 상세");
         }
+    }
+
+    /** 당근마켓 상품 상세 테스트 **/
+    @Test
+    void getProductTest6(){
+        Product product = productService.getProduct("589353858", Market.CARROT);
+        System.out.println("product.getId() = " + product.getId());
+        System.out.println("product.getName() = " + product.getName());
+        System.out.println("product.getImage() = " + product.getImage());
+        System.out.println("product.getPrice() = " + product.getPrice());
+        System.out.println("product.getMarket() = " + product.getMarket());
+        System.out.println("product.getSeller() = " + product.getSeller());
+        System.out.println("product.getUpdatedate() = " + product.getUpdatedate());
+        System.out.println("product.getHearts() = " + product.getHearts());
+        System.out.println("product.getDetails() = " + product.getDetails());
+        System.out.println("product.getCategory() = " + product.getCategory());
+        System.out.println("product.getProducturl() = " + product.getProducturl());
     }
 
     private HashMap<Integer, String> getCategory_J(){

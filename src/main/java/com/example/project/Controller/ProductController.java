@@ -34,10 +34,6 @@ public class ProductController {
     private SearchService searchService;
     private HeartService heartService;
 
-    /** 더미데이터 **/
-    Product product = new Product("119272335", "item","image_url",
-            10000, Market.JOONGGONARA,"seller","2023-07-14",0,"details","category","https://web.joongna.com/product/119272335");
-
     /** String -> Market **/
     public Market parseMarket(String m){
         String n = m.toLowerCase();
@@ -57,10 +53,39 @@ public class ProductController {
 //        long item = Long.parseLong(itemId);
 //        Market m = parseMarket(market);
 //        Product product = productService.getProduct(item, m);
+
+        /** 더미데이터 **/
+        Product product = new Product("119272335", "item","image_url",
+                10000, Market.JOONGGONARA,"seller","2023-07-14",0,"details","category","https://web.joongna.com/product/119272335");
+
         String requestURL = request.getRequestURL().toString();
         System.out.println("requestURL = " + requestURL);
 
         return product;
+    }
+
+    /** 테스트용 상품 상세 **/
+    @GetMapping("/sample/{marketnum}")
+    public Product getProductId2(@PathVariable("marketnum")int marketnum, HttpServletRequest request){
+        String requestURL = request.getRequestURL().toString();
+
+        if(marketnum == 1){
+            System.out.println("중고나라 상품 상세 요청... requestURL = " + requestURL);
+            Product product = productService.getProduct("119272335", Market.JOONGGONARA);
+            return product;
+        } else if (marketnum == 2) {
+            System.out.println("번개장터 상품 상세 요청... requestURL = " + requestURL);
+            Product product = productService.getProduct("227279899", Market.BUNJANG);
+            return product;
+        } else if (marketnum == 3) {
+            System.out.println("당근마켓 상품 상세 요청... requestURL = " + requestURL);
+            Product product = productService.getProduct("589353858", Market.CARROT);
+            return product;
+        } else{
+            System.out.println("상품 상세 요청 잘못됨... requestURL = " + requestURL);
+        }
+
+        return null;
     }
 
     /** 외부 사이트 이동 **/
@@ -69,6 +94,9 @@ public class ProductController {
 //        long item = Long.parseLong(itemId);
 //        Market m = parseMarket(market);
 //        Product product = productService.getProduct(item, m);
+        /** 더미데이터 **/
+        Product product = new Product("119272335", "item","image_url",
+                10000, Market.JOONGGONARA,"seller","2023-07-14",0,"details","category","https://web.joongna.com/product/119272335");
         String url = product.getProducturl();
         return url;
     }
