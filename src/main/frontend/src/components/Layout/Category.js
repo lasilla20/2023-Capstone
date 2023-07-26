@@ -53,7 +53,10 @@ const CategoryBox = () => {
               className={styles.categoryItem - 11}
               text="문구류"
             />
-            <CategoryContent className={styles.categoryItem - 4} text="식품" />
+            <CategoryContent 
+              className={styles.categoryItem - 4} 
+              text="식품" 
+            />
             <CategoryContent
               className={styles.categoryItem - 5}
               text="출산 / 유아동"

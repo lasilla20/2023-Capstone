@@ -1,0 +1,77 @@
+.itemlistcontent {
+    display: flex;
+    width: 85%;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    /*gap:30px;*/
+    position: relative;
+    align-content: space-around;
+}
+
+.listItem {
+    font-family: "Noto Sans CJK KR";
+    align-items: center;
+    align-self: center;
+    position: relative;
+    width: fit-content;
+    margin: 20px 30px;  /* 위아래, 좌우 */
+}
+
+.imgContainer {
+    position: relative;
+}
+
+.itemimg {
+    width: 190px;
+    height: 130px;
+    object-fit: cover;
+}
+
+.heartButton {
+    width: 17px;
+    height: 17px;
+    bottom: 13px;
+    right: 8px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    z-index: 1;
+}
+
+.heartIcon{
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.iteminfo{
+    margin: 3px 5px;
+}
+
+.itemstorelogo{
+    float: left;
+    width: 16px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.itemname {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.itemprice {
+    color: #5D1FC2;
+    font-weight: bolder;
+    font-size: 17px;
+}
+
+.itempick {
+    float: right;
+    font-size: 13px;
+}

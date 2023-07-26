@@ -1,16 +1,18 @@
-.divcategory {
-  display: inline-block;
+.divhome {
   position: relative;
   top: 130px;
-  left: 100px;
-  width: 80%;
   margin: 0 auto;
+}
+
+.divcategory {
+  display: block;
+  position: relative;
 }
 
 .divcontent {
   display: inline-block;
   position: relative;
-  top: 140px;
+  top: 10px;
   width: 100%;
   /*left: 80px;*/
 }

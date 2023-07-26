@@ -24,7 +24,7 @@ public class HelloWorldController {
         return "Hello, world!";
     }
 
-    @GetMapping("/api/Login")
+    @GetMapping("/Login")
     public String login(HttpServletRequest request){
         String requestURL = request.getRequestURL().toString();
         System.out.println("requestURL = " + requestURL);

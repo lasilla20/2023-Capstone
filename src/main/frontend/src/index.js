@@ -5,6 +5,31 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/fonts/Font.css";
 
+/*import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "./module";
+import { Provider } from "react-redux";
+import { createLogger } from "redux-logger";
+
+const logger = createLogger();
+
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(logger),
+});
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
+);
+*/
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
