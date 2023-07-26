@@ -7,9 +7,9 @@
     padding: 10px;
     position: relative;
     border-radius: 10px;
-    width: 90%;
+    width: 70%;
     height: 20%;
-    /*margin: 0 auto;*/
+    margin: 0 auto;
 }
 
 .accordionTitle {
@@ -42,7 +42,8 @@
     width: fit-content;
     margin: 5px 10px;  /* 위아래, 좌우 */
 }
-  
+
+/*
 .categoryContent .checkbox {
     background-color: #ffffff;
     border: 1px solid;
@@ -51,13 +52,44 @@
     min-width: 12px;
     position: relative;
 }
-
-.cLabel {
-    top: 5px;
-    left: 5px;
-    font-family: "Inter", Helvetica;
-    font-size: 15px;
+*/
+ul {
+  list-style: none;
+  padding-left: 0;
 }
+il{
+  top: 5px;
+  left: 5px;
+}
+#leftToRight li::after {
+  position: absolute; 
+  content:""; display: block; 
+  border-bottom: 3px solid #5d1fc2; 
+  transition: width 250ms ease-out; 
+  left: auto; right: 0;  width: 0;
+}
+#leftToRight li:hover::after {
+  width: 100%; left: 0; right: auto;
+}
+
+.contentBtn {
+    background-color: transparent;
+    border: none;
+    
+    font-family: "Inter", Helvetica;
+    font-size: 14px;
+    list-style: none;
+
+    /* 여기서부터 css 코드 */
+    position: relative;
+    transition: 0.3s;
+}
+.contentBtn:hover {
+  /*color: 텍스트 색깔*/
+  letter-spacing: 3px;
+  /*background: rgb(234, 235, 235);*/
+}
+
 
 
 /* 아코디언 버튼 스타일 */

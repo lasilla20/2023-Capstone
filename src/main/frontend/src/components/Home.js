@@ -4,7 +4,7 @@ import styles from "../styles/css/ContentDetail.module.css";
 
 const Home = () => {
   return (
-    <div>
+    <div className={styles.divhome}>
       <div className={styles.divcategory}>
         <Category></Category>
       </div>
