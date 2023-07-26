@@ -27,7 +27,7 @@ public class SearchServiceTest {
     @Test
     void getSearchResultTest() {
         String url = "https://web.joongna.com/search/%EC%A7%B1%EA%B5%AC?page=1";
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
         WebDriver webDriver = chromeDriver.setChrome();
 
         try {
@@ -40,7 +40,7 @@ public class SearchServiceTest {
                 String ad = webElement.findElement(By.cssSelector(".w-full.overflow-hidden div.my-1 span:nth-child(3)")).getText();
                 if(!ad.equals("광고")){
                     String[] pid = webElement.getAttribute("href").split("t/");
-                    Long id = Long.parseLong(pid[1]);
+                    String id = pid[1];
 
                     String name = webElement.getAttribute("title");
                     String img = webElement.findElement(By.cssSelector("div.relative img")).getAttribute("src");
@@ -53,7 +53,7 @@ public class SearchServiceTest {
                     page.put(id, product);
                 }
             }
-            for (Long key:page.keySet()){
+            for (String key:page.keySet()){
                 Product p = page.get(key);
                 System.out.println("p.getId() = " + p.getId());
                 System.out.println("p.getName() = " + p.getName());
@@ -72,7 +72,7 @@ public class SearchServiceTest {
     @Test
     void getSearchResultTest2(){
         String url = "https://m.bunjang.co.kr/search/products?order=date&page=1&q=%EC%A7%B1%EA%B5%AC";
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
         WebDriver webDriver = chromeDriver.setChrome();
 
         try {
@@ -82,8 +82,7 @@ public class SearchServiceTest {
             List<WebElement> webElements = webDriver.findElements(By.className("sc-kcDeIU"));
 
             for(WebElement webElement : webElements){
-                String pid = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
-                Long id = Long.parseLong(pid);
+                String id = webElement.findElement(By.tagName("a")).getAttribute("data-pid");
                 System.out.println("ppid = " + id);
 
                 String name = webElement.findElement(By.cssSelector("a div.sc-eInJlc div.sc-gtfDJT")).getText();
@@ -100,7 +99,7 @@ public class SearchServiceTest {
                 Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, null, null, url);
                 page.put(id, product);
             }
-            for (Long key:page.keySet()){
+            for (String key:page.keySet()){
                 Product p = page.get(key);
                 System.out.println("p.getId() = " + p.getId());
                 System.out.println("p.getName() = " + p.getName());
@@ -119,7 +118,7 @@ public class SearchServiceTest {
     @Test
     void getSearchResultTest3(){
         String url = "https://www.daangn.com/search/%EC%A7%B1%EA%B5%AC/";
-        LinkedHashMap<Long, Product> page = new LinkedHashMap<>();
+        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
         WebDriver webDriver = chromeDriver.setChrome();
 
         try {
@@ -137,7 +136,7 @@ public class SearchServiceTest {
 
             for(WebElement webElement : webElements){
                 String[] pid = webElement.findElement(By.tagName("a")).getAttribute("href").split("s/");
-                Long id = Long.parseLong(pid[1]);
+                String id = pid[1];
 
                 String name = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("alt");
                 String img = webElement.findElement(By.cssSelector("a div.card-photo img")).getAttribute("src");
@@ -149,7 +148,7 @@ public class SearchServiceTest {
                 Product product = new Product(id, name, img, price, Market.CARROT, null, null, 0, null, null, null);
                 page.put(id, product);
             }
-            for (Long key:page.keySet()){
+            for (String key:page.keySet()){
                 Product p = page.get(key);
                 System.out.println("p.getId() = " + p.getId());
                 System.out.println("p.getName() = " + p.getName());
@@ -167,7 +166,7 @@ public class SearchServiceTest {
     /** 검색 통합 테스트 **/
     @Test
     void getSearchResultTest4(){
-//        LinkedHashMap<Long, Product> page = searchService.getSearchResult(Market.JOONGGONARA, 2, "짱구");
+//        LinkedHashMap<String, Product> page = searchService.getSearchResult(Market.JOONGGONARA, 2, "짱구");
 //        Assertions.assertThat(page.size()).isEqualTo(40);
 //        page.clear();
 //
@@ -175,7 +174,7 @@ public class SearchServiceTest {
 //        Assertions.assertThat(page.size()).isEqualTo(40);
 //        page.clear();
 
-        LinkedHashMap<Long, Product> page = searchService.getSearchResult(Market.CARROT, 1, "짱구");
+        LinkedHashMap<String, Product> page = searchService.getSearchResult(Market.CARROT, 1, "짱구");
         System.out.println("page.size() = " + page.size());
 //        Assertions.assertThat(page.size()).isEqualTo(6); // 번개장터 검색 결과 한 페이지에 6개
     }
