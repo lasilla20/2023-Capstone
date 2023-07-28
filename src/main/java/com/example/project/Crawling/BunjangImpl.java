@@ -12,15 +12,15 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import static java.sql.Types.NULL;
+
 @Component
 @RequiredArgsConstructor
 public class BunjangImpl implements Bunjang {
 
     private final ChromeDriver chromeDriver;
 
-    /**
-     * 번개장터 카테고리 페이지 가져오기
-     **/
+    /** 번개장터 카테고리 페이지 가져오기 **/
     @Override
     public LinkedHashMap<String, Product> getPage(String category, int pagenum) {
         LinkedHashMap<String, Product> page = new LinkedHashMap<>();
@@ -60,9 +60,7 @@ public class BunjangImpl implements Bunjang {
         return null;
     }
 
-    /**
-     * 번개장터 검색 결과 가져오기
-     **/
+    /** 번개장터 검색 결과 가져오기 **/
     @Override
     public LinkedHashMap<String, Product> getSearchResult(String keyword, int pagenum) {
         LinkedHashMap<String, Product> page = new LinkedHashMap<>();
@@ -143,9 +141,7 @@ public class BunjangImpl implements Bunjang {
         return null;
     }
 
-    /**
-     * 번개장터 메인(추천상품) 가져오기
-     **/
+    /** 번개장터 메인(추천상품) 가져오기 **/
     @Override
     public LinkedHashMap<String, Product> getMainPage() {
         LinkedHashMap<String, Product> page = new LinkedHashMap<>();
@@ -225,7 +221,8 @@ public class BunjangImpl implements Bunjang {
                 categoryid = Bunjang.STATIONERY;
                 break;
             default:
-                categoryid = Bunjang.MAIN;
+                categoryid = NULL;
+                System.out.println("[Error: BunjangImpl.setCategory] 카테고리 이름이 잘못됨");
         }
 
         return categoryid;

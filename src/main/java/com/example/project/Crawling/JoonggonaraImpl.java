@@ -18,15 +18,15 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import static java.sql.Types.NULL;
+
 @Component
 @RequiredArgsConstructor
 public class JoonggonaraImpl implements Joonggonara{
 
     private final ChromeDriver chromeDriver;
 
-    /**
-     * 중고나라 카테고리 페이지 가져오기
-     **/
+    /** 중고나라 카테고리 페이지 가져오기 **/
     @Override
     public LinkedHashMap<String, Product> getPage(String category, int pagenum) {
         String url = setURL(category, pagenum);
@@ -155,9 +155,7 @@ public class JoonggonaraImpl implements Joonggonara{
         return null;
     }
 
-    /**
-     * 중고나라 메인(추천상품) 가져오기
-     **/
+    /** 중고나라 메인(추천상품) 가져오기 **/
     @Override
     public LinkedHashMap<String, Product> getMainPage() {
         String url = setURL();
@@ -233,7 +231,8 @@ public class JoonggonaraImpl implements Joonggonara{
                 categoryid = Joonggonara.STATIONERY;
                 break;
             default:
-                categoryid = Joonggonara.MAIN;
+                categoryid = NULL;
+                System.out.println("[Error: JoonggonaraImpl.setCategory] 카테고리 이름이 잘못됨");
         }
 
         return categoryid;

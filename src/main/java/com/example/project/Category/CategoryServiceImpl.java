@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
-@Service
 @Component
 public class CategoryServiceImpl implements CategoryService {
 

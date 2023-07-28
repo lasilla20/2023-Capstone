@@ -25,14 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/api/product")
 @RequiredArgsConstructor
 public class ProductController {
-    ChromeDriver chromeDriver = new ChromeDriverImpl();
-    private Joonggonara joonggonara = new JoonggonaraImpl(chromeDriver);
-    private Bunjang bunjang = new BunjangImpl(chromeDriver);
-    private Carrot carrot = new CarrotImpl(chromeDriver);
-    private ProductService productService = new ProductServiceImpl(joonggonara, bunjang, carrot);
-    private CategoryService categoryService;
-    private SearchService searchService;
-    private HeartService heartService;
+    private final ProductService productService;
 
     /** String -> Market **/
     public Market parseMarket(String m){
