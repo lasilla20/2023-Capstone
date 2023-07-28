@@ -18,7 +18,6 @@ public class HelloWorldController {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
     @GetMapping("/api/hello")
     public String test() {
         return "Hello, world!";

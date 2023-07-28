@@ -6,12 +6,10 @@ import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
-@Service
 @Component
 public class CategoryServiceImpl implements CategoryService {
 

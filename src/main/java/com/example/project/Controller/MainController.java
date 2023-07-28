@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
@@ -55,15 +54,32 @@ public class MainController {
 //    }
 
     /** 카테고리 **/
-    @GetMapping("/category/{categoryName}/{pagenum}")
-    public String getCategoryName(@PathVariable String categoryName, @PathVariable("pagenum")int pagenum, Model model){
-        HashMap<String, Product> bunjang = categoryService.getPage(Market.BUNJANG, categoryName, pagenum);
-        HashMap<String, Product> joonggo = categoryService.getPage(Market.JOONGGONARA, categoryName, pagenum);
-        HashMap<String, Product> carrot = categoryService.getPage(Market.CARROT, categoryName, pagenum);
-        model.addAttribute("categoryInfo", bunjang);
-        model.addAttribute("categoryInfo", joonggo);
-        model.addAttribute("categoryInfo", carrot);
-        return "category";
+    @GetMapping("/{marketName}/{categoryName}/{pageNum}")
+    public ArrayList getCategory(@PathVariable String marketName, @PathVariable String categoryName, @PathVariable int pageNum, HttpServletRequest request){
+        String requestURL = request.getRequestURL().toString();
+
+        if (marketName.equals("J")) {
+            logger.info("중고나라 카테고리 로딩... requestURL = " + requestURL);
+            LinkedHashMap<String, Product> page = categoryService.getPage(Market.JOONGGONARA, categoryName, pageNum);
+
+            ArrayList datas = new ArrayList();
+            page.forEach((k, v) -> {
+                datas.add(v);
+            });
+            return datas;
+        } else if (marketName.equals("B")) {
+            logger.info("번개장터 카테고리 로딩... requestURL = " + requestURL);
+            LinkedHashMap<String, Product> page = categoryService.getPage(Market.BUNJANG, categoryName, pageNum);
+
+            ArrayList datas = new ArrayList();
+            page.forEach((k, v) -> {
+                datas.add(v);
+            });
+            return datas;
+        }
+
+        logger.info("Error: 마켓 이름을 제대로 입력해 주세요! requestURL = " + requestURL);
+        return null;
     }
 
     /** 상품 검색 **/
