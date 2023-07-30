@@ -12,7 +12,7 @@ export const ListItem = ({
   heartCnt = 0,
 }) => {
   const renderLogo = () => {
-    if (store === "당근") {
+    if (store === "CARROT") { //당근마켓
       return (
         <img
           className={styles.itemstorelogo}
@@ -20,7 +20,7 @@ export const ListItem = ({
           src="/img/당근마켓 아이콘 1.png"
         />
       );
-    } else if (store === "번개") {
+    } else if (store === "BUNJANG") { //번개장터
       return (
         <img
           className={styles.itemstorelogo}
@@ -28,7 +28,7 @@ export const ListItem = ({
           src="/img/번개장터 아이콘 1.png"
         />
       );
-    } else if (store === "중고") {
+    } else if (store === "JOONGGONARA") { //중고나라
       return (
         <img
           className={styles.itemstorelogo}
