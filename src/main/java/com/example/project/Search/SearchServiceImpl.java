@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
 
+import static org.hibernate.sql.InFragment.NULL;
+
 @RequiredArgsConstructor
 @Component
 public class SearchServiceImpl implements SearchService{
@@ -23,12 +25,20 @@ public class SearchServiceImpl implements SearchService{
     private int JGpagenum = 1;
     private int BJpagenum = 1;
     private int CRpagenum = 1;
+    private String savedKeyword = NULL;
 
     @Override
     public LinkedHashMap<String, Product> getSearchResult(Market market, int pagenum, String keyword) {
 
         LinkedHashMap<String, Product> page = new LinkedHashMap<>();
         int i = 0;
+
+        if(!savedKeyword.equals(keyword)){
+            JGpage.clear();
+            BJpage.clear();
+            CRpage.clear();
+            savedKeyword = keyword;
+        }
 
         while(true) {
             if (market == Market.JOONGGONARA) {
