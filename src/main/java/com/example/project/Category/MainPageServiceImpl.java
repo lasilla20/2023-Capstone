@@ -27,9 +27,9 @@ public class MainPageServiceImpl implements MainPageService{
         int i = 0;
 
         // 중고나라
-        crawlingpage = joonggonara.getMainPage();
+/*        crawlingpage = joonggonara.getMainPage();
         page.putAll(crawlingpage);
-        crawlingpage.clear();
+        crawlingpage.clear();*/
 
         // 번개장터
         crawlingpage = bunjang.getMainPage();
@@ -41,11 +41,11 @@ public class MainPageServiceImpl implements MainPageService{
         i = 0;
 
         // 당근마켓
-        crawlingpage = carrot.getMainPage();
+/*        crawlingpage = carrot.getMainPage();
         for(String s:crawlingpage.keySet()){
             page.put(s, crawlingpage.get(s));
             if(++i == 17) break;
-        }
+        }*/
 
         return page;
     }
