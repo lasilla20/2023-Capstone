@@ -19,6 +19,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -71,8 +72,10 @@ class CategoryServiceTest {
     /** 중고나라에서 카테고리 불러오기 테스트 2 **/
     @Test
     void getPageTest2() {
-        HashMap<String, Product> hashMap = categoryService
-                .getPage(Market.JOONGGONARA, 1, 1);
+        HashMap<String, Product> hashMap = categoryService.getPage(Market.JOONGGONARA, 1, 1);
+        Assertions.assertThat(hashMap.size()).isEqualTo(40);
+
+        HashMap<String, Product> hashMap2 = categoryService.getPage(Market.JOONGGONARA, 2, 1);
         Assertions.assertThat(hashMap.size()).isEqualTo(40);
     }
 
