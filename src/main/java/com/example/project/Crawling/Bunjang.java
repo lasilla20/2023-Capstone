@@ -27,7 +27,7 @@ public interface Bunjang {
     /**
      * 번개장터 카테고리 페이지 가져오기
      **/
-    public LinkedHashMap<String, Product> getPage(String category, int pagenum);
+    public LinkedHashMap<String, Product> getPage(int category, int pagenum);
 
     /**
      * 번개장터 검색 결과 가져오기

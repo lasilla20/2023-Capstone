@@ -22,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
     private int BJpagenum = 1;
 
     @Override
-    public LinkedHashMap<String, Product> getPage(Market market, String category, int pagenum) {
+    public LinkedHashMap<String, Product> getPage(Market market, int category, int pagenum) {
 
         LinkedHashMap<String, Product> page = new LinkedHashMap<>();
         int i = 0;
