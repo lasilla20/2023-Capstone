@@ -2,17 +2,14 @@ package com.example.project.Controller;
 
 import com.example.project.Category.CategoryService;
 import com.example.project.Category.MainPageService;
-import com.example.project.Heart.Heart;
 import com.example.project.Heart.HeartService;
 import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import com.example.project.Search.SearchService;
 import com.example.project.config.auth.PrincipalDetails;
-import com.example.project.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
