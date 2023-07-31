@@ -22,7 +22,7 @@ public class BunjangImpl implements Bunjang {
 
     /** 번개장터 카테고리 페이지 가져오기 **/
     @Override
-    public LinkedHashMap<String, Product> getPage(String category, int pagenum) {
+    public LinkedHashMap<String, Product> getPage(int category, int pagenum) {
         LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
         String url = setURL(category, pagenum);
@@ -46,7 +46,7 @@ public class BunjangImpl implements Bunjang {
                             .replaceAll("[^0-9]", "");
                     int price = Integer.parseInt(price_string);
 
-                    Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, null, category, null);
+                    Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, null, null, null);
                     page.put(id, product);
                 }
             }
@@ -179,50 +179,51 @@ public class BunjangImpl implements Bunjang {
     }
 
     /** 번개장터 카테고리 세팅 **/
-    private int setCategory(@NotNull String category) {
+    private int setCategory(@NotNull int category) {
 
         int categoryid;
 
         switch(category){
-            case "WOMANCLOTHES":
+            case 1:
                 categoryid = Bunjang.WOMANCLOTHES;
                 break;
-            case "MANCLOTHES":
+            case 2:
                 categoryid = Bunjang.MANCLOTHES;
                 break;
-            case "BEAUTY":
+            case 3:
                 categoryid = Bunjang.BEAUTY;
                 break;
-            case "FURNITURE":
+            case 4:
                 categoryid = Bunjang.FURNITURE;
                 break;
-            case "FOOD":
-                categoryid = Bunjang.FOOD;
-                break;
-            case "KIDS":
-                categoryid = Bunjang.KIDS;
-                break;
-            case "PETS":
-                categoryid = Bunjang.PETS;
-                break;
-            case "LIVES":
-                categoryid = Bunjang.LIVES1;
-                break;
-            case "DIGITAL":
-                categoryid = Bunjang.DIGITAL;
-                break;
-            case "SPORTS":
-                categoryid = Bunjang.SPORTS;
-                break;
-            case "HEALTH":
-                categoryid = Bunjang.HEALTH;
-                break;
-            case "STATIONERY":
+            case 5:
                 categoryid = Bunjang.STATIONERY;
                 break;
+            case 6:
+                categoryid = Bunjang.FOOD;
+                break;
+            case 7:
+                categoryid = Bunjang.KIDS;
+                break;
+            case 8:
+                categoryid = Bunjang.PETS;
+                break;
+            case 9:
+                categoryid = Bunjang.LIVES1;
+                break;
+            case 10:
+                categoryid = Bunjang.DIGITAL;
+                break;
+            case 11:
+                categoryid = Bunjang.SPORTS;
+                break;
+            case 12:
+                categoryid = Bunjang.HEALTH;
+                break;
+
             default:
                 categoryid = NULL;
-                System.out.println("[Error: BunjangImpl.setCategory] 카테고리 이름이 잘못됨");
+                System.out.println("[Error: BunjangImpl.setCategory] 카테고리 번호가 잘못됨");
         }
 
         return categoryid;
@@ -250,7 +251,7 @@ public class BunjangImpl implements Bunjang {
     }
 
     /** 크롤링 주소 세팅 **/
-    private String setURL(@NotNull String category, @NotNull int pagenum){
+    private String setURL(@NotNull int category, @NotNull int pagenum){
         int categoryid = setCategory(category);
         String url = "https://m.bunjang.co.kr/categories/" + categoryid + "?page=" + pagenum + "&req_ref=popular_category";
 

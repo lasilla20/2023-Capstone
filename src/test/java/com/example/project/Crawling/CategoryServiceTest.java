@@ -72,7 +72,7 @@ class CategoryServiceTest {
     @Test
     void getPageTest2() {
         HashMap<String, Product> hashMap = categoryService
-                .getPage(Market.JOONGGONARA, "WOMANCLOTHES", 1);
+                .getPage(Market.JOONGGONARA, 1, 1);
         Assertions.assertThat(hashMap.size()).isEqualTo(40);
     }
 
@@ -131,7 +131,7 @@ class CategoryServiceTest {
     @Test
     void getPageTest4(){
         HashMap<String, Product> hashMap = categoryService
-                .getPage(Market.BUNJANG, "WOMANCLOTHES", 5);
+                .getPage(Market.BUNJANG, 1, 5);
         Assertions.assertThat(hashMap.size()).isEqualTo(40);
     }
 

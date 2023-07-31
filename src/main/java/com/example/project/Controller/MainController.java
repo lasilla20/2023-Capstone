@@ -48,7 +48,7 @@ public class MainController {
 
     /** 카테고리 **/
     @GetMapping("/{marketName}/{categoryName}/{pageNum}")
-    public ArrayList getCategory(@PathVariable String marketName, @PathVariable String categoryName, @PathVariable int pageNum, HttpServletRequest request){
+    public ArrayList getCategory(@PathVariable String marketName, @PathVariable int categoryName, @PathVariable int pageNum, HttpServletRequest request){
         String requestURL = request.getRequestURL().toString();
 
         if (marketName.equals("J")) {
