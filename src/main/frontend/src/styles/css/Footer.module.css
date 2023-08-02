@@ -30,8 +30,9 @@
   font-family: Noto Sans KR;
 }
 .rectangleParent {
-  position: absolute;
-  top: 1382px;
+  position: relative;
+  /* top: 500px; */
+  margin-top: 250px;
   left: 0;
   width: 1280px;
   height: 128px;

@@ -8,11 +8,11 @@ const Layout = () => {
   return (
     <div>
       <Header></Header>
-      <Footer></Footer>
       <Outlet></Outlet>
       <div className={styles.divsidebar}>
         <Sidebar></Sidebar>
       </div>
+      <Footer></Footer>
     </div>
   );
 };
