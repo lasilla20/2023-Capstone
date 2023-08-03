@@ -32,8 +32,7 @@ const ItemList = ({ selectedCategoryId }) => {
         setLoading(true);
         // axios 등을 이용하여 categoryId를 이용하여 서버에서 데이터를 가져옵니다.
         //const response = await axios.get(`/api?categoryId=${categoryId}`);
-        //const response = await axios.get(`/api/{categoryId}/1`);
-        alert(categoryId+"itemlist.js");
+        //alert(categoryId+"itemlist.js");
         const response = await axios.get(`/api/B/${categoryId}/1`);
         setData(response.data);
       } catch (e) {

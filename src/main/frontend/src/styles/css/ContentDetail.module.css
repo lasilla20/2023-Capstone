@@ -17,6 +17,10 @@
   /*left: 80px;*/
 }
 
+.wrap {
+    min-height: 100%;
+}
+
 .divsidebar {
   position: fixed;
   display: inline-block;

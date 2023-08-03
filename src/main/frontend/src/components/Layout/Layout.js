@@ -8,8 +8,10 @@ const Layout = () => {
   return (
     <div>
       <Header></Header>
+      <div className={styles.wrap}>
+        <Outlet></Outlet>
+      </div>
       <Footer></Footer>
-      <Outlet></Outlet>
       <div className={styles.divsidebar}>
         <Sidebar></Sidebar>
       </div>
