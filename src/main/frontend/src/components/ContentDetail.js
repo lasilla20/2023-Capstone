@@ -4,16 +4,9 @@ import React, { useState, useEffect, useParams } from "react";
 import HeartButton from "./HeartButton";
 import axios from "axios";
 
-const url = "https://web.joongna.com/"; //상품의 원글 url- producturl
+let url = "https://web.joongna.com/"; //상품의 원글
 
 const ContentDetail = (props) => {
-  /*
-  let { itemId } = useParams();
-  let find = props.products.find(
-    (product) => parseInt(product.itemId) === parseInt(itemId)
-  );
-  console.log(find);
-  */
   const [heart, setHeart] = useState(false);
 
   //찜하기/해제 작동되는지 백이랑 통합 후 확인가능
@@ -35,6 +28,34 @@ const ContentDetail = (props) => {
     setHeart(!heart);
   };
 */
+  const fetchURLData = async () => { //해당 상품 외부 링크 이동
+    const response = await axios.get("/api/product/{itemId}/{market}/url");
+    url=response.data;
+    //console.log("url", url);
+  };
+  useEffect(() => {
+    fetchURLData();
+  }, []);
+
+  /*
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("/api/product/{itemId}/{market}/heart");
+      setData(response.data); // 데이터는 response.data 안에 들어있습니다.
+    } catch (e) {
+      setError(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const toggleLike = async (e) => {
+    const res = await axios.post("api/product/{itemId}/{market}/heart/add"); // 좋아요 누름 -> DB 갱신
+    setHeart(!heart);
+  };
+  */
   const toggleLike = async (e) => {
     setHeart(!heart);
   };

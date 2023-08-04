@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CategoryContent } from "../CategoryContent";
+import cdata from "../../db/categories.json";
 import styles from "../../styles/css/Category.module.css";
 
 /* 아코디언 컴포넌트 이용 */
-const CategoryBox = () => {
+const CategoryBox = ({ onCategorySelect }) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   const toggleOpen = () => {
     setIsAccordionOpen(!isAccordionOpen);
+  };
+
+  const handleCategorySelect = (categoryId) => {
+      //alert(categoryId+"category.js");
+      onCategorySelect(categoryId); // 선택된 카테고리 ID를 부모 컴포넌트(Home)로 전달
   };
 
   return (
@@ -33,79 +39,16 @@ const CategoryBox = () => {
         {isAccordionOpen && (
           <motion.div layout className={styles.accordionContent}>
             {/* Add your accordion content here */}
+            {cdata.categories.map((citem) => (
             <CategoryContent
-              className={styles.categoryItem - 0}
-              text="여성패션"
+                className={styles.categoryItem}
+                text={citem.category_name}
+                category_id={citem.category_id}
+                onCategorySelect={handleCategorySelect}
             />
-            <CategoryContent
-              className={styles.categoryItem - 1}
-              text="남성패션"
-            />
-            <CategoryContent
-              className={styles.categoryItem - 2}
-              text="화장품 / 미용"
-            />
-            <CategoryContent
-              className={styles.categoryItem - 3}
-              text="가구 / 인테리어"
-            />
-            <CategoryContent
-              className={styles.categoryItem - 11}
-              text="문구류"
-            />
-            <CategoryContent 
-              className={styles.categoryItem - 4} 
-              text="식품" 
-            />
-            <CategoryContent
-              className={styles.categoryItem - 5}
-              text="출산 / 유아동"
-            />
-            <CategoryContent
-              className={styles.categoryItem - 6}
-              text="반려동물용품"
-            />
-            <CategoryContent
-              className={styles.categoryItem - 7}
-              text="생활(주방/가전)"
-            />
-            <CategoryContent
-              className={styles.categoryItem - 8}
-              text="디지털 / 컴퓨터"
-            />
-            <CategoryContent
-              className={styles.categoryItem - 9}
-              text="스포츠 / 레저"
-            />
-            <CategoryContent
-              className={styles.categoryItem - 10}
-              text="건강 / 의료용품"
-            />
+            ))}
           </motion.div>
         )}
-
-        {/*
-    <button onClick={toggleOpen}>
-        {isAccordionOpen ? "Close" : "Category"}
-    </button>
-
-      {isAccordionOpen && (
-        <div className={styles.accordionContent}>
-          <CategoryContent className={styles.categoryItem-0} text="여성패션"/>
-          <CategoryContent className={styles.categoryItem-1} text="남성패션"/>
-          <CategoryContent className={styles.categoryItem-2} text="화장품 / 미용"/>
-          <CategoryContent className={styles.categoryItem-3} text="가구 / 인테리어"/>
-          <CategoryContent className={styles.categoryItem-11} text="문구류"/>
-          <CategoryContent className={styles.categoryItem-4} text="식품"/>
-          <CategoryContent className={styles.categoryItem-5} text="출산 / 유아동"/>
-          <CategoryContent className={styles.categoryItem-6} text="반려동물용품"/>
-          <CategoryContent className={styles.categoryItem-7} text="생활(주방/가전)"/>
-          <CategoryContent className={styles.categoryItem-8} text="디지털 / 컴퓨터"/>
-          <CategoryContent className={styles.categoryItem-9} text="스포츠 / 레저"/>
-          <CategoryContent className={styles.categoryItem-10} text="건강 / 의료용품"/>
-        </div>
-      )}
-      */}
       </motion.div>
     </AnimatePresence>
   );
