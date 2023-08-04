@@ -1,0 +1,52 @@
+{
+  "categories": [
+    {
+      "category_id":1,
+      "category_name":"여성패션"
+    },
+    {
+      "category_id":2,
+      "category_name":"남성패션"
+    },
+    {
+      "category_id":3,
+      "category_name":"화장품 / 미용"
+    },
+    {
+      "category_id":4,
+      "category_name":"가구 / 인테리어"
+    },
+    {
+      "category_id":5,
+      "category_name":"문구류"
+    },
+    {
+      "category_id":6,
+      "category_name":"식품"
+    },
+    {
+      "category_id":7,
+      "category_name":"출산 / 유아동"
+    },
+    {
+      "category_id":8,
+      "category_name":"반려동물용품"
+    },
+    {
+      "category_id":9,
+      "category_name":"생활(주방/가전)"
+    },
+    {
+      "category_id":10,
+      "category_name":"디지털 / 컴퓨터"
+    },
+    {
+      "category_id":11,
+      "category_name":"스포츠 / 레저"
+    },
+    {
+      "category_id":12,
+      "category_name":"건강 / 의료식품"
+    }
+  ]
+}

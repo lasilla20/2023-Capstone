@@ -4,7 +4,7 @@ import React, { useState, useEffect, useParams } from "react";
 import HeartButton from "./HeartButton";
 import axios from "axios";
 
-let url = "https://web.joongna.com/"; //상품의 원글 url- producturl
+let url = "https://web.joongna.com/"; //상품의 원글
 
 const ContentDetail = (props) => {
   const [heart, setHeart] = useState(false);
