@@ -28,7 +28,7 @@ public class JoonggonaraImpl implements Joonggonara{
 
     /** 중고나라 카테고리 페이지 가져오기 **/
     @Override
-    public LinkedHashMap<String, Product> getPage(String category, int pagenum) {
+    public LinkedHashMap<String, Product> getPage(int category, int pagenum) {
         String url = setURL(category, pagenum);
         LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
@@ -49,7 +49,7 @@ public class JoonggonaraImpl implements Joonggonara{
                 String price_string = prices.get(i).text().replaceAll("[^0-9]", "");
                 int price = Integer.parseInt(price_string);
 
-                Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, category, null);
+                Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, null, null);
                 page.put(id, product);
             }
             return page;
@@ -189,50 +189,50 @@ public class JoonggonaraImpl implements Joonggonara{
     }
 
     /** 중고나라 카테고리 세팅 **/
-    private int setCategory(@NotNull String category) {
+    private int setCategory(@NotNull int category) {
 
         int categoryid;
 
         switch(category){
-            case "WOMANCLOTHES":
+            case 1:
                 categoryid = Joonggonara.WOMANCLOTHES;
                 break;
-            case "MANCLOTHES":
+            case 2:
                 categoryid = Joonggonara.MANCLOTHES;
                 break;
-            case "BEAUTY":
+            case 3:
                 categoryid = Joonggonara.BEAUTY;
                 break;
-            case "FURNITURE":
+            case 4:
                 categoryid = Joonggonara.FURNITURE;
                 break;
-            case "FOOD":
+            case 5:
+                categoryid = Joonggonara.STATIONERY;
+                break;
+            case 6:
                 categoryid = Joonggonara.FOOD;
                 break;
-            case "KIDS":
+            case 7:
                 categoryid = Joonggonara.KIDS;
                 break;
-            case "PETS":
+            case 8:
                 categoryid = Joonggonara.PETS;
                 break;
-            case "LIVES":
+            case 9:
                 categoryid = Joonggonara.LIVES1;
                 break;
-            case "DIGITAL":
+            case 10:
                 categoryid = Joonggonara.DIGITAL1;
                 break;
-            case "SPORTS":
+            case 11:
                 categoryid = Joonggonara.SPORTS1;
                 break;
-            case "HEALTH":
+            case 12:
                 categoryid = Joonggonara.HEALTH;
-                break;
-            case "STATIONERY":
-                categoryid = Joonggonara.STATIONERY;
                 break;
             default:
                 categoryid = NULL;
-                System.out.println("[Error: JoonggonaraImpl.setCategory] 카테고리 이름이 잘못됨");
+                System.out.println("[Error: JoonggonaraImpl.setCategory] 카테고리 번호가 잘못됨");
         }
 
         return categoryid;
@@ -260,7 +260,7 @@ public class JoonggonaraImpl implements Joonggonara{
     }
 
     /** 크롤링 주소 세팅 **/
-    private String setURL(@NotNull String category, @NotNull int pagenum){
+    private String setURL(@NotNull int category, @NotNull int pagenum){
         int categoryid = setCategory(category);
         String url = "https://web.joongna.com/search?category=" + categoryid + "&page=" + pagenum + "&sort=RECENT_SORT";
 

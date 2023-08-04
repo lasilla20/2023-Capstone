@@ -29,7 +29,7 @@ public interface Joonggonara {
     /**
      * 중고나라 카테고리 페이지 가져오기
      **/
-    public LinkedHashMap<String, Product> getPage(String category, int pagenum);
+    public LinkedHashMap<String, Product> getPage(int category, int pagenum);
 
     /**
      * 중고나라 검색 결과 가져오기

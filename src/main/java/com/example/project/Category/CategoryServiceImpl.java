@@ -20,12 +20,19 @@ public class CategoryServiceImpl implements CategoryService {
     private LinkedHashMap<String, Product> BJpage = new LinkedHashMap<>();
     private int JGpagenum = 1;
     private int BJpagenum = 1;
+    private int categorynum = 0;
 
     @Override
-    public LinkedHashMap<String, Product> getPage(Market market, String category, int pagenum) {
+    public LinkedHashMap<String, Product> getPage(Market market, int category, int pagenum) {
 
         LinkedHashMap<String, Product> page = new LinkedHashMap<>();
         int i = 0;
+
+        if (categorynum != category) {
+            JGpage.clear();
+            BJpage.clear();
+            categorynum = category;
+        }
 
         while(true) {
             if (market == Market.JOONGGONARA) {

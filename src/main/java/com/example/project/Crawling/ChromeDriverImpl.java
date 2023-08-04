@@ -9,13 +9,13 @@ import org.springframework.util.ObjectUtils;
 @Component
 public class ChromeDriverImpl implements ChromeDriver{
 
-    private static String WEB_DRIVER_PATH = "/Users/hyunmin/Desktop/2023-Capstone/chromedriver_macos";
+//    private static String WEB_DRIVER_PATH = "/Users/hyunmin/Desktop/2023-Capstone/chromedriver_macos";
     private WebDriver webDriver;
 
     public ChromeDriverImpl() {
-        if (ObjectUtils.isEmpty(System.getProperty("webdriver.chrome.driver"))) {
-            System.setProperty("webdriver.chrome.driver", WEB_DRIVER_PATH);
-        }
+//        if (ObjectUtils.isEmpty(System.getProperty("webdriver.chrome.driver"))) {
+//            System.setProperty("webdriver.chrome.driver", WEB_DRIVER_PATH);
+//        }
 
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);

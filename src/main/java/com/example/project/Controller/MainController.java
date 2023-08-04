@@ -7,11 +7,9 @@ import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import com.example.project.Search.SearchService;
 import com.example.project.config.auth.PrincipalDetails;
-import com.example.project.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,10 +26,8 @@ public class MainController {
     private final SearchService searchService;
     private final HeartService heartService;
 
-    //TODO : 틀만 잡았지 고쳐야할 부분 많음
-
     /** 메인 **/
-    @RequestMapping("")
+    @RequestMapping(value = {"","/logo"})
     public ArrayList main(HttpServletRequest request){
         logger.info("메인 페이지를 로딩합니다···");
 
@@ -47,15 +43,9 @@ public class MainController {
         return datas;
     }
 
-//    /** 로고 클릭 시 메인화면으로 이동 **/
-//    @RequestMapping(value = "/logo", method = RequestMethod.GET)
-//    public String mainLogo(Model model){
-//        return main(model);
-//    }
-
     /** 카테고리 **/
     @GetMapping("/{marketName}/{categoryName}/{pageNum}")
-    public ArrayList getCategory(@PathVariable String marketName, @PathVariable String categoryName, @PathVariable int pageNum, HttpServletRequest request){
+    public ArrayList getCategory(@PathVariable String marketName, @PathVariable int categoryName, @PathVariable int pageNum, HttpServletRequest request){
         String requestURL = request.getRequestURL().toString();
 
         if (marketName.equals("J")) {
@@ -83,25 +73,44 @@ public class MainController {
     }
 
     /** 상품 검색 **/
-    @PostMapping("/search/{productName}/{pagenum}")
-    public String getProductSearch(@PathVariable String productName,@PathVariable("pagenum")int pagenum, Model model, HttpServletRequest request){
+    @GetMapping("/search/{productName}/{pageNum}")
+    public ArrayList getProductSearch(@PathVariable String productName, @PathVariable int pageNum, HttpServletRequest request){
+        logger.info("상품명으로 검색을 진행합니다···");
         String requestURL = request.getRequestURL().toString();
-        System.out.println("requestURL = " + requestURL);
+        System.out.println("requestURL = " +requestURL +" 상품명 : "+productName);
 
-        LinkedHashMap<String, Product> bunjang = searchService.getSearchResult(Market.JOONGGONARA, pagenum, productName);
-        LinkedHashMap<String, Product> joonggo = searchService.getSearchResult(Market.BUNJANG, pagenum, productName);
-        LinkedHashMap<String, Product> carrot = searchService.getSearchResult(Market.CARROT, pagenum, productName);
-        model.addAttribute("categoryInfo", bunjang);
-        model.addAttribute("categoryInfo", joonggo);
-        model.addAttribute("categoryInfo", carrot);
-        return "search";
+        if(pageNum==0){ pageNum=1; }
+
+        if(productName!=null){
+            LinkedHashMap<String, Product> page1 = searchService.getSearchResult(Market.JOONGGONARA, pageNum, productName);
+            LinkedHashMap<String, Product> page2 = searchService.getSearchResult(Market.BUNJANG, pageNum, productName);
+
+            ArrayList datas = new ArrayList();
+            page1.forEach((k, v) -> {
+                datas.add(v);
+            });
+            page2.forEach((k, v) -> {
+                datas.add(v);
+            });
+            return datas;
+        }
+        return null;
     }
 
     /** 찜 목록 이동 **/
     @GetMapping("/list")
-    public String getHeartList(PrincipalDetails principalDetails, Model model){
-        User user = principalDetails.getUser();
-        //model.addAttribute(user.getHeart());
-        return "list";
+    public ArrayList getHeartList(PrincipalDetails principalDetails, HttpServletRequest request){
+        logger.info("찜목록으로 이동합니다···");
+        String requestURL = request.getRequestURL().toString();
+        System.out.println("requestURL = " + requestURL);
+
+//        User user = principalDetails.getUser();
+//        Heart page = user.getHeart();
+
+        ArrayList datas = new ArrayList();
+//        page.forEach((k, v) -> {
+//            datas.add(v);
+//        });
+        return datas;
     }
 }
