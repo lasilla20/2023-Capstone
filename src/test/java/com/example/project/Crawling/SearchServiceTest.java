@@ -176,6 +176,31 @@ public class SearchServiceTest {
 
         LinkedHashMap<String, Product> page = searchService.getSearchResult(Market.CARROT, 1, "짱구");
         System.out.println("page.size() = " + page.size());
-//        Assertions.assertThat(page.size()).isEqualTo(6); // 번개장터 검색 결과 한 페이지에 6개
+//        Assertions.assertThat(page.size()).isEqualTo(6); // 당근마켓 검색 결과 한 페이지에 6개
+    }
+
+    /** 중복 검색 테스트 **/
+    @Test
+    void getSearchResultTest5(){
+        LinkedHashMap<String, Product> page = searchService.getSearchResult(Market.JOONGGONARA, 2, "짱구");
+        for (String key:page.keySet()){
+            Product p = page.get(key);
+            System.out.println("p.getId() = " + p.getId());
+            System.out.println("p.getName() = " + p.getName());
+            System.out.println("p.getImage() = " + p.getImage());
+            System.out.println("p.getPrice() = " + p.getPrice());
+        }
+        page.clear();
+
+        System.out.println("=======================================================================");
+
+        LinkedHashMap<String, Product> page2 = searchService.getSearchResult(Market.JOONGGONARA, 2, "흰둥이");
+        for (String key:page2.keySet()){
+            Product p = page2.get(key);
+            System.out.println("p.getId() = " + p.getId());
+            System.out.println("p.getName() = " + p.getName());
+            System.out.println("p.getImage() = " + p.getImage());
+            System.out.println("p.getPrice() = " + p.getPrice());
+        }
     }
 }

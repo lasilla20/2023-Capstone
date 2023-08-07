@@ -92,6 +92,7 @@ public class MainController {
             page2.forEach((k, v) -> {
                 datas.add(v);
             });
+            Collections.shuffle(datas);
             return datas;
         }
         return null;
