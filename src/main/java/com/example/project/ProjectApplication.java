@@ -5,13 +5,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.*;
 
 @EntityScan(basePackages = {"com.example.project.domain"})
+@ComponentScan(basePackages = "com.example.project")
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+
 //@EnableJpaRepositories(basePackages = "com.example.project.Repository")
 public class ProjectApplication {
 /** DB 정해지면 application.properties 수정 후 위 annotation의 exclude 옵션 삭제 **/

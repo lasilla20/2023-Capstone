@@ -1,21 +1,12 @@
 package com.example.project.Controller;
 
-import com.example.project.Category.CategoryService;
-import com.example.project.Crawling.*;
-import com.example.project.Heart.HeartService;
-import com.example.project.Heart.HeartServiceImpl;
 import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import com.example.project.Product.ProductService;
-import com.example.project.Product.ProductServiceImpl;
-import com.example.project.Search.SearchService;
 import com.example.project.config.auth.PrincipalDetails;
-import com.example.project.domain.user.User;
+import com.example.project.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
