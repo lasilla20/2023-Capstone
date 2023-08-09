@@ -15,14 +15,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private static final Logger log = LoggerFactory.getLogger(MyAuthenticationSuccessHandler.class);
-    private static final String REDIRECT_URI = "http://localhost:3000/logincheck";
-
-    public MyAuthenticationSuccessHandler() {
-    }
+    private static final String redirectUri = "http://localhost:3000/join";
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
-        log.info("SuccessHandler oAuth2User : {}", oAuth2User);
-        response.sendRedirect(UriComponentsBuilder.fromUriString("http://localhost:3000/logincheck").queryParam("accessToken", new Object[]{"accessToken"}).queryParam("refreshToken", new Object[]{"refreshToken"}).queryParam("email", new Object[]{oAuth2User.getAttribute("email").toString()}).build().encode(StandardCharsets.UTF_8).toUriString());
+
+        response.sendRedirect(UriComponentsBuilder.fromUriString(redirectUri)
+                .queryParam("accessToken", oAuth2User.getAttributes().get("sub"))
+                .queryParam("name", oAuth2User.getAttributes().get("name"))
+                .queryParam("email", oAuth2User.getAttributes().get("email"))
+                .build().encode(StandardCharsets.UTF_8)
+                .toUriString());
     }
 }
