@@ -78,3 +78,15 @@
   float: right;
   font-size: 13px;
 }
+
+.pageBox {
+    background-color: white;
+    border: none;
+    margin: 10px;
+}
+.pageMove {
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+}
