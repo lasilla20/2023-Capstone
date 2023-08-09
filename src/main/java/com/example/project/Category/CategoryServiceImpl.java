@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
@@ -36,17 +37,26 @@ public class CategoryServiceImpl implements CategoryService {
 
         while(true) {
             if (market == Market.JOONGGONARA) {
-                if (JGpage.size() < pagenum * 40) JGpage.putAll(joonggonara.getPage(category, JGpagenum++));
+                if (JGpage.size() < pagenum * 40) {
+                    LinkedHashMap<String, Product> newpage = joonggonara.getPage(category, JGpagenum++);
+                    if (newpage.isEmpty()) System.out.println("[Error] CategoryServiceImpl: 중고나라 카테고리 로딩 실패");
+                    else JGpage.putAll(newpage);
+                }
                 else {
                     for (String key : JGpage.keySet()) {
-                        if ((i > ((pagenum - 1) * 40 - 1)) && (i < pagenum * 40)) page.put(key, JGpage.get(key));
+                        if ((i > ((pagenum - 1) * 40 - 1)) && (i < pagenum * 40))
+                            page.put(key, JGpage.get(key));
                         else if (i == pagenum * 40) break;
                         i++;
                     }
                     return page;
                 }
             } else if (market == Market.BUNJANG) {
-                if (BJpage.size() < pagenum * 40) BJpage.putAll(bunjang.getPage(category, BJpagenum++));
+                if (BJpage.size() < pagenum * 40) {
+                    LinkedHashMap<String, Product> newpage = bunjang.getPage(category, BJpagenum++);
+                    if (newpage.isEmpty()) System.out.println("[Error] CategoryServiceImpl: 번개장터 카테고리 로딩 실패");
+                    else BJpage.putAll(newpage);
+                }
                 else {
                     for (String key : BJpage.keySet()) {
                         if ((i > ((pagenum - 1) * 40 - 1)) && (i < pagenum * 40)) page.put(key, BJpage.get(key));
@@ -56,7 +66,7 @@ public class CategoryServiceImpl implements CategoryService {
                     return page;
                 }
             } else {
-                System.out.println("마켓 값 잘못됨");
+                System.out.println("[Error] CategoryServiceImpl: 올바르지 않은 마켓 값 입력");
                 return null;
             }
         }

@@ -28,24 +28,33 @@ public class MainPageServiceImpl implements MainPageService{
 
         // 중고나라
         crawlingpage = joonggonara.getMainPage();
-        page.putAll(crawlingpage);
-        crawlingpage.clear();
+        if (!crawlingpage.isEmpty()) {
+            page.putAll(crawlingpage);
+            crawlingpage.clear();
+        }
+        else System.out.println("[Error] MainPageServiceImpl: 중고나라 로딩 실패");
 
         // 번개장터
         crawlingpage = bunjang.getMainPage();
-        for(String s:crawlingpage.keySet()){
-            page.put(s, crawlingpage.get(s));
-            if(++i == 13) break;
+        if (!crawlingpage.isEmpty()) {
+            for (String s : crawlingpage.keySet()) {
+                page.put(s, crawlingpage.get(s));
+                if (++i == 13) break;
+            }
+            crawlingpage.clear();
+            i = 0;
         }
-        crawlingpage.clear();
-        i = 0;
+        else System.out.println("[Error] MainPageServiceImpl: 번개장터 로딩 실패");
 
         // 당근마켓
         crawlingpage = carrot.getMainPage();
-        for(String s:crawlingpage.keySet()){
-            page.put(s, crawlingpage.get(s));
-            if(++i == 17) break;
+        if (!crawlingpage.isEmpty()) {
+            for (String s:crawlingpage.keySet()){
+                page.put(s, crawlingpage.get(s));
+                if(++i == 17) break;
+            }
         }
+        else System.out.println("[Error] MainPageServiceImpl: 당근마켓 로딩 실패");
 
         return page;
     }
