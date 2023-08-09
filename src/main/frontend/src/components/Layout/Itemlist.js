@@ -3,16 +3,12 @@ import axios from "axios";
 import styles from "../../styles/css/ItemList.module.css";
 import { ListItem } from "../ListItem";
 
-<<<<<<< HEAD
-const ItemList = ({ selectedCategoryId }) => {
-=======
 //글자수 제한 함수
 const truncate = (str, n) => {
   return str?.length > n ? str.substr(0, n - 1) + "..." : str;
 };
 
 const ItemList = ({ selectedCategoryId}) => {
->>>>>>> c41551a991a342799ea9ae16d32775cebf92f326
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -32,38 +28,6 @@ const ItemList = ({ selectedCategoryId}) => {
     setLoading(false);
   };
 
-<<<<<<< HEAD
-  const fetchCategoryData = async (categoryId) => {
-      try {
-        setError(null);
-        setData(null);
-        setLoading(true);
-        // axios 등을 이용하여 categoryId를 이용하여 서버에서 데이터를 가져옵니다.
-        //const response = await axios.get(`/api?categoryId=${categoryId}`);
-        //alert(categoryId+"itemlist.js");
-        const response = await axios.get(`/api/B/${categoryId}/1`);
-        setData(response.data);
-      } catch (e) {
-        setError(e);
-      }
-      setLoading(false);
-    };
-
-  {/*useEffect(() => {
-    fetchData();
-  }, []);*/}
-
-  useEffect(() => {
-    if (selectedCategoryId !== null) {
-        fetchCategoryData(selectedCategoryId);
-    } else {
-        fetchData();
-    }
-  }, [selectedCategoryId]);
-
-    // 카테고리 선택을 처리하는 함수
-/*  const handleListItemClick = (categoryId) => {
-=======
 
   const fetchCategoryData = async (categoryId) => {
     try {
@@ -96,7 +60,6 @@ const ItemList = ({ selectedCategoryId}) => {
 
   // 카테고리 선택을 처리하는 함수
   /*  const handleListItemClick = (categoryId) => {
->>>>>>> c41551a991a342799ea9ae16d32775cebf92f326
     alert(categoryId);
   };*/
 
@@ -104,22 +67,6 @@ const ItemList = ({ selectedCategoryId}) => {
   if (error) return <div>에러가 발생했습니다</div>;
   if (!data) return null;
   return (
-<<<<<<< HEAD
-      <div className={styles.itemlistcontent}>
-        {data.map((item) => (
-            <ListItem
-                className={styles.listItem}
-                key={item.name}
-                id={item.id}
-                store={item.market}
-                price={item.price}
-                title={item.name}
-                src={item.image}
-                heartCnt={item.heartCnt}
-            />
-        ))}
-      </div>
-=======
     <div className={styles.itemlistcontent}>
       {data.map((item) => (
         <ListItem
@@ -134,7 +81,6 @@ const ItemList = ({ selectedCategoryId}) => {
         />
       ))}
     </div>
->>>>>>> c41551a991a342799ea9ae16d32775cebf92f326
   );
 };
 

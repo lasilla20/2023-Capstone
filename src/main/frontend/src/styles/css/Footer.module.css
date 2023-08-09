@@ -24,18 +24,11 @@
   font-family: Noto Sans KR;
 }
 .rectangleParent {
-<<<<<<< HEAD
-  position: absolute;
-  top: 1500px;
-  left: 0;
-  width: 100%;/*1280px;*/
-=======
   position: relative;
   /* top: 500px; */
   margin-top: 250px;
   left: 0;
   width: 100%;
->>>>>>> c41551a991a342799ea9ae16d32775cebf92f326
   height: 128px;
   font-size: var(--font-size-xs);
   font-family: var(--font-inter);
