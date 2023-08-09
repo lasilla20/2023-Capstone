@@ -1,9 +1,5 @@
 package com.example.project.Controller;
 
-import com.example.project.Category.CategoryService;
-import com.example.project.Crawling.*;
-import com.example.project.Heart.HeartService;
-import com.example.project.Heart.HeartServiceImpl;
 import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import com.example.project.Product.ProductService;
@@ -25,16 +21,17 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/api/product")
 @RequiredArgsConstructor
 public class ProductController {
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     private final ProductService productService;
 
     /** String -> Market **/
-    public Market parseMarket(String m){
-        String n = m.toLowerCase();
-        if(n.contains("joonggo")){
+    public Market parseMarket(String s){
+        String m = s.toUpperCase();
+        if(m.equals("J")){
             return Market.JOONGGONARA;
-        } else if(n.contains("bunjang")){
+        } else if(m.equals("B")){
             return Market.BUNJANG;
-        } else if (n.contains("carrot")) {
+        } else if (m.equals("C")) {
             return Market.CARROT;
         }
         return null;
@@ -42,17 +39,13 @@ public class ProductController {
 
     /** 상품 상세 페이지 **/
     @GetMapping("/{itemId}/{market}")
-    public Product getProductId(@PathVariable("itemId")String itemId, @PathVariable("market")String market, Model model, HttpServletRequest request) {
-//        long item = Long.parseLong(itemId);
-//        Market m = parseMarket(market);
-//        Product product = productService.getProduct(item, m);
-
-        /** 더미데이터 **/
-        Product product = new Product("119272335", "item","image_url",
-                10000, Market.JOONGGONARA,"seller","2023-07-14",0,"details","category","https://web.joongna.com/product/119272335");
-
+    public Product getProductId(@PathVariable("itemId")String itemId, @PathVariable String market, HttpServletRequest request) {
+//      http://localhost:3000/api/product/231821733/B
+        logger.info("상품 상세 페이지를 로딩합니다···");
+        Market m = parseMarket(market);
+        Product product = productService.getProduct(itemId, m);
         String requestURL = request.getRequestURL().toString();
-        System.out.println("requestURL = " + requestURL);
+        System.out.println("requestURL = " + requestURL+" 상품 아이디: "+itemId);
 
         return product;
     }
@@ -83,13 +76,14 @@ public class ProductController {
 
     /** 외부 사이트 이동 **/
     @GetMapping("/{itemId}/{market}/url")
-    public String getProuctUrl(@PathVariable("itemId")String itemId, @PathVariable("market")String market, Model model){
-//        long item = Long.parseLong(itemId);
-//        Market m = parseMarket(market);
-//        Product product = productService.getProduct(item, m);
-        /** 더미데이터 **/
-        Product product = new Product("119272335", "item","image_url",
-                10000, Market.JOONGGONARA,"seller","2023-07-14",0,"details","category","https://web.joongna.com/product/119272335");
+    public String getProuctUrl(@PathVariable("itemId")String itemId, @PathVariable String market, HttpServletRequest request){
+//      http://localhost:3000/api/product/231821733/B/url
+        logger.info("외부 사이트로 이동합니다···");
+        Market m = parseMarket(market);
+        Product product = productService.getProduct(itemId, m);
+        String requestURL = request.getRequestURL().toString();
+        System.out.println("requestURL = " + requestURL+" 상품 아이디: "+itemId);
+
         String url = product.getProducturl();
         return url;
     }
