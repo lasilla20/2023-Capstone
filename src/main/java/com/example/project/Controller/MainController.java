@@ -111,10 +111,5 @@ public class MainController {
 //        });
         return datas;
     }
-<<<<<<< HEAD
-
 
 }
-=======
-}
->>>>>>> 064647060b169c018b2ad98622589babc3a85889
