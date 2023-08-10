@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
@@ -45,28 +46,15 @@ public class MainController {
     @GetMapping("/{marketName}/{categoryName}/{pageNum}")
     public ArrayList getCategory(@PathVariable String marketName, @PathVariable int categoryName, @PathVariable int pageNum, HttpServletRequest request){
 
-        if (marketName.equals("J")) {
-            mylogger.printRequestInfo(request, classPath, "중고나라 카테고리를 로딩합니다···");
-            LinkedHashMap<String, Product> page = categoryService.getPage(Market.JOONGGONARA, categoryName, pageNum);
+        mylogger.printRequestInfo(request, classPath, "카테고리를 로딩합니다···");
+        HashMap<String, Product> page = categoryService.getPage(categoryName, pageNum);
 
-            ArrayList datas = new ArrayList();
-            page.forEach((k, v) -> {
-                datas.add(v);
-            });
-            return datas;
-        } else if (marketName.equals("B")) {
-            mylogger.printRequestInfo(request, classPath, "번개장터 카테고리를 로딩합니다···");
-            LinkedHashMap<String, Product> page = categoryService.getPage(Market.BUNJANG, categoryName, pageNum);
+        ArrayList datas = new ArrayList();
+        page.forEach((k, v) -> {
+            datas.add(v);
+        });
 
-            ArrayList datas = new ArrayList();
-            page.forEach((k, v) -> {
-                datas.add(v);
-            });
-            return datas;
-        }
-
-        System.out.println("[Error] MainController: 올바르지 않은 마켓 이름");
-        return null;
+        return datas;
     }
 
     /** 상품 검색 **/
