@@ -54,7 +54,7 @@ public class JoonggonaraImpl implements Joonggonara{
             }
             return page;
         } catch(IOException e){
-            System.out.println("중고나라 크롤링 오류_카테고리");
+            System.out.println("[Error] JoonggonaraImpl: 카테고리 크롤링 오류");
         }
         return null;
     }
@@ -94,11 +94,8 @@ public class JoonggonaraImpl implements Joonggonara{
             }
             return page;
         } catch (Exception e) {
-            System.out.println("중고나라 크롤링 오류_검색");
+            System.out.println("[Error] JoonggonaraImpl: 검색 크롤링 오류");
         }
-//        } finally {
-//            webDriver.quit();
-//        }
 
         return null;
     }
@@ -146,11 +143,8 @@ public class JoonggonaraImpl implements Joonggonara{
             Product product = new Product(id, name, img, price, market, seller, updatedate, heart, detail, category, url);
             return product;
         } catch (Exception e) {
-            System.out.println("중고나라 크롤링 오류_상품 상세");
+            System.out.println("[Error] JoonggonaraImpl: 상품 크롤링 오류");
         }
-//        } finally {
-//            webDriver.quit();
-//        }
 
         return null;
     }
@@ -183,7 +177,7 @@ public class JoonggonaraImpl implements Joonggonara{
             }
             return page;
         } catch(IOException e){
-            System.out.println("중고나라 크롤링 오류_메인화면");
+            System.out.println("[Error] JoonggonaraImpl: 메인화면 크롤링 오류");
         }
         return null;
     }
@@ -232,7 +226,7 @@ public class JoonggonaraImpl implements Joonggonara{
                 break;
             default:
                 categoryid = NULL;
-                System.out.println("[Error: JoonggonaraImpl.setCategory] 카테고리 번호가 잘못됨");
+                System.out.println("[Error] JoonggonaraImpl.setCategory: 카테고리 번호가 잘못됨");
         }
 
         return categoryid;
