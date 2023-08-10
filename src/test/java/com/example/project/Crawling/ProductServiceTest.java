@@ -53,7 +53,7 @@ public class ProductServiceTest {
 
             String sellerURL = webDriver.findElement(By.cssSelector(".col-span-2 div div.flex a.font-semibold")).getAttribute("href");
             webDriver.get(sellerURL);
-            String seller = webDriver.findElement(By.cssSelector("div.relative h1.hidden")).getText();
+            String seller = webDriver.findElement(By.cssSelector(".mt-5 div h1")).getText();
 
             String[] etcs = doc.select(".text-body span").text().split(" · ");
             String updatedate = etcs[0];
