@@ -32,7 +32,7 @@ public class MainPageServiceImpl implements MainPageService{
         if ((Math.abs(systemmin - nowminute) < 4) && !page.isEmpty()) return page;
 
         page.clear();
-        // 중고나라
+
         crawlingpage = joonggonara.getMainPage();
         if (!crawlingpage.isEmpty()) {
             page.putAll(crawlingpage);
@@ -40,26 +40,19 @@ public class MainPageServiceImpl implements MainPageService{
         }
         else System.out.println("[Error] MainPageServiceImpl: 중고나라 로딩 실패");
 
-        // 번개장터
         crawlingpage = bunjang.getMainPage();
         if (!crawlingpage.isEmpty()) {
             for (String s : crawlingpage.keySet()) {
                 page.put(s, crawlingpage.get(s));
-                if (++i == 13) break;
+                if (++i == 50) break;
             }
             crawlingpage.clear();
             i = 0;
         }
         else System.out.println("[Error] MainPageServiceImpl: 번개장터 로딩 실패");
 
-        // 당근마켓
         crawlingpage = carrot.getMainPage();
-        if (!crawlingpage.isEmpty()) {
-            for (String s:crawlingpage.keySet()){
-                page.put(s, crawlingpage.get(s));
-                if(++i == 17) break;
-            }
-        }
+        if (!crawlingpage.isEmpty()) page.putAll(crawlingpage);
         else System.out.println("[Error] MainPageServiceImpl: 당근마켓 로딩 실패");
 
         return page;
