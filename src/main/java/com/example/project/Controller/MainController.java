@@ -8,11 +8,10 @@ import com.example.project.Product.Product;
 import com.example.project.Search.SearchService;
 import com.example.project.config.auth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -21,23 +20,21 @@ import java.util.LinkedHashMap;
 @RestController
 @RequestMapping("/api")
 public class MainController {
-    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
     private final CategoryService categoryService;
     private final MainPageService mainPageService;
     private final SearchService searchService;
     private final HeartService heartService;
+    private final MyLogger mylogger;
+    private String classPath = Thread.currentThread().getStackTrace()[1].getClassName();
 
     /** 메인 **/
     @RequestMapping(value = {"","/logo"})
     public ArrayList main(HttpServletRequest request){
-        logger.info("메인 페이지를 로딩합니다···");
-
-        ArrayList datas = new ArrayList();
-        String requestURL = request.getRequestURL().toString();
-        System.out.println("requestURL = " + requestURL);
+        mylogger.printRequestInfo(request, classPath, "메인 페이지를 로딩합니다···");
 
         LinkedHashMap<String, Product> page = mainPageService.getPage();
 
+        ArrayList datas = new ArrayList();
         page.forEach((k, v) -> {
             datas.add(v);
         });
@@ -47,10 +44,9 @@ public class MainController {
     /** 카테고리 **/
     @GetMapping("/{marketName}/{categoryName}/{pageNum}")
     public ArrayList getCategory(@PathVariable String marketName, @PathVariable int categoryName, @PathVariable int pageNum, HttpServletRequest request){
-        String requestURL = request.getRequestURL().toString();
 
         if (marketName.equals("J")) {
-            logger.info("중고나라 카테고리 로딩... requestURL = " + requestURL);
+            mylogger.printRequestInfo(request, classPath, "중고나라 카테고리를 로딩합니다···");
             LinkedHashMap<String, Product> page = categoryService.getPage(Market.JOONGGONARA, categoryName, pageNum);
 
             ArrayList datas = new ArrayList();
@@ -59,7 +55,7 @@ public class MainController {
             });
             return datas;
         } else if (marketName.equals("B")) {
-            logger.info("번개장터 카테고리 로딩... requestURL = " + requestURL);
+            mylogger.printRequestInfo(request, classPath, "번개장터 카테고리를 로딩합니다···");
             LinkedHashMap<String, Product> page = categoryService.getPage(Market.BUNJANG, categoryName, pageNum);
 
             ArrayList datas = new ArrayList();
@@ -69,14 +65,14 @@ public class MainController {
             return datas;
         }
 
-        logger.info("Error: 마켓 이름을 제대로 입력해 주세요! requestURL = " + requestURL);
+        System.out.println("[Error] MainController: 올바르지 않은 마켓 이름");
         return null;
     }
 
     /** 상품 검색 **/
     @GetMapping("/search/{productName}/{pageNum}")
     public ArrayList getProductSearch(@PathVariable String productName, @PathVariable int pageNum, HttpServletRequest request){
-        logger.info("상품명으로 검색을 진행합니다···");
+        mylogger.printRequestInfo(request, classPath, "상품명으로 검색을 진행합니다···");
         String requestURL = request.getRequestURL().toString();
         System.out.println("requestURL = " +requestURL +" 상품명 : "+productName);
 
@@ -93,6 +89,7 @@ public class MainController {
             page2.forEach((k, v) -> {
                 datas.add(v);
             });
+            Collections.shuffle(datas);
             return datas;
         }
         return null;
@@ -101,7 +98,7 @@ public class MainController {
     /** 찜 목록 이동 **/
     @GetMapping("/list")
     public ArrayList getHeartList(PrincipalDetails principalDetails, HttpServletRequest request){
-        logger.info("찜목록으로 이동합니다···");
+        mylogger.printRequestInfo(request, classPath, "찜목록으로 이동합니다···");
         String requestURL = request.getRequestURL().toString();
         System.out.println("requestURL = " + requestURL);
 
@@ -114,4 +111,5 @@ public class MainController {
 //        });
         return datas;
     }
+
 }

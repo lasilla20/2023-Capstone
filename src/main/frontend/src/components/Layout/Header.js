@@ -1,22 +1,24 @@
 import styles from "../../styles/css/Header.module.css";
 import Searchbar from "./Searchbar";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles.groupParent}>
       <div className={styles.planetParent}>
-        <img className={styles.planet} alt="" src="/img/임시로고.svg" />
+        <button className={styles.planet}
+            onClick={() => navigate('/')}>
+            <img src="/img/임시로고.svg" /></button>
       </div>
       <img
         className={styles.basketAlt3Icon}
         alt=""
         src="/img/basket-alt-3.svg"
       />
-      <img
-        className={styles.userCicrleDuotoneIcon}
-        alt=""
-        src="/img/user-cicrle-duotone.svg"
-      />
+      <button className={styles.userCicrleDuotoneIcon}
+            onClick={() => navigate('/login')}>
+      <img src="/img/user-cicrle-duotone.svg"/></button>
       <Searchbar></Searchbar>
       <div className={styles.line} />
       {/*<div className={styles.groupItem} />

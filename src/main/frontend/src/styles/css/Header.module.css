@@ -20,6 +20,8 @@
   align-items: center;
   justify-content: center;
   width: 200px;
+  border: none;
+  background: none;
 }
 .planetIcon,
 .planetParent {
@@ -42,11 +44,13 @@
   position: absolute;
   top: 8px;
   left: 1006px;
-  width: 42px;
+  width: 38px;
   height: 42px;
 }
 .userCicrleDuotoneIcon {
-  left: 1078px;
+  left: 1070px;
+  border: none;
+  background: none;
 }
 
 .line,
