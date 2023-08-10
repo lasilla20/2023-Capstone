@@ -4,9 +4,11 @@ import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import com.example.project.Product.ProductService;
 import com.example.project.config.auth.PrincipalDetails;
-import com.example.project.domain.user.User;
+import com.example.project.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

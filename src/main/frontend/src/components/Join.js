@@ -1,9 +1,20 @@
-import React, { Component } from "react";
+import React, {useEffect} from "react";
 import styles from "../styles/css/Join.module.css";
 
-class Join extends Component {
+function Join() {
   //회원가입,로그아웃 완료 페이지
-  render() {
+    useEffect((v) => {
+        const token = new URL(window.location.href).searchParams.get("accessToken")
+        const name = new URL(window.location.href).searchParams.get("name")
+        const email = new URL(window.location.href).searchParams.get("email")
+
+        if (token) {
+            localStorage.setItem("token", token)
+            localStorage.setItem("name", name)
+            localStorage.setItem("email", email)
+        }
+        }
+    )
     return (
       <div className={styles.container}>
         <img alt="" src={"img/임시로고.svg"} />
@@ -18,7 +29,6 @@ class Join extends Component {
         </div>
       </div>
     );
-  }
 }
 
 export default Join;
