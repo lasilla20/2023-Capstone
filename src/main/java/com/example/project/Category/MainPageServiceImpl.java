@@ -7,6 +7,7 @@ import com.example.project.Product.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
 import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
@@ -16,16 +17,21 @@ public class MainPageServiceImpl implements MainPageService{
     private final Joonggonara joonggonara;
     private final Bunjang bunjang;
     private final Carrot carrot;
+    private int systemmin = LocalTime.now().getMinute();
+    private LinkedHashMap<String, Product> page = new LinkedHashMap<>();
 
     /**
      * 메인화면에 인기상품 40개 띄우기
      **/
     @Override
     public LinkedHashMap<String, Product> getPage() {
-        LinkedHashMap<String, Product> page = new LinkedHashMap<>();
         LinkedHashMap<String, Product> crawlingpage = new LinkedHashMap<>();
         int i = 0;
 
+        int nowminute = LocalTime.now().getMinute();
+        if ((Math.abs(systemmin - nowminute) < 4) && !page.isEmpty()) return page;
+
+        page.clear();
         // 중고나라
         crawlingpage = joonggonara.getMainPage();
         if (!crawlingpage.isEmpty()) {
