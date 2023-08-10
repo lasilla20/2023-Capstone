@@ -30,7 +30,7 @@ class Login extends Component {
           <button
             className={styles.google}
             onClick={() =>
-              window.open("/oauth2/authorization/google", "_blank")
+              window.open("http://localhost:8080/oauth2/authorization/google")
             }
           >
             <img src={googlebtn} width="222" alt="구글 로그인 버튼" />

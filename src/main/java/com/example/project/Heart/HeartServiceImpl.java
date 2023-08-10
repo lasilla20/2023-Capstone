@@ -4,7 +4,7 @@ import com.example.project.Product.Market;
 import com.example.project.Product.Product;
 import com.example.project.Product.ProductService;
 import com.example.project.config.auth.PrincipalDetails;
-import com.example.project.domain.user.User;
+import com.example.project.domain.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

@@ -50,14 +50,11 @@ public class BunjangImpl implements Bunjang {
                     page.put(id, product);
                 }
             }
-            return page;
         } catch(Exception e) {
-            System.out.println("번개장터 크롤링 오류_카테고리");
+            System.out.println("[Error] BunjangImpl: 카테고리 크롤링 오류");
         }
-//        } finally {
-//            webDriver.quit();
-//        }
-        return null;
+
+        return page;
     }
 
     /** 번개장터 검색 결과 가져오기 **/
@@ -88,14 +85,11 @@ public class BunjangImpl implements Bunjang {
                 Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, null, null, null);
                 page.put(id, product);
             }
-            return page;
         } catch(Exception e) {
-            System.out.println("번개장터 크롤링 오류_검색");
+            System.out.println("[Error] BunjangImpl: 검색 크롤링 오류");
         }
-//        } finally {
-//            webDriver.quit();
-//        }
-        return null;
+
+        return page;
     }
 
     /** 번개장터 상품 상세 가져오기 **/
@@ -132,11 +126,8 @@ public class BunjangImpl implements Bunjang {
             Product product = new Product(id, name, img, price, market, seller, null, heart, detail, category, url);
             return product;
         } catch(Exception e) {
-            System.out.println("번개장터 크롤링 오류_상품 상세");
+            System.out.println("[Error] BunjangImpl: 상품 상세 크롤링 오류");
         }
-//        } finally {
-//            webDriver.quit();
-//        }
 
         return null;
     }
@@ -168,14 +159,11 @@ public class BunjangImpl implements Bunjang {
                 Product product = new Product(id, name, img, price, Market.BUNJANG, null, null, 0, null, null, null);
                 page.put(id, product);
             }
-            return page;
         } catch(Exception e) {
-            System.out.println("번개장터 크롤링 오류_메인화면");
+            System.out.println("[Error] BunjangImpl: 메인화면 크롤링 오류");
         }
-//        } finally {
-//            webDriver.quit();
-//        }
-        return null;
+
+        return page;
     }
 
     /** 번개장터 카테고리 세팅 **/
@@ -223,7 +211,7 @@ public class BunjangImpl implements Bunjang {
 
             default:
                 categoryid = NULL;
-                System.out.println("[Error: BunjangImpl.setCategory] 카테고리 번호가 잘못됨");
+                System.out.println("[Error] BunjangImpl.setCategory: 카테고리 번호가 잘못됨");
         }
 
         return categoryid;

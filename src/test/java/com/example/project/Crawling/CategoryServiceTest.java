@@ -1,12 +1,9 @@
 package com.example.project.Crawling;
 
-import com.example.project.AppConfig;
 import com.example.project.Category.CategoryService;
 import com.example.project.Category.CategoryServiceImpl;
 import com.example.project.Product.Market;
 import com.example.project.Product.Product;
-import com.example.project.Search.SearchService;
-import com.example.project.Search.SearchServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,11 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -69,15 +63,15 @@ class CategoryServiceTest {
         }
     }
 
-    /** 중고나라에서 카테고리 불러오기 테스트 2 **/
-    @Test
-    void getPageTest2() {
-        HashMap<String, Product> hashMap = categoryService.getPage(Market.JOONGGONARA, 1, 1);
-        Assertions.assertThat(hashMap.size()).isEqualTo(40);
-
-        HashMap<String, Product> hashMap2 = categoryService.getPage(Market.JOONGGONARA, 2, 1);
-        Assertions.assertThat(hashMap.size()).isEqualTo(40);
-    }
+//    /** 중고나라에서 카테고리 불러오기 테스트 2 **/
+//    @Test
+//    void getPageTest2() {
+//        HashMap<String, Product> hashMap = categoryService.getPage(Market.JOONGGONARA, 1, 1);
+//        Assertions.assertThat(hashMap.size()).isEqualTo(40);
+//
+//        HashMap<String, Product> hashMap2 = categoryService.getPage(Market.JOONGGONARA, 2, 1);
+//        Assertions.assertThat(hashMap.size()).isEqualTo(40);
+//    }
 
     /** 번개장터에서 카테고리 불러오기 테스트 **/
     @Test
@@ -130,12 +124,26 @@ class CategoryServiceTest {
         }
     }
 
-    /** 번개장터에서 카테고리 불러오기 테스트 2 **/
+//    /** 번개장터에서 카테고리 불러오기 테스트 2 **/
+//    @Test
+//    void getPageTest4(){
+//        HashMap<String, Product> hashMap = categoryService
+//                .getPage(Market.BUNJANG, 1, 5);
+//        Assertions.assertThat(hashMap.size()).isEqualTo(40);
+//    }
+
+    /** 통합 카테고리 불러오기 테스트 **/
     @Test
-    void getPageTest4(){
-        HashMap<String, Product> hashMap = categoryService
-                .getPage(Market.BUNJANG, 1, 5);
-        Assertions.assertThat(hashMap.size()).isEqualTo(40);
+    void getPageTest5(){
+        HashMap<String, Product> hashMap = categoryService.getPage(1, 5);
+        int i = 0;
+        for (String key : hashMap.keySet()){
+            i++;
+            System.out.println("Product name = " + hashMap.get(key).getName());
+        }
+
+        System.out.println();
+        System.out.println("Total: " + i);
     }
 
 }

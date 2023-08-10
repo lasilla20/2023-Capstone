@@ -55,14 +55,10 @@ public class CarrotImpl implements Carrot{
                 Product product = new Product(id, name, img, price, Market.CARROT, null, null, 0, null, null, null);
                 page.put(id, product);
             }
-            return page;
         } catch(Exception e){
-            System.out.println("당근마켓 크롤링 오류_검색");
+            System.out.println("[Error] CarrotImpl: 검색 크롤링 오류");
         }
-//        finally {
-//            webDriver.quit();
-//        }
-        return null;
+        return page;
     }
 
     /** 당근마켓 상품 상세 가져오기 **/
@@ -95,7 +91,7 @@ public class CarrotImpl implements Carrot{
             Product product = new Product(id, name, img, price, market, seller, updatedate, heart, detail, category, url);
             return product;
         } catch (IOException e){
-            System.out.println("당근마켓 크롤링 오류_상품 상세");
+            System.out.println("[Error] CarrotImpl: 상품 상세 크롤링 오류");
         }
         return null;
     }
@@ -133,14 +129,11 @@ public class CarrotImpl implements Carrot{
                 Product product = new Product(id, name, img, price, Market.CARROT, null, null, 0, null, null, null);
                 page.put(id, product);
             }
-            return page;
         } catch (Exception e) {
-            System.out.println("당근마켓 크롤링 오류_메인화면");
+            System.out.println("[Error] CarrotImpl: 메인화면 크롤링 오류");
         }
-//        } finally {
-//            webDriver.quit();
-//        }
-        return null;
+
+        return page;
     }
 
     private String setURL(String id){

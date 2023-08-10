@@ -1,46 +1,38 @@
 package com.example.project.config.auth;
 
-import com.example.project.domain.user.User;
-import lombok.Getter;
-import lombok.ToString;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-
-import java.util.ArrayList;
+import com.example.project.domain.User;
 import java.util.Collection;
 import java.util.Map;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
-@Getter
-@ToString
 public class PrincipalDetails implements OAuth2User {
     private User user;
     private Map<String, Object> attributes;
 
-    //구글 로그인 시 사용
-    public PrincipalDetails(User user, Map<String, Object> attributes){
+    public PrincipalDetails(User user, Map<String, Object> attributes) {
         this.user = user;
         this.attributes = attributes;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
-        Collection<GrantedAuthority> collect = new ArrayList<>();
-        collect.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return user.getRole();
-            }
-        });
-        return collect;
+    public Map<String, Object> getAttributes() {
+        return this.attributes;
     }
 
-    @Override
-    public Map<String, Object> getAttributes(){
-        return attributes;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
-    @Override
-    public String getName(){
+
+    public String getName() {
         return "name";
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public String toString() {
+        User var10000 = this.getUser();
+        return "PrincipalDetails(user=" + var10000 + ", attributes=" + this.getAttributes() + ")";
     }
 }
