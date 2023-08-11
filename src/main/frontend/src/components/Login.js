@@ -20,7 +20,7 @@ class Login extends Component {
         <div>
           <button
             className={styles.kakao}
-            onClick={() => window.open("/oauth2/authorization/kakao", "_blank")}
+            onClick={() => window.open("http://localhost:8080/oauth2/authorization/kakao")}
           >
             <img src={kakaobtn} width="222" alt="카카오 로그인 버튼" />
           </button>

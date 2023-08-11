@@ -52,11 +52,10 @@ public class JoonggonaraImpl implements Joonggonara{
                 Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, null, null);
                 page.put(id, product);
             }
-            return page;
         } catch(IOException e){
             System.out.println("[Error] JoonggonaraImpl: 카테고리 크롤링 오류");
         }
-        return null;
+        return page;
     }
 
     /**
@@ -92,12 +91,11 @@ public class JoonggonaraImpl implements Joonggonara{
                     page.put(id, product);
                 }
             }
-            return page;
         } catch (Exception e) {
             System.out.println("[Error] JoonggonaraImpl: 검색 크롤링 오류");
         }
 
-        return null;
+        return page;
     }
 
     /** 중고나라 상품 상세 가져오기 **/
@@ -175,11 +173,10 @@ public class JoonggonaraImpl implements Joonggonara{
                 Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, null, null);
                 page.put(id, product);
             }
-            return page;
         } catch(IOException e){
             System.out.println("[Error] JoonggonaraImpl: 메인화면 크롤링 오류");
         }
-        return null;
+        return page;
     }
 
     /** 중고나라 카테고리 세팅 **/
