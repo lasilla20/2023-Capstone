@@ -43,8 +43,8 @@ public class MainController {
     }
 
     /** 카테고리 **/
-    @GetMapping("/{marketName}/{categoryName}/{pageNum}")
-    public ArrayList getCategory(@PathVariable String marketName, @PathVariable int categoryName, @PathVariable int pageNum, HttpServletRequest request){
+    @GetMapping("/{categoryName}/{pageNum}")
+    public ArrayList getCategory(@PathVariable int categoryName, @PathVariable int pageNum, HttpServletRequest request){
 
         mylogger.printRequestInfo(request, classPath, "카테고리를 로딩합니다···");
         HashMap<String, Product> page = categoryService.getPage(categoryName, pageNum);
