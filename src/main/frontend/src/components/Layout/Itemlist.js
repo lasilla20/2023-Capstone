@@ -17,7 +17,17 @@ const ItemList = ({ selectedCategoryId }) => {
   /* 페이지네이션 새로 추가한 부분 */
   const limit = 8; //페이지 당 최대 게시물 수
   const [page, setPage] = useState(1); //현재 페이지 번호
-  const offset = (page - 1) * limit; //페이지 당 첫 게시물 위치
+  //const offset = (page - 1) * limit; //페이지 당 첫 게시물 위치
+
+  //흠
+  const indexOfLast = page * limit;
+  const indexOfFirst = (page - 1) * limit;
+  const currentPosts = (data) => {
+      let currentPosts = 0;
+      currentPosts = data.slice(indexOfFirst, indexOfLast);
+      //console.log({"current post: ": currentPosts, "indexofFirst": indexOfFirst, "indexofLast": indexOfLast})
+      return currentPosts;
+    };
   //
 
   const fetchData = async () => {
@@ -68,27 +78,32 @@ const ItemList = ({ selectedCategoryId }) => {
   if (error) return <div>에러가 발생했습니다</div>;
   if (!data) return null;
 
-  return (
-    <div className={styles.itemlistcontent}>
-      {data.slice(offset, offset + limit).map((item) => (
-        <ListItem
-          className={styles.listItem}
-          key={item.name}
-          id={item.id}
-          store={item.market}
-          price={item.price}
-          title={truncate(item.name, 10)}
-          src={item.image}
-          heartCnt={item.hearts}
-        />
-      ))}
 
-      <Pagination
-        total={data.length}
-        limit={limit}
-        page={page}
-        setPage={setPage}
-      />
+
+  return (
+    <div>
+      <div className={styles.itemlistcontent}>
+        {currentPosts(data).map((item) => (
+          <ListItem
+            className={styles.listItem}
+            key={item.url}
+            id={item.id}
+            store={item.market}
+            price={item.price}
+            title={truncate(item.name, 10)}
+            src={item.image}
+            heartCnt={item.hearts}
+          />
+        ))}
+      </div>
+      <div className={styles.pageMove}>
+        <Pagination
+          total={data.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      </div>
     </div>
   );
 };
