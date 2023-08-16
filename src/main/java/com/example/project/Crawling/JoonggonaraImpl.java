@@ -36,33 +36,23 @@ public class JoonggonaraImpl implements Joonggonara{
 
         while(retry != 0) {
             try {
-                System.out.println("연결중");
                 Document doc = Jsoup.connect(url).get();
 
-                System.out.println("1");
                 Elements ids = doc.select(".grid.grid-cols-2 li:nth-child(n) a");
-                System.out.println("2");
                 Elements imgs = doc.select(".grid.grid-cols-2 li:nth-child(n) a div img");
-                System.out.println("3");
                 Elements prices = doc.select(".grid.grid-cols-2 li:nth-child(n) a div div.font-semibold");
-                System.out.println("4");
 
                 for (int i = 0; i < imgs.size(); i++) {
                     String[] id_string = ids.get(i).attr("href").split("/");
                     String id = id_string[2];
-                    System.out.println("5");
 
                     String name = imgs.get(i).attr("alt");
-                    System.out.println("6");
                     String img = imgs.get(i).attr("src");
-                    System.out.println("7");
 
                     String price_string = prices.get(i).text().replaceAll("[^0-9]", "");
                     int price = Integer.parseInt(price_string);
-                    System.out.println("8");
 
                     Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, null, null);
-                    System.out.println("9");
                     page.put(id, product);
                 }
 
@@ -186,33 +176,23 @@ public class JoonggonaraImpl implements Joonggonara{
 
         while(retry != 0) {
             try {
-                System.out.println("연결중");
                 Document doc = Jsoup.connect(url).get();
-                System.out.println("1");
 
                 Elements ids = doc.select(".swiper-slide.pt-2 a");
-                System.out.println("2");
                 Elements imgs = doc.select(".swiper-slide.pt-2 a div img");
-                System.out.println("3");
                 Elements prices = doc.select(".swiper-slide.pt-2 a div div.font-semibold");
-                System.out.println("4");
 
                 for (int i = 0; i < 10; i++) {
                     String[] id_string = ids.get(i).attr("href").split("/");
-                    System.out.println("5");
                     String id = id_string[2];
 
                     String name = imgs.get(i).attr("alt");
-                    System.out.println("6");
                     String img = imgs.get(i).attr("src");
-                    System.out.println("7");
 
                     String price_string = prices.get(i).text().replaceAll("[^0-9]", "");
                     int price = Integer.parseInt(price_string);
-                    System.out.println("8");
 
                     Product product = new Product(id, name, img, price, Market.JOONGGONARA, null, null, 0, null, null, null);
-                    System.out.println("9");
                     page.put(id, product);
                 }
 
