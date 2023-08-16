@@ -65,9 +65,7 @@ public class MainController {
     /** 상품 검색 **/
     @GetMapping("/search/{productName}/{pageNum}")
     public ArrayList getProductSearch(@PathVariable String productName, @PathVariable int pageNum, HttpServletRequest request) {
-        mylogger.printRequestInfo(request, classPath, "상품명으로 검색을 진행합니다···");
-        String requestURL = request.getRequestURL().toString();
-        System.out.println("requestURL = " + requestURL + " 상품명 : " + productName);
+        mylogger.printRequestInfo(request, classPath, "상품명으로 검색을 진행합니다··· 상품명: " + productName);
 
         if (pageNum == 0) {
             pageNum = 1;
